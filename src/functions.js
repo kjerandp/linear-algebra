@@ -49,7 +49,7 @@ export function mix(a, b, t) {
     const mixed = ts.map((m, i) => mixValue(va[i], vb[i], m));
 
     if (isVector) {
-      return new Vector().dimensions(a.dim).fill(mixed);
+      return new Vector(mixed);
     }
     return mixed;
   } else if (Number.isFinite(a)) {

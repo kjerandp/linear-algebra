@@ -1,7 +1,7 @@
 {
   "private": false,
   "name": "@kjerandp/linear-algebra",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Math library for doing basic linear algebra operations",
   "repository": "https://github.com/kjerandp/linear-algebra",
   "author": "Kjerand Pedersen",
