@@ -95,7 +95,7 @@ describe('Functions tests', () => {
     expect(clamp(v2, 1.25, 3.5)).toEqual(vec4(3.5, 1.25, 1.25, 2));
 
     expect(clamp(-1)).toBe(0);
-    expect(clamp(-1, 1)).toBe(1);
+    expect(clamp(-1, 1)).toBe(0);
     expect(clamp(1.25)).toBe(1);
   });
 });
