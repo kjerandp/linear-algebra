@@ -107,12 +107,16 @@ class Vector {
   }
 
   // mutable scale
-  scale(val) {
+  scale(...val) {
+    if (val.length === 0) return this;
+    if (val.length === 1) {
+      [val] = val;
+    }
     if (Number.isFinite(val)) {
       this.assign(v => v * val);
     } else if (Array.isArray(val) || val instanceof Vector) {
       const vc = Vector.argsToComponents(val);
-      this.assign((v, i) => v * vc[i]);
+      this.assign((v, i) => v * (vc[i] === undefined ? 0 : vc[i]));
     }
     return this;
   }
@@ -133,9 +137,6 @@ class Vector {
   // dimension vectors, it will only consider the first three components.
   // In the 2d case, it will return a scalar (i.e. the area/determinant)
   cross(v) {
-    if (this.dim < 2) {
-      return 0;
-    }
     const a = this.value;
     const b = Vector.argsToComponents(v);
 
@@ -156,7 +157,7 @@ class Vector {
     if (this.dim === 2) {
       return Math.atan2(c[1], c[0]);
     }
-
+    if (axis > 2 || axis < 0) return undefined;
     const l = Math.sqrt(c.filter((v, i) => i !== axis).reduce((sqr, v) => (sqr + v ** 2), 0));
     return Math.atan2(l, c[axis]);
   }
