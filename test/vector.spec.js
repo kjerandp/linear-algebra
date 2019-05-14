@@ -254,4 +254,10 @@ describe('Vector class tests', () => {
 
     expect(vec3(1, 0, 0).cross(vec3(0, 1, 0))).toEqual(vec3(0, 0, 1));
   });
+
+  it('Can clamp vectors', () => {
+    expect(vec4(1, 2, 3, 4).clamp(1.7, 3).value).toEqual([1.7, 2, 3, 3]);
+    expect(vec3(1, 2, 3).clamp(1.7, 2.5).value).toEqual([1.7, 2, 2.5]);
+    expect(vec2(1, 2).clamp(1, 2).value).toEqual([1, 2]);
+  });
 });

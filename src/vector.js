@@ -163,7 +163,7 @@ class Vector {
   }
 
   clamp(min = 0, max = 1) {
-    this.value.forEach((v, i) => this.set(i, clampValue(v, min, max)));
+    this.assign(v => clampValue(v, min, max));
     return this;
   }
 
