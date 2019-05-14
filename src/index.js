@@ -24,6 +24,9 @@ import {
   triple,
   det,
   inv,
+  deg,
+  rad,
+
 } from './functions';
 
 export default {
@@ -48,4 +51,6 @@ export default {
   cross,
   det,
   inv,
+  deg,
+  rad,
 };
