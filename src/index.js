@@ -19,6 +19,8 @@ import Matrix, {
 import {
   clamp,
   mix,
+  step,
+  smoothstep,
   dot,
   cross,
   triple,
@@ -46,6 +48,8 @@ export default {
   row4,
   clamp,
   mix,
+  step,
+  smoothstep,
   dot,
   triple,
   cross,

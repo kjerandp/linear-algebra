@@ -3,9 +3,29 @@
 import expect from 'expect';
 import Matrix, { mat2, mat3 } from '../src/matrix';
 import { vec3, vec4 } from '../src/vector';
-import { dot, mix, clamp } from '../src/functions';
+import {
+  dot,
+  mix,
+  clamp,
+  step,
+  smoothstep,
+  standardizeArgument,
+} from '../src/functions';
 
 describe('Functions tests', () => {
+  it('Can standardize arguments', () => {
+    expect(standardizeArgument(1)).toEqual([1]);
+    expect(standardizeArgument(1, true)).toEqual([[1]]);
+    expect(standardizeArgument(0)).toEqual([0]);
+    expect(standardizeArgument(0, true)).toEqual([[0]]);
+    expect(standardizeArgument([1, 2, 3, 4])).toEqual([1, 2, 3, 4]);
+    expect(standardizeArgument([1, 2, 3, 4], true)).toEqual([[1], [2], [3], [4]]);
+    expect(standardizeArgument(vec3(1, 2, 3))).toEqual([1, 2, 3]);
+    expect(standardizeArgument(vec3(1, 2, 3), true)).toEqual([[1], [2], [3]]);
+    expect(standardizeArgument(mat2(1, 2, 3, 4))).toEqual([1, 2, 3, 4]);
+    expect(standardizeArgument(mat2(1, 2, 3, 4), true)).toEqual([[1, 2], [3, 4]]);
+  });
+
   it('Can do matrix vector multiplications (dot product)', () => {
     const m1 = mat3(
       1,  0,  1,
@@ -75,7 +95,7 @@ describe('Functions tests', () => {
     expect(dot(m4, v2)).toEqual(vec3(-15, -7, 0));
   });
 
-  it('Can mix vectors and values', () => {
+  it('Can mix vectors, matrices and values', () => {
     const v1 = vec4(1, 2, 3, 4);
     const v2 = vec4(6, -4, 0, 2);
     expect(mix(v1, v2, 0)).toEqual(v1);
@@ -85,17 +105,48 @@ describe('Functions tests', () => {
     expect(mix(v1, v2, 0.75)).toEqual(vec4(4.75, -2.5, 0.75, 2.5));
     expect(mix(v1, v2, vec4(0, 0.25, 0.5, 0.75))).toEqual(vec4(1, 0.5, 1.5, 2.5));
 
+    const m = mat2(-7, 2, 0, 2);
+    expect(mix(m, Matrix.identity(2), 0.5)).toEqual(mat2(-3, 1, 0, 1.5));
+
     expect(mix(10, 20, 0.5)).toBe(15);
   });
 
   it('Can clamp vectors and values', () => {
     const v1 = vec4(1, 2, 3, 4);
     const v2 = vec4(6, -4, 0, 2);
+
     expect(clamp(v1, 1.25, 3.5)).toEqual(vec4(1.25, 2, 3, 3.5));
     expect(clamp(v2, 1.25, 3.5)).toEqual(vec4(3.5, 1.25, 1.25, 2));
-
+    expect(clamp(
+      mat3(
+        1, 2, 3,
+        4, 5, 6,
+        7, 8, 9,
+      ),
+      2.5,
+      8.2,
+    )).toEqual(mat3(
+      2.5, 2.5, 3,
+      4, 5, 6,
+      7, 8, 8.2,
+    ));
     expect(clamp(-1)).toBe(0);
     expect(clamp(-1, 1)).toBe(0);
     expect(clamp(1.25)).toBe(1);
+  });
+
+  it('Can generate threshold values with step and smoothstep functions (as in GLSL)', () => {
+    expect(step(0.5, 0.4)).toBe(0);
+    expect(step(0.5, 0.5)).toBe(1);
+    expect(step(0.5, 0.6)).toBe(1);
+
+    expect(step(vec3(1, 0.5, 2), vec3(2, 0.2, 1))).toEqual(vec3(1, 0, 0));
+
+    expect(smoothstep(0.2, 0.6, 0.1)).toBe(0);
+    expect(smoothstep(0.2, 0.6, 0.2)).toBe(0);
+    expect(smoothstep(0.2, 0.6, 0.21)).toBeGreaterThan(0);
+    expect(smoothstep(0.2, 0.6, 0.4)).toBeCloseTo(0.5);
+    expect(smoothstep(0.2, 0.6, 0.6)).toBe(1);
+    expect(smoothstep(0.2, 0.6, 0.7)).toBe(1);
   });
 });

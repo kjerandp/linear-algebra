@@ -1,10 +1,35 @@
 import Vector from './vector';
 import Matrix from './matrix';
-import { mixValue, clampValue } from './internal';
+import {
+  mixValue,
+  clampValue,
+  stepValue,
+  smoothstepValue,
+} from './internal';
 import {
   DEG2RAD,
   RAD2DEG,
 } from './constants';
+
+export function standardizeArgument(arg, matrixForm = false) {
+  let res = [];
+
+  if (Number.isFinite(arg)) {
+    res.push(matrixForm ? [arg] : arg);
+  } else if (arg instanceof Vector) {
+    res = matrixForm ? arg.value.map(v => [v]) : arg.value;
+  } else if (arg instanceof Matrix) {
+    res = matrixForm ? arg.value : arg.flatten();
+  } else if (Array.isArray(arg) && Number.isFinite(arg[0])) {
+    res = matrixForm ? arg.map(v => [v]) : arg;
+  } else if (Array.isArray(arg) && Array.isArray(arg[0])) {
+    res = matrixForm ? arg : arg.reduce((arr, el) => [...arr, ...el], []);
+  } else {
+    res = arg;
+  }
+
+  return res;
+}
 
 export function dot(a, b) {
   return a.dot(b);
@@ -29,47 +54,75 @@ export function mix(a, b, t) {
     if (a.constructor !== b.constructor)
       throw Error('Unable to mix different types!');
 
-    const isVector = a instanceof Vector;
-    const va = isVector ? a.value : a;
-    const vb = isVector ? b.value : b;
+    const va = standardizeArgument(a);
+    const vb = standardizeArgument(b);
+
     if (va.length !== vb.length)
       throw Error('Values must have the same number of components!');
 
-    let ts = va.map(() => t);
+    const ts = standardizeArgument(t);
+    const mixed = va.map((v, i) => mixValue(v, vb[i], i < ts.length ? ts[i] : ts[0]));
 
-    if (t instanceof Vector) {
-      ts = t.value;
-    } else if (Array.isArray(t)) {
-      ts = t;
+    if (Array.isArray(a)) {
+      return mixed;
     }
-
-    if (ts.length !== va.length)
-      throw Error('Invalid argument of t!');
-
-    const mixed = ts.map((m, i) => mixValue(va[i], vb[i], m));
-
-    if (isVector) {
-      return new Vector(mixed);
-    }
-    return mixed;
-  } else if (Number.isFinite(a)) {
-    return mixValue(a, b, t);
+    return a.clone().fill(mixed);
   }
-  throw Error('Invalid input value!');
+  return mixValue(a, b, t);
 }
 
 export function clamp(val, min = 0, max = 1) {
-  if (Array.isArray(val) && val.every(v => Number.isFinite(v))) {
-    val.forEach((v, i) => {
-      val[i] = clampValue(v);
-    });
-    return val;
-  } else if (val instanceof Vector || val instanceof Matrix) {
-    return val.clamp(min, max);
-  } else if (Number.isFinite(val)) {
+  if (Number.isFinite(val)) {
     return clampValue(val);
   }
-  throw Error('Invalid input value!');
+  const arr = standardizeArgument(val);
+  const clamped = arr.map(v => clampValue(v, min, max));
+  if (Array.isArray(val)) return clamped;
+
+  return val.clone().fill(clamped);
+}
+
+export function step(edge, x) {
+  if (typeof (edge) === 'object' || typeof (x) === 'object') {
+    if (edge.constructor !== x.constructor)
+      throw Error('Unable to step using different input types!');
+
+    const ve = standardizeArgument(edge);
+    const vx = standardizeArgument(x);
+
+    if (ve.length !== vx.length)
+      throw Error('Inputs must have the same number of components!');
+
+    const stepped = ve.map((v, i) => stepValue(v, vx[i]));
+
+    if (Array.isArray(edge)) {
+      return stepped;
+    }
+    return edge.clone().fill(stepped);
+  }
+  return stepValue(edge, x);
+}
+
+export function smoothstep(edge0, edge1, x) {
+  if (typeof (edge0) === 'object' || typeof (edge1) === 'object' || typeof (x) === 'object') {
+    if (edge0.constructor !== x.constructor || edge1.constructor !== x.constructor)
+      throw Error('Unable to smoothstep using different input types!');
+
+    const ve0 = standardizeArgument(edge0);
+    const ve1 = standardizeArgument(edge1);
+    const vx = standardizeArgument(x);
+
+    if (ve0.length !== vx.length || ve1.length !== vx.length)
+      throw Error('Inputs must have the same number of components!');
+
+    const stepped = ve0.map((v, i) => smoothstepValue(v, ve1[i], vx[i]));
+
+    if (Array.isArray(edge0)) {
+      return stepped;
+    }
+    return edge0.clone().fill(stepped);
+  }
+  return smoothstepValue(edge0, edge1, x);
 }
 
 export function det(m) {
