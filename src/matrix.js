@@ -1,4 +1,4 @@
-import Vector from './Vector';
+import Vector from './vector';
 import { clampValue, dotArrays } from './internal';
 
 const _fillIdentity = (size) => {

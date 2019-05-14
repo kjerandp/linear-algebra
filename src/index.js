@@ -2,7 +2,7 @@ import Vector, {
   vec2,
   vec3,
   vec4,
-} from './Vector';
+} from './vector';
 
 import Matrix, {
   mat2,
@@ -14,7 +14,7 @@ import Matrix, {
   row2,
   row3,
   row4,
-} from './Matrix';
+} from './matrix';
 
 import {
   clamp,

@@ -1,5 +1,5 @@
-import Vector from './Vector';
-import Matrix from './Matrix';
+import Vector from './vector';
+import Matrix from './matrix';
 import { mixValue, clampValue } from './internal';
 import {
   DEG2RAD,

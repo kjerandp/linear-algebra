@@ -7,7 +7,7 @@ import Matrix, {
   col4,
   row2,
   row4,
-} from '../src/Matrix';
+} from '../src/matrix';
 
 describe('Matrix class tests', () => {
   it('Can create matrices using constructor and helper functions', () => {

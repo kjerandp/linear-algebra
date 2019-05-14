@@ -1,8 +1,8 @@
 /* eslint-disable no-multi-spaces */
 
 import expect from 'expect';
-import Matrix, { mat2, mat3 } from '../src/Matrix';
-import { vec3, vec4 } from '../src/Vector';
+import Matrix, { mat2, mat3 } from '../src/matrix';
+import { vec3, vec4 } from '../src/vector';
 import { dot, mix, clamp } from '../src/functions';
 
 describe('Functions tests', () => {
