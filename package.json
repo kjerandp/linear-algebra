@@ -1,0 +1,54 @@
+{
+  "private": false,
+  "name": "@kjerandp/linear-algebra",
+  "version": "0.0.1",
+  "description": "Math library for doing basic linear algebra operations",
+  "repository": "https://github.com/kjerandp/linear-algebra",
+  "author": "Kjerand Pedersen",
+  "license": "MIT",
+  "keywords": [
+    "vector",
+    "matrix",
+    "matricies",
+    "linear",
+    "algebra",
+    "transformations",
+    "2d",
+    "3d",
+    "4d",
+    "math"
+  ],
+  "main": "dist/@kjerandp/linear-algebra.cjs.js",
+  "module": "dist/@kjerandp/linear-algebra.esm.js",
+  "browser": "dist/@kjerandp/linear-algebra.js",
+  "devDependencies": {
+    "@babel/cli": "^7.4.4",
+    "@babel/core": "^7.4.4",
+    "@babel/preset-env": "^7.4.4",
+    "@babel/register": "^7.4.4",
+    "eslint": "^4.18.2",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-import": "^2.9.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.7.0",
+    "expect": "^24.8.0",
+    "mocha": "^6.1.4",
+    "rollup": "^1.11.3",
+    "rollup-plugin-babel": "^4.3.2",
+    "rollup-plugin-commonjs": "^9.3.4",
+    "rollup-plugin-node-resolve": "^4.2.4",
+    "sinon": "^7.3.2"
+  },
+  "scripts": {
+    "build": "node node_modules/.bin/rollup -c",
+    "dev": "node node_modules/.bin/rollup -c -w",
+    "test": "NODE_ENV=test node node_modules/.bin/mocha --require @babel/register",
+    "test:watch": "NODE_ENV=test node node_modules/.bin/mocha --require @babel/register --reporter min --watch",
+    "lint": "node node_modules/.bin/eslint src test tools",
+    "prepub": "npm run build",
+    "pub": "npm publish --access=public"
+  },
+  "files": [
+    "dist"
+  ]
+}
