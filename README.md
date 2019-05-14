@@ -1,6 +1,6 @@
-# math-utils-2d
+# Linear algebra
 
-WIP 
+TODO
 
 ## License
 MIT

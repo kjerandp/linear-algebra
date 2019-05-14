@@ -193,12 +193,7 @@ class Vector {
   swap(args) {
     if (args.length > 0 && args.length <= this.dim) {
       const swizzled = this.swizzle(args);
-      console.log(swizzled);
-      this.assign((v, i) => v + (swizzled[i] === undefined ? v : swizzled[i]));
-      // this._values.fill(0);
-      // swizzled.forEach((v, i) => {
-      //   this._values[i] = v;
-      // });
+      this.assign((v, i) => (swizzled[i] === undefined ? v : swizzled[i]));
     }
     return this;
   }
@@ -219,15 +214,14 @@ class Vector {
       [values] = values;
     }
 
-    for (let i = 0; i < this._values.length; i++) {
-      let v = 0;
+    this.assign((v, i) => {
       if (i < values.length) {
-        v = values[i];
+        return values[i];
       } else if (values.length === 1) {
-        [v] = values;
+        return values[0];
       }
-      this._values[i] = v;
-    }
+      return 0;
+    });
 
     return this;
   }
