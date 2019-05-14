@@ -1,7 +1,7 @@
 {
   "private": false,
   "name": "@kjerandp/linear-algebra",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Math library for doing basic linear algebra operations",
   "repository": "https://github.com/kjerandp/linear-algebra",
   "author": "Kjerand Pedersen",
@@ -20,7 +20,7 @@
   ],
   "main": "dist/@kjerandp/linear-algebra.cjs.js",
   "module": "dist/@kjerandp/linear-algebra.esm.js",
-  "browser": "dist/@kjerandp/linear-algebra.js",
+  "browser": "dist/@kjerandp/linear-algebra.min.js",
   "devDependencies": {
     "@babel/cli": "^7.4.4",
     "@babel/core": "^7.4.4",
@@ -38,6 +38,7 @@
     "rollup-plugin-babel": "^4.3.2",
     "rollup-plugin-commonjs": "^9.3.4",
     "rollup-plugin-node-resolve": "^4.2.4",
+    "rollup-plugin-uglify": "^6.0.2",
     "sinon": "^7.3.2"
   },
   "scripts": {
