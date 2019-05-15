@@ -8,6 +8,8 @@ import Matrix, {
   row2,
   row4,
 } from '../src/matrix';
+import { product } from '../src/functions';
+
 
 describe('Matrix class tests', () => {
   it('Can create matrices using constructor and helper functions', () => {
@@ -157,7 +159,11 @@ describe('Matrix class tests', () => {
   });
 
   it('Can extract rows and columns', () => {
-    const m = mat3(1, 2, 3, 4, 5, 6, 7, 8, 9);
+    const m = mat3(
+      1, 2, 3,
+      4, 5, 6,
+      7, 8, 9,
+    );
 
     expect(m.submatrix(1, 2, 2, 2)).toEqual(mat2(2, 3, 5, 6));
 
@@ -172,6 +178,32 @@ describe('Matrix class tests', () => {
     expect(m.col(3)).toEqual([3, 6, 9]);
     expect(() => m.col(4)).toThrow();
     expect(() => m.col(0)).toThrow();
+
+    // diagonal
+    expect(m.diagonal(1)).toEqual([1, 5, 9]); // 45
+    expect(m.diagonal(2)).toEqual([2, 6, 7]); // 84
+    expect(m.diagonal(3)).toEqual([3, 4, 8]); // 96
+
+    // diagonal reverse
+    expect(m.diagonal(3, true)).toEqual([3, 5, 7]);
+    expect(m.diagonal(2, true)).toEqual([2, 4, 9]);
+    expect(m.diagonal(1, true)).toEqual([1, 6, 8]);
+
+    expect(() => m.diagonal(4)).toThrow();
+    expect(() => m.diagonal(0)).toThrow();
+
+    let det = 0;
+    m.columns.each((j) => {
+      det += product(m.diagonal(j)) - product(m.antiDiagonal(j, true));
+    });
+    expect(det).toEqual(m.det());
+
+    const m2 = mat3(-2, 2, 3, -1, 1, 3, 2, 0, -1);
+    det = 0;
+    m2.columns.each((j) => {
+      det += product(m2.diagonal(j)) - product(m2.antiDiagonal(j));
+    });
+    expect(det).toEqual(m2.det());
   });
 
   it('Can extract submatrices and remove rows and columns', () => {

@@ -161,6 +161,22 @@ class Matrix {
     throw Error('Invalid arguments!');
   }
 
+  diagonal(j = 1, reverse = false) {
+    if (j <= 0 || j > this.cols) throw Error('Invalid arguments!');
+    const d = [];
+    const c = j - 1;
+    for (let r = 0; r < this.rows; r++) {
+      const ri = r;
+      const ci = (reverse ? c - r + this.cols : r + c) % this.cols;
+      d.push(this._values[ri][ci]);
+    }
+    return d;
+  }
+
+  antiDiagonal(j = this.cols) {
+    return this.diagonal(j, true);
+  }
+
   clamp(min = 0, max = 1) {
     this.assign(v => clampValue(v, min, max));
     return this;
@@ -359,6 +375,16 @@ class Matrix {
 
   get html() {
     return `<pre><code>${this.ascii}</code></pre>`;
+  }
+
+  get columns() {
+    return {
+      each: (cb) => {
+        for (let c = 0; c < this.cols; c++) {
+          cb(c + 1, this.cols);
+        }
+      },
+    };
   }
 }
 
