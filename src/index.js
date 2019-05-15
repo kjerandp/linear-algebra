@@ -24,10 +24,12 @@ import {
   dot,
   cross,
   triple,
+  norm,
   det,
   inv,
   deg,
   rad,
+  nrmRad,
   sum,
   avg,
   product,
@@ -58,8 +60,12 @@ export default {
   dot,
   triple,
   cross,
+  norm,
   det,
   inv,
   deg,
   rad,
+  nrmRad,
 };
+
+export * from './constants';

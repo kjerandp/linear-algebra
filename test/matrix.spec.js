@@ -52,6 +52,29 @@ describe('Matrix class tests', () => {
     expect(clone).not.toEqual(m);
   });
 
+  it('Can use accessors to get/set values', () => {
+    const m = mat3(1, 2, 3, 4, 5, 6, 7, 8, 9);
+
+    expect(m.get(1, 1)).toBe(1);
+    expect(m.get(2, 2)).toBe(5);
+    expect(m.get(3, 2)).toBe(8);
+    expect(m.get(3, 3)).toBe(9);
+
+    expect(() => m.get(0, 2)).toThrow();
+    expect(() => m.get(2, 8)).toThrow();
+
+    m.set(2, 2, -7);
+    expect(m.get(2, 2)).toBe(-7);
+
+    expect(m.get(1, 1)).toBe(m.a11);
+    expect(m.get(2, 2)).toBe(m.a22);
+    expect(m.get(3, 2)).toBe(m.a32);
+    expect(m.get(3, 3)).toBe(m.a33);
+
+    m.a12 = 0;
+    expect(m.get(1, 2)).toBe(0);
+  });
+
   it('Can do basic matrix arithmetics', () => {
     expect(mat2(1, 2, 3, 4).add(mat2(1)).value).toEqual([
       [2, 3],
@@ -91,6 +114,19 @@ describe('Matrix class tests', () => {
     expect(mat3(-2, 2, 3, -1, 1, 3, 2, 0, -1).det()).toBe(6);
   });
 
+  it('Can invert matrices', () => {
+    expect(() => col4().invert()).toThrow('Matrix cannot be inverted!');
+    expect(mat3(-2, 2, 3, -1, 1, 3, 2, 0, -1).invert()).toBeInstanceOf(Matrix);
+
+    let actual = mat2(4, 7, 2, 6).invert().flatten();
+    let expected = [0.6, -0.7, -0.2, 0.4];
+    actual.every((a, i) => expect(a).toBeCloseTo(expected[i], 5));
+
+    actual = mat2(3, 3.5, 3.2, 3.6).invert().flatten();
+    expected = [-9, 8.75, 8, -7.5];
+    actual.every((a, i) => expect(a).toBeCloseTo(expected[i], 5));
+  });
+
   it('Can transpose matrices', () => {
     expect(row2(1, 2).transpose()).toEqual(col2(1, 2));
     expect(mat2(
@@ -120,4 +156,35 @@ describe('Matrix class tests', () => {
     ]));
   });
 
+  it('Can extract rows and columns', () => {
+    const m = mat3(1, 2, 3, 4, 5, 6, 7, 8, 9);
+
+    expect(m.submatrix(1, 2, 2, 2)).toEqual(mat2(2, 3, 5, 6));
+
+    expect(m.row(1)).toEqual([1, 2, 3]);
+    expect(m.row(2)).toEqual([4, 5, 6]);
+    expect(m.row(3)).toEqual([7, 8, 9]);
+    expect(() => m.row(4)).toThrow();
+    expect(() => m.row(0)).toThrow();
+
+    expect(m.col(1)).toEqual([1, 4, 7]);
+    expect(m.col(2)).toEqual([2, 5, 8]);
+    expect(m.col(3)).toEqual([3, 6, 9]);
+    expect(() => m.col(4)).toThrow();
+    expect(() => m.col(0)).toThrow();
+  });
+
+  it('Can extract submatrices and remove rows and columns', () => {
+    const m = mat3(
+      1, 2, 3,
+      4, 5, 6,
+      7, 8, 9,
+    );
+
+    expect(m.submatrix(1, 2, 2, 2)).toEqual(mat2(2, 3, 5, 6));
+    expect(m.submatrix(2, 1, 2, 2)).toEqual(mat2(4, 5, 7, 8));
+
+    expect(m.remove(1, 2)).toEqual(mat2(4, 6, 7, 9));
+    expect(m.remove(3, 2)).toEqual(mat2(1, 3, 4, 6));
+  });
 });

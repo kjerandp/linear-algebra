@@ -173,11 +173,6 @@ class Vector {
     return this;
   }
 
-  // Immutable version of normalize
-  unitVector() {
-    return this.clone().normalize();
-  }
-
   // Mimic the swizzle operator for vectors in glsl
   swizzle(args) {
     const components = new Array(args.length);

@@ -131,7 +131,10 @@ class Matrix {
   }
 
   get(i, j) {
-    return this._values[i - 1][j - 1];
+    if (i > 0 && i <= this.rows && j > 0 && j <= this.cols) {
+      return this._values[i - 1][j - 1];
+    }
+    throw Error('Out of range!');
   }
 
   assign(assignFunc) {
@@ -299,19 +302,8 @@ class Matrix {
     return _calcDeterminant(this);
   }
 
-  inverse() {
-    if (!this.isSquare()) throw Error('Matrix must be square!');
-
-    const inverse = _findInverse(this.clone()._values);
-
-    if (inverse) {
-      return new Matrix(inverse);
-    }
-    return undefined;
-  }
-
   invert() {
-    const inverse = this.inverse();
+    const inverse = _findInverse(this._values.map(r => [...r]));
     if (inverse) {
       this._values = inverse;
     } else {

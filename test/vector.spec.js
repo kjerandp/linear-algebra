@@ -188,7 +188,6 @@ describe('Vector class tests', () => {
     actual.every((x, i) => expect(x).toBeCloseTo(expected[i], 5));
 
     const v = new Vector(2, 1, 2, 0);
-    expect(v.unitVector()).not.toBe(v);
     expect(v.normalize()).toBe(v);
   });
 

@@ -1,10 +1,16 @@
 /* eslint-disable no-multi-spaces */
 
 import expect from 'expect';
-import Matrix, { mat2, mat3 } from '../src/matrix';
+import Matrix, { mat2, mat3, mat4 } from '../src/matrix';
 import { vec3, vec4 } from '../src/vector';
+import { PI, TAU, SPI, QPI } from '../src/constants';
 import {
   dot,
+  cross,
+  det,
+  inv,
+  triple,
+  norm,
   mix,
   clamp,
   step,
@@ -13,6 +19,9 @@ import {
   sum,
   avg,
   product,
+  deg,
+  rad,
+  nrmRad,
 } from '../src/functions';
 
 describe('Functions tests', () => {
@@ -98,6 +107,36 @@ describe('Functions tests', () => {
     expect(dot(m4, v2)).toEqual(vec3(-15, -7, 0));
   });
 
+  it('Can do use convenience functions for matrix determinant and inverse', () => {
+    const m = mat4(1, 2, 3, -4, -5, -6, 7, 8, 9, 10, 11, 12, -13, 14, 15, 16);
+
+    expect(m.det()).toBe(25344);
+    expect(det(m)).toBe(m.det());
+    const im = m.invert();
+    expect(im).toBe(m);
+    expect(inv(m)).not.toBe(m);
+  });
+
+  it('Can do use convenience functions for vector cross and triple product and vector normalization', () => {
+    const i = vec3(1, 0, 0);
+    const j = vec3(0, 1, 0);
+    const k = vec3(0, 0, 1);
+    expect(i.cross(j)).toEqual(k);
+    expect(k.cross(i)).toEqual(j);
+    expect(j.cross(k)).toEqual(i);
+
+    expect(cross(i, j)).toEqual(i.cross(j));
+    expect(cross(k, i)).toEqual(k.cross(i));
+    expect(cross(j, k)).toEqual(j.cross(k));
+
+    expect(triple(i, j, k)).toBe(1);
+    expect(triple(k, i, j)).toBe(k.dot(i.cross(j)));
+    const v = vec3(7, 0, 0);
+    expect(norm(v)).toEqual(i);
+    expect(norm(v).length).toBe(1);
+    expect(v.length).toBe(7);
+  });
+
   it('Can mix vectors, matrices and values', () => {
     const v1 = vec4(1, 2, 3, 4);
     const v2 = vec4(6, -4, 0, 2);
@@ -168,5 +207,32 @@ describe('Functions tests', () => {
     expect(avg(['x'])).toBeUndefined();
     expect(product(arr1)).toBe(-1468.8);
     expect(product(arr2)).toBe(0);
+  });
+
+  it('Can covert between degrees and radians', () => {
+    expect(deg(0)).toBe(0);
+    expect(deg(PI)).toBe(180);
+    expect(deg(-PI)).toBe(-180);
+    expect(deg(SPI)).toBe(90);
+    expect(deg(-SPI)).toBe(-90);
+    expect(deg(QPI)).toBe(45);
+    expect(deg(-QPI)).toBe(-45);
+    expect(deg(TAU)).toBe(360);
+    expect(deg(-TAU)).toBe(-360);
+
+    expect(rad(0)).toBe(0);
+    expect(rad(180)).toBe(PI);
+    expect(rad(-180)).toBe(-PI);
+    expect(rad(90)).toBe(SPI);
+    expect(rad(-90)).toBe(-SPI);
+    expect(rad(45)).toBe(QPI);
+    expect(rad(-45)).toBe(-QPI);
+    expect(rad(360)).toBe(TAU);
+    expect(rad(-360)).toBe(-TAU);
+
+    expect(nrmRad(-QPI)).toBe(TAU - QPI);
+    expect(nrmRad(-SPI)).toBe(TAU - SPI);
+    expect(nrmRad(-TAU)).toBe(-0);
+    expect(nrmRad(-TAU - SPI)).toBe(TAU - SPI);
   });
 });
