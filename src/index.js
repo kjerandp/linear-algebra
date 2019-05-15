@@ -16,24 +16,8 @@ import Matrix, {
   row4,
 } from './matrix';
 
-import {
-  clamp,
-  mix,
-  step,
-  smoothstep,
-  dot,
-  cross,
-  triple,
-  norm,
-  det,
-  inv,
-  deg,
-  rad,
-  nrmRad,
-  sum,
-  avg,
-  product,
-} from './functions';
+import * as functions from './functions';
+import * as constants from './constants';
 
 export default {
   Vector,
@@ -50,22 +34,7 @@ export default {
   row2,
   row3,
   row4,
-  clamp,
-  mix,
-  step,
-  smoothstep,
-  sum,
-  avg,
-  product,
-  dot,
-  triple,
-  cross,
-  norm,
-  det,
-  inv,
-  deg,
-  rad,
-  nrmRad,
+  ...functions,
+  ...constants,
 };
 
-export * from './constants';
