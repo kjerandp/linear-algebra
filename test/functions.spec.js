@@ -10,6 +10,9 @@ import {
   step,
   smoothstep,
   standardizeArgument,
+  sum,
+  avg,
+  product,
 } from '../src/functions';
 
 describe('Functions tests', () => {
@@ -148,5 +151,22 @@ describe('Functions tests', () => {
     expect(smoothstep(0.2, 0.6, 0.4)).toBeCloseTo(0.5);
     expect(smoothstep(0.2, 0.6, 0.6)).toBe(1);
     expect(smoothstep(0.2, 0.6, 0.7)).toBe(1);
+  });
+
+  it('Can aggregate array data using sum, avg, product', () => {
+    const arr1 = [4, 2, 6, 4.5, 2, 1, -2, 1.7];
+    const arr2 = [4, 2, -6, 0, 2, 1, -2, 1.7];
+
+    expect(sum(arr1)).toBe(19.2);
+    expect(sum(arr2)).toBe(2.7);
+    expect(sum([])).toBe(null);
+    expect(sum(['x'])).toBe(null);
+    expect(sum('x')).toBe(null);
+    expect(avg(arr1)).toBe(2.4);
+    expect(avg(arr2)).toBe(0.3375);
+    expect(avg([])).toBeUndefined();
+    expect(avg(['x'])).toBeUndefined();
+    expect(product(arr1)).toBe(-1468.8);
+    expect(product(arr2)).toBe(0);
   });
 });

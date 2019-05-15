@@ -28,7 +28,9 @@ import {
   inv,
   deg,
   rad,
-
+  sum,
+  avg,
+  product,
 } from './functions';
 
 export default {
@@ -50,6 +52,9 @@ export default {
   mix,
   step,
   smoothstep,
+  sum,
+  avg,
+  product,
   dot,
   triple,
   cross,

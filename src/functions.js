@@ -139,6 +139,31 @@ export function inv(m) {
   throw Error('Only defined for matrices!');
 }
 
+export function sum(arr) {
+  let s = null;
+  for (let i = 0; i < arr.length; i++) {
+    if (!Number.isFinite(arr[i])) return null;
+    s += arr[i];
+  }
+  return s;
+}
+
+export function avg(arr) {
+  if (arr.length === 0) return undefined;
+  const s = sum(arr);
+  if (!Number.isFinite(s)) return undefined;
+  return s / arr.length;
+}
+
+export function product(arr) {
+  let p = 1;
+  for (let i = 0; i < arr.length; i++) {
+    if (!Number.isFinite(arr[i])) return null;
+    if (arr[i] === 0) return 0; // early termination
+    p *= arr[i];
+  }
+  return p;
+}
 
 export const rad = d => d * DEG2RAD;
 
