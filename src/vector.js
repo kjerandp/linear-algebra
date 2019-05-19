@@ -80,27 +80,15 @@ class Vector {
     return v;
   }
 
-  // immutable addition (returns new vector)
-  add(v) {
-    const n = this.clone();
-    return n.addFrom(v);
-  }
-
-  // immutable subtraction (returns new vector)
-  sub(v) {
-    const n = this.clone();
-    return n.subFrom(v);
-  }
-
   // mutable addition (adds to and return self)
-  addFrom(val) {
+  add(val) {
     const vc = Vector.argsToComponents(val);
     this.assign((v, i) => v + (vc[i] === undefined ? 0 : vc[i]));
     return this;
   }
 
   // mutable subtraction (subtract and returns self)
-  subFrom(val) {
+  sub(val) {
     const vc = Vector.argsToComponents(val);
     this.assign((v, i) => v - (vc[i] === undefined ? 0 : vc[i]));
     return this;

@@ -222,14 +222,6 @@ class Matrix {
   }
 
   add(m) {
-    return this.clone().addFrom(m);
-  }
-
-  sub(m) {
-    return this.clone().subFrom(m);
-  }
-
-  addFrom(m) {
     if (this.rows !== m.rows || this.cols !== m.cols)
       throw Error('Incompatible matrices!');
 
@@ -238,7 +230,7 @@ class Matrix {
     return this;
   }
 
-  subFrom(m) {
+  sub(m) {
     if (this.rows !== m.rows || this.cols !== m.cols)
       throw Error('Incompatible matrices!');
 

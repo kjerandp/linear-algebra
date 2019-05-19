@@ -42,3 +42,4 @@ export function dotArrays(a1, a2) {
 
   return v;
 }
+

@@ -5,6 +5,9 @@ import Matrix, { mat2, mat3, mat4 } from '../src/matrix';
 import { vec3, vec4 } from '../src/vector';
 import { PI, TAU, SPI, QPI } from '../src/constants';
 import {
+  add,
+  sub,
+  scale,
   dot,
   cross,
   det,
@@ -15,29 +18,15 @@ import {
   clamp,
   step,
   smoothstep,
-  standardizeArgument,
   sum,
   avg,
   product,
   deg,
   rad,
-  nrmRad,
+  nrad,
 } from '../src/functions';
 
 describe('Functions tests', () => {
-  it('Can standardize arguments', () => {
-    expect(standardizeArgument(1)).toEqual([1]);
-    expect(standardizeArgument(1, true)).toEqual([[1]]);
-    expect(standardizeArgument(0)).toEqual([0]);
-    expect(standardizeArgument(0, true)).toEqual([[0]]);
-    expect(standardizeArgument([1, 2, 3, 4])).toEqual([1, 2, 3, 4]);
-    expect(standardizeArgument([1, 2, 3, 4], true)).toEqual([[1], [2], [3], [4]]);
-    expect(standardizeArgument(vec3(1, 2, 3))).toEqual([1, 2, 3]);
-    expect(standardizeArgument(vec3(1, 2, 3), true)).toEqual([[1], [2], [3]]);
-    expect(standardizeArgument(mat2(1, 2, 3, 4))).toEqual([1, 2, 3, 4]);
-    expect(standardizeArgument(mat2(1, 2, 3, 4), true)).toEqual([[1, 2], [3, 4]]);
-  });
-
   it('Can do matrix vector multiplications (dot product)', () => {
     const m1 = mat3(
       1,  0,  1,
@@ -116,10 +105,17 @@ describe('Functions tests', () => {
     expect(inv(m)).not.toBe(m);
   });
 
-  it('Can do use convenience functions for vector cross and triple product and vector normalization', () => {
+  it('Can use operator functions for vector arithmetics', () => {
     const i = vec3(1, 0, 0);
     const j = vec3(0, 1, 0);
     const k = vec3(0, 0, 1);
+
+    expect(add(i, j)).toEqual(vec3(1, 1, 0));
+    expect(sub(i, j)).toEqual(vec3(1, -1, 0));
+
+    expect(scale(i, 2)).toEqual(vec3(2, 0, 0));
+    expect(scale(i, j)).toEqual(vec3(0, 0, 0));
+
     expect(i.cross(j)).toEqual(k);
     expect(k.cross(i)).toEqual(j);
     expect(j.cross(k)).toEqual(i);
@@ -229,9 +225,9 @@ describe('Functions tests', () => {
     expect(rad(360)).toBe(TAU);
     expect(rad(-360)).toBe(-TAU);
 
-    expect(nrmRad(-QPI)).toBe(TAU - QPI);
-    expect(nrmRad(-SPI)).toBe(TAU - SPI);
-    expect(nrmRad(-TAU)).toBe(-0);
-    expect(nrmRad(-TAU - SPI)).toBe(TAU - SPI);
+    expect(nrad(-QPI)).toBe(TAU - QPI);
+    expect(nrad(-SPI)).toBe(TAU - SPI);
+    expect(nrad(-TAU)).toBe(-0);
+    expect(nrad(-TAU - SPI)).toBe(TAU - SPI);
   });
 });

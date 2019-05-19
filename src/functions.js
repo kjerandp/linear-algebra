@@ -6,30 +6,30 @@ import {
   stepValue,
   smoothstepValue,
 } from './internal';
+import { standardizeArgument } from './utils';
 import {
   DEG2RAD,
   RAD2DEG,
   TAU,
 } from './constants';
 
-export function standardizeArgument(arg, matrixForm = false) {
-  let res = [];
 
-  if (Number.isFinite(arg)) {
-    res.push(matrixForm ? [arg] : arg);
-  } else if (arg instanceof Vector) {
-    res = matrixForm ? arg.value.map(v => [v]) : arg.value;
-  } else if (arg instanceof Matrix) {
-    res = matrixForm ? arg.value : arg.flatten();
-  } else if (Array.isArray(arg) && Number.isFinite(arg[0])) {
-    res = matrixForm ? arg.map(v => [v]) : arg;
-  } else if (Array.isArray(arg) && Array.isArray(arg[0])) {
-    res = matrixForm ? arg : arg.reduce((arr, el) => [...arr, ...el], []);
-  } else {
-    res = arg;
-  }
+export function add(a, b) {
+  if (a.constructor !== b.constructor)
+    throw Error('Unable to add different types!');
+  return a.clone().add(b);
+}
 
-  return res;
+export function sub(a, b) {
+  if (a.constructor !== b.constructor)
+    throw Error('Unable to subtract different types!');
+  return a.clone().sub(b);
+}
+
+export function scale(v, f) {
+  if (!Number.isFinite(f) && v.constructor !== f.constructor)
+    throw Error('Unable to scale different types!');
+  return v.clone().scale(f);
 }
 
 export function dot(a, b) {
@@ -147,6 +147,13 @@ export function inv(m) {
   throw Error('Only defined for matrices!');
 }
 
+export function tran(m) {
+  if (m instanceof Matrix) {
+    return m.clone().transpose();
+  }
+  throw Error('Only defined for matrices!');
+}
+
 export function sum(arr) {
   let s = null;
   for (let i = 0; i < arr.length; i++) {
@@ -177,7 +184,7 @@ export const rad = d => d * DEG2RAD;
 
 export const deg = r => r * RAD2DEG;
 
-export function nrmRad(r) {
+export function nrad(r) {
   const v = r % TAU;
   return (v < 0 ? v + TAU : v);
 }

@@ -240,11 +240,7 @@ describe('Vector class tests', () => {
     const v2 = vec4(1, 0, 1, 0);
     const v3 = v1.add(v2);
 
-    expect(v1).not.toBe(v3);
-
-    const v4 = v1.addFrom(v2);
-
-    expect(v1).toBe(v4);
+    expect(v1).toBe(v3);
 
     expect(vec2(1, 2).cross(vec2(1, 0))).toBe(-2);
     expect(vec2(1, 2).cross(vec2(-5, 2))).toBe(12);
