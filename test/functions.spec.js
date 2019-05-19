@@ -109,7 +109,6 @@ describe('Functions tests', () => {
 
   it('Can do use convenience functions for matrix determinant and inverse', () => {
     const m = mat4(1, 2, 3, -4, -5, -6, 7, 8, 9, 10, 11, 12, -13, 14, 15, 16);
-
     expect(m.det()).toBe(25344);
     expect(det(m)).toBe(m.det());
     const im = m.invert();

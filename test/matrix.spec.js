@@ -9,6 +9,7 @@ import Matrix, {
   row4,
 } from '../src/matrix';
 import { product } from '../src/functions';
+import timer from './timer';
 
 
 describe('Matrix class tests', () => {
@@ -128,6 +129,62 @@ describe('Matrix class tests', () => {
     expected = [-9, 8.75, 8, -7.5];
     actual.every((a, i) => expect(a).toBeCloseTo(expected[i], 5));
   });
+
+  it('Can optimise matrix determinant calculations', () => {
+    const runs = 50;
+    let timeA = 0;
+    let timeB = 0;
+    for (let i = 0; i < runs; i++) {
+      const m1 = mat3().assign(() => Math.random());
+      const m2 = m1.clone();
+      m2.optimise = false;
+      const a = timer(() => m1.det());
+      const b = timer(() => m2.det());
+      expect(a[0]).toBeCloseTo(b[0], 10);
+      timeA += a[1];
+      timeB += b[1];
+    }
+    expect(timeA).toBeLessThanOrEqual(timeB);
+
+    timeA = 0;
+    timeB = 0;
+    for (let i = 0; i < runs; i++) {
+      const m1 = mat4().assign(() => Math.random());
+      const m2 = m1.clone();
+      m2.optimise = false;
+      const a = timer(() => m1.det());
+      const b = timer(() => m2.det());
+      expect(a[0]).toBeCloseTo(b[0], 10);
+      timeA += a[1];
+      timeB += b[1];
+    }
+    expect(timeA).toBeLessThanOrEqual(timeB);
+  });
+
+  /*
+  it('Can optimise calculation of matrix inverse', () => {
+    const runs = 500;
+    let timeA = 0;
+    let timeB = 0;
+    for (let i = 0; i < runs; i++) {
+      const m1 = mat4().assign(() => Math.random() + 1);
+      const m2 = m1.clone();
+      m2.optimise = false;
+      const a = timer(() => m1.invert());
+      const b = timer(() => m2.invert());
+      const actual = a[0].value;
+      const expected = b[0].value;
+      if (a[0]) {
+        actual.forEach((row, r) => {
+          row.forEach((val, c) => expect(val).toBeCloseTo(expected[r][c], 5));
+        });
+        timeA += a[1];
+        timeB += b[1];
+      }
+    }
+    expect(timeA).toBeLessThanOrEqual(timeB);
+  });
+  */
 
   it('Can transpose matrices', () => {
     expect(row2(1, 2).transpose()).toEqual(col2(1, 2));

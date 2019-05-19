@@ -1,5 +1,13 @@
 import Vector from './vector';
 import { clampValue, dotArrays } from './internal';
+import {
+  determinant2d,
+  inverse2d,
+  determinant3d,
+  inverse3d,
+  determinant4d,
+  inverse4d,
+} from './optimalisations/matrix';
 
 const _fillIdentity = (size) => {
   const values = new Array(size);
@@ -107,6 +115,7 @@ class Matrix {
       }
       this._values = v;
     }
+    this.optimise = true;
   }
 
   static identity(size = 4) {
@@ -312,14 +321,30 @@ class Matrix {
 
     if (this.rows === 1) {
       return v[0][0];
-    } else if (this.rows === 2) {
-      return v[0][0] * v[1][1] - v[1][0] * v[0][1];
+    } else if (this.rows === 2 && this.optimise) {
+      return determinant2d(this.value);
+    } else if (this.rows === 3 && this.optimise) {
+      return determinant3d(this.value);
+    } else if (this.rows === 4 && this.optimise) {
+      return determinant4d(this.value);
     }
     return _calcDeterminant(this);
   }
 
   invert() {
-    const inverse = _findInverse(this._values.map(r => [...r]));
+    let inverse;
+    if (!this.isSquare()) {
+      inverse = null;
+    // } else if (this.rows === 2 && this.optimise) {
+    //   inverse = inverse2d(this.value);
+    // } else if (this.rows === 3 && this.optimise) {
+    //   inverse = inverse3d(this.value);
+    // } else if (this.rows === 4 && this.optimise) {
+    //   inverse = inverse4d(this.value);
+    } else {
+      inverse = _findInverse(this._values.map(r => [...r]));
+    }
+
     if (inverse) {
       this._values = inverse;
     } else {
