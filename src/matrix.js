@@ -112,7 +112,7 @@ class Matrix {
       }
       this._values = v;
     }
-    this.optimise = true;
+    this._optimise = true;
   }
 
   static identity(size = 4) {
@@ -310,11 +310,11 @@ class Matrix {
 
     if (this.rows === 1) {
       return v[0][0];
-    } else if (this.rows === 2 && this.optimise) {
+    } else if (this.rows === 2 && this._optimise) {
       return determinant2d(this.value);
-    } else if (this.rows === 3 && this.optimise) {
+    } else if (this.rows === 3 && this._optimise) {
       return determinant3d(this.value);
-    } else if (this.rows === 4 && this.optimise) {
+    } else if (this.rows === 4 && this._optimise) {
       return determinant4d(this.value);
     }
     return _calcDeterminant(this);
@@ -324,11 +324,11 @@ class Matrix {
     let inverse;
     if (!this.isSquare()) {
       inverse = null;
-    // } else if (this.rows === 2 && this.optimise) {
+    // } else if (this.rows === 2 && this._optimise) {
     //   inverse = inverse2d(this.value);
-    // } else if (this.rows === 3 && this.optimise) {
+    // } else if (this.rows === 3 && this._optimise) {
     //   inverse = inverse3d(this.value);
-    // } else if (this.rows === 4 && this.optimise) {
+    // } else if (this.rows === 4 && this._optimise) {
     //   inverse = inverse4d(this.value);
     } else {
       inverse = _findInverse(this._values.map(r => [...r]));

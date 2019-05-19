@@ -137,7 +137,7 @@ describe('Matrix class tests', () => {
     for (let i = 0; i < runs; i++) {
       const m1 = mat3().assign(() => Math.random());
       const m2 = m1.clone();
-      m2.optimise = false;
+      m2._optimise = false;
       const a = timer(() => m1.det());
       const b = timer(() => m2.det());
       expect(a[0]).toBeCloseTo(b[0], 10);
@@ -151,7 +151,7 @@ describe('Matrix class tests', () => {
     for (let i = 0; i < runs; i++) {
       const m1 = mat4().assign(() => Math.random());
       const m2 = m1.clone();
-      m2.optimise = false;
+      m2._optimise = false;
       const a = timer(() => m1.det());
       const b = timer(() => m2.det());
       expect(a[0]).toBeCloseTo(b[0], 10);
