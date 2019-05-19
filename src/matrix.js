@@ -2,11 +2,8 @@ import Vector from './vector';
 import { clampValue, dotArrays } from './internal';
 import {
   determinant2d,
-  inverse2d,
   determinant3d,
-  inverse3d,
   determinant4d,
-  inverse4d,
 } from './optimalisations/matrix';
 
 const _fillIdentity = (size) => {
