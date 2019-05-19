@@ -113,7 +113,15 @@ class Vector {
   dot(arg) {
     if (!(arg instanceof Vector)) {
       const mat = arg.value || arg;
-      const res = dotArrays([this.value], mat);
+      const vec = [...this.value];
+      if (this.dim < 4 && vec.length < mat.length) {
+        // convert to homogeneous coordinates  (ex. vec3 * mat4)
+        for (let i = vec.length; i < mat.length; i++) {
+          const v = i === mat.length - 1 ? 1 : 0;
+          vec.push(v);
+        }
+      }
+      const res = dotArrays([vec], mat);
       return this.clone().fill(res[0]);
     }
     const v = arg;

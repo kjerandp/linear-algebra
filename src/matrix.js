@@ -248,6 +248,13 @@ class Matrix {
 
     if (bIsVec) {
       m2 = arg.value.map(v => [v]);
+      if (arg.dim < 4 && m2.length < m1.length) {
+        // convert to homogeneous coordinates (ex. mat4 * vec3)
+        for (let i = m2.length; i < m1.length; i++) {
+          const v = i === m1.length - 1 ? 1 : 0;
+          m2.push([v]);
+        }
+      }
     } else {
       m2 = arg.value || arg;
     }

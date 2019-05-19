@@ -2,7 +2,7 @@
 
 import expect from 'expect';
 import Matrix, { mat2, mat3, mat4 } from '../src/matrix';
-import { vec3, vec4 } from '../src/vector';
+import { vec2, vec3, vec4 } from '../src/vector';
 import { PI, TAU, SPI, QPI } from '../src/constants';
 import {
   add,
@@ -89,11 +89,19 @@ describe('Functions tests', () => {
     ));
 
     expect(dot(m2, v1)).toEqual(vec3(6, -2, -7));
+    expect(dot(v1, m2)).toEqual(vec3(-3, -8, -1));
     expect(() => dot(m3, v1)).toThrow();
     expect(dot(m4, v1)).toEqual(vec3(6, -2, 0));
     expect(dot(m2, v2)).toEqual(vec3(-15, -7, 17.5));
     expect(() => dot(m3, v2)).toThrow();
     expect(dot(m4, v2)).toEqual(vec3(-15, -7, 0));
+
+    // convert vector to homogeneous coordinates if lower dim than matrix
+    expect(dot(m2, vec2(2, -2))).toEqual(vec2(6, -2));
+    expect(dot(vec2(2, -2), m2)).toEqual(vec2(-3, -8));
+
+    // product of identity matrix and vector
+    expect(dot(Matrix.identity(4), vec2(2, -2))).toEqual(vec2(2, -2));
   });
 
   it('Can do use convenience functions for matrix determinant and inverse', () => {
