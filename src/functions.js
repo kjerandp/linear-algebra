@@ -32,6 +32,11 @@ export function scale(v, f) {
   return v.clone().scale(f);
 }
 
+export function length(v) {
+  return v.length;
+}
+
+
 export function dot(a, b) {
   return a.dot(b);
 }
