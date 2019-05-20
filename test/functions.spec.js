@@ -43,11 +43,16 @@ describe('Functions tests', () => {
     const v1 = vec3(2, -2, 1);
     const v2 = vec3(-3.5, 1.5, -3);
 
+    // dot product of two vectors
     expect(dot(v1, v2)).toEqual(-13);
+
+    // dot product of matrix vector and vector matrix
     expect(dot(m1, v1)).toEqual(vec3(3, -4, 1.5));
     expect(dot(v1, m1)).toEqual(vec3(2, -4, 3.5));
     expect(dot(m1, v2)).toEqual(vec3(-6.5, 3, -4.5));
     expect(dot(v2, m1)).toEqual(vec3(-3.5, 3, -8));
+
+    // dot product of two matrices
     expect(dot(m1, m2)).toEqual(mat3(
       -2,   -1,   1,
       4,    8,    4,
@@ -96,21 +101,12 @@ describe('Functions tests', () => {
     expect(() => dot(m3, v2)).toThrow();
     expect(dot(m4, v2)).toEqual(vec3(-15, -7, 0));
 
-    // convert vector to homogeneous coordinates if lower dim than matrix
+    // convert vector to homogeneous coordinates if vector are of a lower dim than matrix
     expect(dot(m2, vec2(2, -2))).toEqual(vec2(6, -2));
     expect(dot(vec2(2, -2), m2)).toEqual(vec2(-3, -8));
 
     // product of identity matrix and vector
     expect(dot(Matrix.identity(4), vec2(2, -2))).toEqual(vec2(2, -2));
-  });
-
-  it('Can do use convenience functions for matrix determinant and inverse', () => {
-    const m = mat4(1, 2, 3, -4, -5, -6, 7, 8, 9, 10, 11, 12, -13, 14, 15, 16);
-    expect(m.det()).toBe(25344);
-    expect(det(m)).toBe(m.det());
-    const im = m.invert();
-    expect(im).toBe(m);
-    expect(inv(m)).not.toBe(m);
   });
 
   it('Can use operator functions for vector arithmetics', () => {
@@ -134,10 +130,20 @@ describe('Functions tests', () => {
 
     expect(triple(i, j, k)).toBe(1);
     expect(triple(k, i, j)).toBe(k.dot(i.cross(j)));
+
     const v = vec3(7, 0, 0);
     expect(norm(v)).toEqual(i);
     expect(norm(v).length).toBe(1);
     expect(v.length).toBe(7);
+  });
+
+  it('Can use operator functions for matrix arithmetic', () => {
+    const m = mat4(1, 2, 3, -4, -5, -6, 7, 8, 9, 10, 11, 12, -13, 14, 15, 16);
+    expect(m.det()).toBe(25344);
+    expect(det(m)).toBe(m.det());
+    const im = m.invert();
+    expect(im).toBe(m);
+    expect(inv(m)).not.toBe(m);
   });
 
   it('Can mix vectors, matrices and values', () => {

@@ -179,7 +179,7 @@ class Matrix {
     return d;
   }
 
-  antiDiagonal(j = this.cols) {
+  digonalReverse(j = this.cols) {
     return this.diagonal(j, true);
   }
 

@@ -9,7 +9,7 @@ import Matrix, {
   row4,
 } from '../src/matrix';
 import { product } from '../src/functions';
-// import timer from './timer';
+// import { timer } from './timer';
 
 
 describe('Matrix class tests', () => {
@@ -227,14 +227,14 @@ describe('Matrix class tests', () => {
 
     let det = 0;
     m.columns.each((j) => {
-      det += product(m.diagonal(j)) - product(m.antiDiagonal(j, true));
+      det += product(m.diagonal(j)) - product(m.digonalReverse(j));
     });
     expect(det).toEqual(m.det());
 
     const m2 = mat3(-2, 2, 3, -1, 1, 3, 2, 0, -1);
     det = 0;
     m2.columns.each((j) => {
-      det += product(m2.diagonal(j)) - product(m2.antiDiagonal(j));
+      det += product(m2.diagonal(j)) - product(m2.digonalReverse(j));
     });
     expect(det).toEqual(m2.det());
   });
