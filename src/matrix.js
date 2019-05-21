@@ -221,21 +221,22 @@ class Matrix {
     return this;
   }
 
-  add(m) {
-    if (this.rows !== m.rows || this.cols !== m.cols)
-      throw Error('Incompatible matrices!');
-
-    this.assign((v, i, j) => v + m._values[i - 1][j - 1]);
-
+  add(...args) {
+    args.forEach((m) => {
+      if (this.rows !== m.rows || this.cols !== m.cols)
+        throw Error('Matrices must be of same size!');
+      this.assign((v, i, j) => v + m._values[i - 1][j - 1]);
+    });
     return this;
   }
 
-  sub(m) {
-    if (this.rows !== m.rows || this.cols !== m.cols)
-      throw Error('Incompatible matrices!');
+  sub(...args) {
+    args.forEach((m) => {
+      if (this.rows !== m.rows || this.cols !== m.cols)
+        throw Error('Matrices must be of same size!');
 
-    this.assign((v, i, j) => v - m._values[i - 1][j - 1]);
-
+      this.assign((v, i, j) => v - m._values[i - 1][j - 1]);
+    });
     return this;
   }
 
@@ -268,11 +269,13 @@ class Matrix {
     return new Matrix(v);
   }
 
-  apply(m) {
-    if (m instanceof Matrix) {
-      const v = dotArrays(this.value, m.value);
-      this.fill(v);
-    }
+  apply(...args) {
+    args.forEach((m) => {
+      if (m instanceof Matrix) {
+        const v = dotArrays(this.value, m.value);
+        this.fill(v);
+      }
+    });
     return this;
   }
 
@@ -280,6 +283,11 @@ class Matrix {
     if (Number.isFinite(factor)) {
       this.assign(v => v * factor);
     }
+    return this;
+  }
+
+  negate() {
+    this.assign(v => -v);
     return this;
   }
 

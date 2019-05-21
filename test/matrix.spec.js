@@ -109,7 +109,7 @@ describe('Matrix class tests', () => {
 
     expect(r.transpose()).toEqual(c);
 
-    expect(() => mat2(1, 2, 3, 4).add(col2(1))).toThrow('Incompatible matrices!');
+    expect(() => mat2(1, 2, 3, 4).add(col2(1))).toThrow('Matrices must be of same size!');
   });
 
   it('Can find matrix determinant', () => {

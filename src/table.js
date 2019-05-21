@@ -1,6 +1,6 @@
 import { clampValue } from './internal';
 
-class Table extends Array {
+class Table {
   constructor(arg0, arg1) {
     let columns = null, values = [];
     if (arg0 !== undefined && arg0.length) {
@@ -16,7 +16,7 @@ class Table extends Array {
 
     if (columns < 1) throw Error('Invalid arguments!');
 
-    super(values.length);
+    this._values = [];
     this._columns = columns;
     this._set(values);
   }
@@ -38,11 +38,11 @@ class Table extends Array {
       values = [arg];
     }
 
-    if (this.length > values.length) {
-      this.splice(values.length);
+    if (this._values.length > values.length) {
+      this._values.splice(values.length);
     }
     for (let i = 0; i < values.length; i++)
-      this[i] = values[i];
+      this._values[i] = values[i];
   }
 
   index(c = 0, r = 0) {
@@ -60,24 +60,24 @@ class Table extends Array {
     return [c, r];
   }
 
-  get(c = 0, r = 0) {
-    return this[this.index(c, r)];
+  getCellValue(c = 0, r = 0) {
+    return this._values[this.index(c, r)];
   }
 
-  set(...args) {
+  setCellValue(...args) {
     const [c, r, v] = args;
     if (c.length) {
       this._set(args);
     } else {
-      this[this.index(c, r)] = v;
+      this._values[this.index(c, r)] = v;
     }
     return this;
   }
 
   assign(func) {
-    for (let n = 0; n < this.length; n++) {
+    for (let n = 0; n < this._values.length; n++) {
       const [c, r] = this.position(n);
-      this[n] = func(this[n], c, r, n);
+      this._values[n] = func(this._values[n], c, r, n);
     }
     return this;
   }
@@ -94,9 +94,12 @@ class Table extends Array {
 
   add(...others) {
     others.forEach((other) => {
+      if (other.value) {
+        other = other.value;
+      }
       if (other.length) {
         for (let i = 0; i < other.length; i++) {
-          this[i] += other[i];
+          this._values[i] += other[i];
         }
       }
     });
@@ -104,7 +107,7 @@ class Table extends Array {
   }
 
   get value() {
-    return Array.from(this);
+    return this._values;
   }
 
   set value(arg) {
@@ -112,10 +115,10 @@ class Table extends Array {
   }
 
   get valueColumnMajor() {
-    const arr = new Array(this.length);
-    for (let n = 0; n < this.length; n++) {
+    const arr = new Array(this._values.length);
+    for (let n = 0; n < this._values.length; n++) {
       const [c, r] = this.position(n);
-      arr[this.rows * c + r] = this[n];
+      arr[this.rows * c + r] = this._values[n];
     }
     return arr;
   }
@@ -124,12 +127,21 @@ class Table extends Array {
     return this._columns;
   }
 
+  set cols(n) {
+    this._columns = n;
+    return this;
+  }
+
   get rows() {
-    return Math.ceil(this.length / this.cols);
+    return Math.ceil(this._values.length / this.cols);
+  }
+
+  get entries() {
+    return this._values.length;
   }
 
   toFloat32() {
-    const f32arr = new Float32Array(this);
+    const f32arr = new Float32Array(this._values);
     if (!f32arr.length || Number.isNaN(f32arr[0]))
       throw Error('Only supported for numeric values');
     return f32arr;

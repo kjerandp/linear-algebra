@@ -81,16 +81,20 @@ class Vector {
   }
 
   // mutable addition (adds to and return self)
-  add(val) {
-    const vc = Vector.argsToComponents(val);
-    this.assign((v, i) => v + (vc[i] === undefined ? 0 : vc[i]));
+  add(...args) {
+    args.forEach((val) => {
+      const vc = Vector.argsToComponents(val);
+      this.assign((v, i) => v + (vc[i] === undefined ? 0 : vc[i]));
+    });
     return this;
   }
 
   // mutable subtraction (subtract and returns self)
-  sub(val) {
-    const vc = Vector.argsToComponents(val);
-    this.assign((v, i) => v - (vc[i] === undefined ? 0 : vc[i]));
+  sub(...args) {
+    args.forEach((val) => {
+      const vc = Vector.argsToComponents(val);
+      this.assign((v, i) => v - (vc[i] === undefined ? 0 : vc[i]));
+    });
     return this;
   }
 
@@ -160,6 +164,11 @@ class Vector {
 
   clamp(min = 0, max = 1) {
     this.assign(v => clampValue(v, min, max));
+    return this;
+  }
+
+  negate() {
+    this.assign(v => -v);
     return this;
   }
 
