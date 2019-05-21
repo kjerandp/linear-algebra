@@ -1,6 +1,7 @@
 {
   "extends": "airbnb",
   "rules": {
+    "no-bitwise": "off",
     "no-continue": "off",
     "one-var": "off",
     "curly": "off",

@@ -2,7 +2,7 @@ import expect from 'expect';
 import Vector, { vec2, vec3, vec4 } from '../src/vector';
 
 describe('Vector class tests', () => {
-  it('Can create convert arguments to component array', () => {
+  it('Can convert arguments to component array', () => {
     expect(Vector.argsToComponents([1, 2, 3])).toEqual([1, 2, 3]);
     expect(Vector.argsToComponents([1, [2, 3]])).toEqual([1, 2, 3]);
     expect(Vector.argsToComponents([1, vec2(2, 3)])).toEqual([1, 2, 3]);

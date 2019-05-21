@@ -268,6 +268,14 @@ class Matrix {
     return new Matrix(v);
   }
 
+  apply(m) {
+    if (m instanceof Matrix) {
+      const v = dotArrays(this.value, m.value);
+      this.fill(v);
+    }
+    return this;
+  }
+
   scale(factor) {
     if (Number.isFinite(factor)) {
       this.assign(v => v * factor);
