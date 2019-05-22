@@ -8,7 +8,7 @@ const accessors = ({
   w: 3, a: 3, l: 3, v: 3,
 });
 
-class Vector {
+export class Vector {
   constructor(...args) {
     if (args.length === 0)
       throw Error('No arguments provided!');
@@ -275,8 +275,6 @@ Object.keys(accessors).forEach((a) => {
     },
   });
 });
-
-export default Vector;
 
 export const vec2 = (...args) => new Vector(2).fill(Vector.argsToComponents(args));
 export const vec3 = (...args) => new Vector(3).fill(Vector.argsToComponents(args));

@@ -1,5 +1,5 @@
-import Matrix from './matrix';
-import Vector from './vector';
+import { Matrix } from './matrix';
+import { Vector } from './vector';
 
 export function standardizeArgument(arg, matrixForm = false) {
   let res = [];

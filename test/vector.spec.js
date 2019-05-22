@@ -1,5 +1,5 @@
 import expect from 'expect';
-import Vector, { vec2, vec3, vec4 } from '../src/vector';
+import { Vector, vec2, vec3, vec4 } from '../src/vector';
 
 describe('Vector class tests', () => {
   it('Can convert arguments to component array', () => {

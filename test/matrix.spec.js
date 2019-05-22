@@ -1,5 +1,6 @@
 import expect from 'expect';
-import Matrix, {
+import {
+  Matrix,
   mat2,
   mat3,
   mat4,

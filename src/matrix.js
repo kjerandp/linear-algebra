@@ -1,4 +1,4 @@
-import Vector from './vector';
+import { Vector } from './vector';
 import { clampValue, dotArrays } from './common';
 import {
   determinant2d,
@@ -98,7 +98,7 @@ function _findInverse(arr) {
   return result;
 }
 
-class Matrix {
+export class Matrix {
   constructor(rows, cols) {
     if (Array.isArray(rows) && Array.isArray(rows[0]) && !cols) {
       this._values = rows;
@@ -438,8 +438,6 @@ for (let i = 1; i <= 4; i++) {
     });
   }
 }
-
-export default Matrix;
 
 export const mat2 = (...values) => new Matrix(2, 2).fill(...values);
 export const mat3 = (...values) => new Matrix(3, 3).fill(...values);
