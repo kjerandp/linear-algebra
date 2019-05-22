@@ -112,6 +112,14 @@ export default class Array2d extends Array {
     return this;
   }
 
+  copyFrom(arg) {
+    const values = argumentsToList(arg);
+    for (let i = 0; i < values.length && i < this.length; i++) {
+      this[i] = values[i];
+    }
+    return this;
+  }
+
   forEach(func, inRowMajor = true) {
     if (inRowMajor) {
       for (let n = 0; n < this.length; n++) {

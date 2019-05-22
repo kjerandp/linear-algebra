@@ -1,5 +1,7 @@
 /* eslint-disable object-property-newline */
-import { clampValue, dotArrays } from './common';
+import Array2d from './array-2d';
+import { argumentsToList } from './utils';
+import { dotArrays } from './common';
 
 const accessors = ({
   x: 0, r: 0, i: 0, s: 0,
@@ -23,18 +25,13 @@ export class Vector {
     if (args.length === 1 && Number.isFinite(args[0])) {
       [dim] = args;
     } else {
-      values = Vector.argsToComponents(args);
+      values = argumentsToList(args);
       dim = values.length;
     }
 
     if (dim < 2 || dim > 4) throw Error('Invalid arguments!');
 
-    this._values = new Array(dim);
-    if (values) {
-      this.fill(values);
-    } else {
-      this._values.fill(0);
-    }
+    this._values = new Array2d(values, dim, 1);
   }
 
   // Helper function to convert input arguments to a single
@@ -83,8 +80,8 @@ export class Vector {
   // mutable addition (adds to and return self)
   add(...args) {
     args.forEach((val) => {
-      const vc = Vector.argsToComponents(val);
-      this.assign((v, i) => v + (vc[i] === undefined ? 0 : vc[i]));
+      const vc = argumentsToList(val);
+      this._values.assign((v, i) => v + (vc[i] === undefined ? 0 : vc[i]));
     });
     return this;
   }
@@ -92,8 +89,8 @@ export class Vector {
   // mutable subtraction (subtract and returns self)
   sub(...args) {
     args.forEach((val) => {
-      const vc = Vector.argsToComponents(val);
-      this.assign((v, i) => v - (vc[i] === undefined ? 0 : vc[i]));
+      const vc = argumentsToList(val);
+      this._values.assign((v, i) => v - (vc[i] === undefined ? 0 : vc[i]));
     });
     return this;
   }
@@ -105,10 +102,10 @@ export class Vector {
       [val] = val;
     }
     if (Number.isFinite(val)) {
-      this.assign(v => v * val);
+      this._values.scale(val);
     } else if (Array.isArray(val) || val instanceof Vector) {
-      const vc = Vector.argsToComponents(val);
-      this.assign((v, i) => v * (vc[i] === undefined ? 0 : vc[i]));
+      const vc = argumentsToList(val);
+      this._values.assign((v, i) => v * (vc[i] === undefined ? 0 : vc[i]));
     }
     return this;
   }
@@ -117,7 +114,7 @@ export class Vector {
   dot(arg) {
     if (!(arg instanceof Vector)) {
       const mat = arg.value || arg;
-      const vec = [...this.value];
+      const vec = this.value;
       if (this.dim < 4 && vec.length < mat.length) {
         // convert to homogeneous coordinates  (ex. vec3 * mat4)
         for (let i = vec.length; i < mat.length; i++) {
@@ -129,7 +126,7 @@ export class Vector {
       return this.clone().fill(res[0]);
     }
     const v = arg;
-    const vc = Vector.argsToComponents(v);
+    const vc = argumentsToList(v);
     return this.value.reduce((sum, c, i) => sum + c * vc[i], 0);
   }
 
@@ -138,7 +135,7 @@ export class Vector {
   // In the 2d case, it will return a scalar (i.e. the area/determinant)
   cross(v) {
     const a = this.value;
-    const b = Vector.argsToComponents(v);
+    const b = argumentsToList(v);
 
     if (this.dim === 2) {
       return (a[0] * b[1]) - (a[1] * b[0]);
@@ -163,18 +160,18 @@ export class Vector {
   }
 
   clamp(min = 0, max = 1) {
-    this.assign(v => clampValue(v, min, max));
+    this._values.clamp(min, max);
     return this;
   }
 
   negate() {
-    this.assign(v => -v);
+    this._values.negate();
     return this;
   }
 
   normalize() {
     const l = this.length;
-    this.assign(v => v / l);
+    this._values.assign(v => v / l);
     return this;
   }
 
@@ -194,7 +191,7 @@ export class Vector {
   swap(args) {
     if (args.length > 0 && args.length <= this.dim) {
       const swizzled = this.swizzle(args);
-      this.assign((v, i) => (swizzled[i] === undefined ? v : swizzled[i]));
+      this._values.assign((v, i) => (swizzled[i] === undefined ? v : swizzled[i]));
     }
     return this;
   }
@@ -215,7 +212,7 @@ export class Vector {
       [values] = values;
     }
 
-    this.assign((v, i) => {
+    this._values.assign((v, i) => {
       if (i < values.length) {
         return values[i];
       } else if (values.length === 1) {
@@ -233,32 +230,23 @@ export class Vector {
     return this;
   }
 
-  assign(assignFunc) {
-    for (let i = 0; i < this.dim; i++) {
-      this._values[i] = assignFunc(this._values[i], i);
-    }
-    return this;
-  }
-
   get length() {
-    const squared = this.value.reduce((acc, c) => acc + c ** 2, 0);
+    const squared = this._values.reduce((acc, c) => acc + c ** 2, 0);
     return Math.sqrt(squared);
   }
 
   get dim() {
-    return this._values.length;
+    return this._values.cols;
   }
 
   set dim(v) {
-    if (v >= 2 && v <= 4 && v !== this._values.length) {
-      const old = this._values;
-      this._values = new Array(v).fill(0);
-      this.fill(old);
+    if (v >= 2 && v <= 4 && v !== this._values.cols) {
+      this._values.columns(v).init(1, 0, true);
     }
   }
 
   get value() {
-    return this._values;
+    return this._values.toArray();
   }
 }
 

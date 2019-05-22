@@ -22,9 +22,9 @@ export function standardizeArgument(arg, matrixForm = false) {
 }
 
 export function argumentsToList(arg, values = []) {
-  // if (arg._values) {
-  //   arg = arg._values;
-  // }
+  if (arg._values) {
+    arg = arg._values;
+  }
   if (Array.isArray(arg)) {
     arg.forEach(v => argumentsToList(v, values));
   } else {
