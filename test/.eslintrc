@@ -4,6 +4,8 @@
   },
   "rules": {
     "no-unused-expressions": 0,
-    "padded-blocks": 0
+    "padded-blocks": 0,
+    "indent": 0,
+    "no-multi-spaces": 0
   }
 }

@@ -87,7 +87,7 @@ export default class Array2d extends Array {
 
   init(rows, value = undefined, preserve = false) {
     if (this._c === 0) {
-      throw Error('Columns not set!');
+      this._c = this.length;
     }
     const l = rows * this._c;
     if (this.length > l) {
@@ -112,10 +112,20 @@ export default class Array2d extends Array {
     return this;
   }
 
-  forEach(func) {
-    for (let n = 0; n < this.length; n++) {
-      const [c, r] = this.position(n);
-      func(this[n], n, c, r);
+  forEach(func, inRowMajor = true) {
+    if (inRowMajor) {
+      for (let n = 0; n < this.length; n++) {
+        const [c, r] = this.position(n);
+        func(this[n], n, c, r);
+      }
+    } else {
+      const { rows, cols } = this;
+      let n = 0;
+      for (let c = 0; c < cols; c++) {
+        for (let r = 0; r < rows; r++) {
+          func(this[r * cols + c], n++, c, r);
+        }
+      }
     }
     return this;
   }
@@ -170,8 +180,8 @@ export default class Array2d extends Array {
   }
 
   transpose() {
-    if (this._c === 0) throw Error('Columns not set!');
-    return Array2d.from(this.columnMajor, this.rows);
+    if (this._c === 0) this._c = this.length;
+    return new Array2d(this.toArray(1, false), this.rows);
   }
 
   copy(col = 0, row = 0, cols = 0, rows = 0) {
@@ -231,7 +241,41 @@ export default class Array2d extends Array {
   }
 
   dotProduct(other) {
+    if (!(other instanceof Array2d)) {
+      if (!Array.isArray(other))
+        throw Error('Argument is not an Array type!');
+      other = new Array2d(other);
+    }
 
+    if (this.cols !== other.rows)
+      throw Error('The number of columns of the left hand must be the same as the number of rows of the right hand!');
+
+    const { rows } = this;
+    const { cols } = other;
+
+    const op = this.typeInterface;
+
+    const calc = (c, r) => {
+      let sum = op.zero();
+      for (let n = 0; n < this.cols; n++) {
+        sum = op.add(sum, op.multiply(this.getValueAt(n, r), other.getValueAt(c, n)));
+      }
+      return sum;
+    };
+
+    const len = rows * cols;
+    if (len === 1) {
+      return calc(0, 0);
+    }
+
+    const res = new Array2d(len, cols, rows, op);
+
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        res.setValueAt(c, r, calc(c, r));
+      }
+    }
+    return res;
   }
 
   sumOf(...values) {
@@ -257,17 +301,17 @@ export default class Array2d extends Array {
     return p;
   }
 
-  toArray(dim = 1, rowMajor = true) {
+  toArray(dim = 1, inRowMajor = true) {
     const { rows, cols } = this;
-    const i = rowMajor ? rows : cols;
-    const j = rowMajor ? cols : rows;
+    const i = inRowMajor ? rows : cols;
+    const j = inRowMajor ? cols : rows;
     const arr = new Array(dim === 2 ? i : i * j);
     for (let ii = 0; ii < i; ii++) {
       if (dim === 2) {
         arr[ii] = new Array(j);
       }
       for (let jj = 0; jj < j; jj++) {
-        const v = this.getValueAt(rowMajor ? jj : ii, rowMajor ? ii : jj);
+        const v = this.getValueAt(inRowMajor ? jj : ii, inRowMajor ? ii : jj);
         if (dim === 2) {
           arr[ii][jj] = v;
         } else {
@@ -283,7 +327,7 @@ export default class Array2d extends Array {
   }
 
   get cols() {
-    if (this._c === 0) return [1, this.length];
+    if (this._c === 0) return this.length;
     return this._c;
   }
 
@@ -308,6 +352,10 @@ export default class Array2d extends Array {
 
   get typeInterface() {
     return this._op || numberTypeInterface;
+  }
+
+  set typeInterface(op) {
+    this._op = op;
   }
 
   get rowMajor() {
