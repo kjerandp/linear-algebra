@@ -159,6 +159,16 @@ export function tran(m) {
   throw Error('Only defined for matrices!');
 }
 
+export const rad = d => d * DEG2RAD;
+
+export const deg = r => r * RAD2DEG;
+
+export function nrad(r) {
+  const v = r % TAU;
+  return (v < 0 ? v + TAU : v);
+}
+
+// remove
 export function sum(arr) {
   let s = null;
   for (let i = 0; i < arr.length; i++) {
@@ -184,13 +194,3 @@ export function product(arr) {
   }
   return p;
 }
-
-export const rad = d => d * DEG2RAD;
-
-export const deg = r => r * RAD2DEG;
-
-export function nrad(r) {
-  const v = r % TAU;
-  return (v < 0 ? v + TAU : v);
-}
-

@@ -31,4 +31,21 @@ describe('Array2d class', () => {
     expect(c.cols).toBe(4);
     expect(c.rows).toBe(2);
   });
+
+  it('Should be able to do arithmetic operations', () => {
+    const c = new Array2d([
+      [1, 2, 3, 4],
+      [5, 6, 7, 8],
+    ]);
+
+    expect(c.productOf(1, 2, 3)).toBe(6);
+    expect(c.productOf(1, 2, 3, 4, 5, 6, 7, 8)).toBe(40320);
+    expect(c.productOf()).toBe(40320);
+
+    expect(c.sumOf(1, 2, 3)).toBe(6);
+    expect(c.sumOf(1, 2, 3, 4, 5, 6, 7, 8)).toBe(36);
+    expect(c.sumOf()).toBe(36);
+
+    expect(c.clone().negate().toArray(2)).toEqual([[-1, -2, -3, -4], [-5, -6, -7, -8]]);
+  });
 });

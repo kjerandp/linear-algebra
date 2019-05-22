@@ -1,6 +1,7 @@
 import { argumentsToList } from './utils';
 import { EPSILON } from './constants';
 
+
 const numberTypeInterface = {
   default: () => 0,
   zero: () => 0,
@@ -43,6 +44,8 @@ export default class Array2d extends Array {
     if (rows > 0 && this._c > 0) {
       this.init(rows, this._op.default(), true);
     }
+
+    this.rowMajor = this.rowMajor.bind(this);
   }
 
   static from(iterable, cols = 0) {
@@ -65,7 +68,7 @@ export default class Array2d extends Array {
   }
 
   index(c = 0, r = 0) {
-    if (this._c === 0 && r === 0) return c;
+    // if (this._c === 0 && r === 0) return c;
     if (r >= this.rows || c >= this.cols) return undefined;
     return r * this._c + c;
   }
@@ -81,7 +84,7 @@ export default class Array2d extends Array {
   }
 
   clone() {
-    return new Array2d([...this], this.cols, 0, this._op);
+    return new Array2d([...this], this._c, 0, this._op);
   }
 
   init(rows, value = undefined, preserve = false) {
@@ -221,25 +224,49 @@ export default class Array2d extends Array {
     return this;
   }
 
-  sum() {
+  dotProduct(other) {
+
+  }
+
+  sumOf(...values) {
+    values = values.length === 0 ? this : values;
     const op = this.typeInterface;
     let s = op.zero();
-    for (let i = 0; i < this.length; i++) {
-      if (!op.isDefined(this[i])) return undefined;
-      s = op.add(s, this[i]);
+    for (let i = 0; i < values.length; i++) {
+      if (!op.isDefined(values[i])) return undefined;
+      s = op.add(s, values[i]);
     }
     return s;
   }
 
-  product() {
+  productOf(...values) {
+    values = values.length === 0 ? this : values;
     const op = this.typeInterface;
     let p = op.unitValue();
-    for (let i = 0; i < this.length; i++) {
-      if (!op.isDefined(this[i])) return undefined;
-      if (op.isZero(this[i])) return op.zero(); // early termination
-      p = op.multiply(p, this[i]);
+    for (let i = 0; i < values.length; i++) {
+      if (!op.isDefined(values[i])) return undefined;
+      if (op.isZero(values[i])) return op.zero(); // early termination
+      p = op.multiply(p, values[i]);
     }
     return p;
+  }
+
+  toArray(dim = 1, rowMajor = true) {
+    if (dim === 2) {
+      const { rows, cols } = this;
+      const i = rowMajor ? rows : cols;
+      const j = rowMajor ? cols : rows;
+      const arr = new Array(i);
+      for (let ii = 0; ii < i; ii++) {
+        arr[ii] = new Array(j);
+        for (let jj = 0; jj < j; jj++) {
+          arr[ii][jj] = this.getValueAt(rowMajor ? jj : ii, rowMajor ? ii : jj);
+        }
+      }
+      return arr;
+    }
+    return null;
+    // return Array.from(rowMajor ? this.rowMajor : this.columnMajor);
   }
 
   get isSquare() {
@@ -247,6 +274,7 @@ export default class Array2d extends Array {
   }
 
   get cols() {
+    if (this._c === 0) return [1, this.length];
     return this._c;
   }
 
@@ -265,12 +293,26 @@ export default class Array2d extends Array {
     return n;
   }
 
+  get size() {
+    return [this.rows, this.cols];
+  }
+
   get typeInterface() {
     return this._op || numberTypeInterface;
   }
 
   get rowMajor() {
-    return this.values();
+    const _t = this;
+    const { rows, cols } = _t;
+    return {
+      * [Symbol.iterator]() {
+        for (let r = 0; r < rows; r++) {
+          for (let c = 0; c < cols; c++) {
+            yield _t.getValueAt(c, r);
+          }
+        }
+      },
+    };
   }
 
   get columnMajor() {
