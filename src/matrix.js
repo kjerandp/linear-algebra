@@ -1,5 +1,5 @@
 import Vector from './vector';
-import { clampValue, dotArrays } from './internal';
+import { clampValue, dotArrays } from './common';
 import {
   determinant2d,
   determinant3d,

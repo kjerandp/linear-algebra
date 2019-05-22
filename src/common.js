@@ -1,21 +1,3 @@
-export function clampValue(v, min = 0, max = 1) {
-  return Math.min(max, Math.max(min, v));
-}
-
-export function mixValue(a, b, t) {
-  const m = clampValue(t);
-  return a * (1 - m) + b * m;
-}
-
-export function stepValue(edge, x) {
-  return x >= edge ? 1 : 0;
-}
-
-export function smoothstepValue(edge0, edge1, x) {
-  const t = clampValue((x - edge0) / (edge1 - edge0));
-  return t * t * (3.0 - 2.0 * t);
-}
-
 export function dotArrays(a1, a2) {
   if (a1[0].length !== a2.length)
     throw Error(
@@ -43,3 +25,20 @@ export function dotArrays(a1, a2) {
   return v;
 }
 
+export function clampValue(v, min = 0, max = 1) {
+  return Math.min(max, Math.max(min, v));
+}
+
+export function mixValue(a, b, t) {
+  const m = clampValue(t);
+  return a * (1 - m) + b * m;
+}
+
+export function stepValue(edge, x) {
+  return x >= edge ? 1 : 0;
+}
+
+export function smoothstepValue(edge0, edge1, x) {
+  const t = clampValue((x - edge0) / (edge1 - edge0));
+  return t * t * (3.0 - 2.0 * t);
+}

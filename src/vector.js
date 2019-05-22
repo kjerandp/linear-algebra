@@ -1,5 +1,5 @@
 /* eslint-disable object-property-newline */
-import { clampValue, dotArrays } from './internal';
+import { clampValue, dotArrays } from './common';
 
 const accessors = ({
   x: 0, r: 0, i: 0, s: 0,

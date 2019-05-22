@@ -16,12 +16,15 @@ import Matrix, {
   row4,
 } from './matrix';
 
+import Array2d from './array-2d';
+
 import * as functions from './functions';
 import * as constants from './constants';
 
 export default {
   Vector,
   Matrix,
+  Array2d,
   vec2,
   vec3,
   vec4,

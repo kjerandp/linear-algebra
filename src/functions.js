@@ -5,7 +5,7 @@ import {
   clampValue,
   stepValue,
   smoothstepValue,
-} from './internal';
+} from './common';
 import { standardizeArgument } from './utils';
 import {
   DEG2RAD,
