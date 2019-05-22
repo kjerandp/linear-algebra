@@ -46,6 +46,18 @@ describe('Array2d class', () => {
     expect(c.sumOf(1, 2, 3, 4, 5, 6, 7, 8)).toBe(36);
     expect(c.sumOf()).toBe(36);
 
-    expect(c.clone().negate().toArray(2)).toEqual([[-1, -2, -3, -4], [-5, -6, -7, -8]]);
+    c.clone().negate().forEach(v => expect(v).toBeLessThan(0));
+  });
+
+  it('Should be able to convert to plain js 1D and 2D arrays', () => {
+    const c = new Array2d([
+      [1, 2, 3, 4],
+      [5, 6, 7, 8],
+    ]);
+    expect(c.toArray(2)).toEqual([[1, 2, 3, 4], [5, 6, 7, 8]]);
+    expect(c.toArray(1)).toEqual([1, 2, 3, 4, 5, 6, 7, 8]);
+
+    expect(c.toArray(1, false)).toEqual([1, 5, 2, 6, 3, 7, 4, 8]);
+    expect(c.toArray(2, false)).toEqual([[1, 5], [2, 6], [3, 7], [4, 8]]);
   });
 });

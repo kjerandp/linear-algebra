@@ -44,8 +44,6 @@ export default class Array2d extends Array {
     if (rows > 0 && this._c > 0) {
       this.init(rows, this._op.default(), true);
     }
-
-    this.rowMajor = this.rowMajor.bind(this);
   }
 
   static from(iterable, cols = 0) {
@@ -110,6 +108,14 @@ export default class Array2d extends Array {
     for (let n = 0; n < this.length; n++) {
       const [c, r] = this.position(n);
       this[n] = func(this[n], c, r, n);
+    }
+    return this;
+  }
+
+  forEach(func) {
+    for (let n = 0; n < this.length; n++) {
+      const [c, r] = this.position(n);
+      func(this[n], n, c, r);
     }
     return this;
   }
@@ -252,21 +258,24 @@ export default class Array2d extends Array {
   }
 
   toArray(dim = 1, rowMajor = true) {
-    if (dim === 2) {
-      const { rows, cols } = this;
-      const i = rowMajor ? rows : cols;
-      const j = rowMajor ? cols : rows;
-      const arr = new Array(i);
-      for (let ii = 0; ii < i; ii++) {
+    const { rows, cols } = this;
+    const i = rowMajor ? rows : cols;
+    const j = rowMajor ? cols : rows;
+    const arr = new Array(dim === 2 ? i : i * j);
+    for (let ii = 0; ii < i; ii++) {
+      if (dim === 2) {
         arr[ii] = new Array(j);
-        for (let jj = 0; jj < j; jj++) {
-          arr[ii][jj] = this.getValueAt(rowMajor ? jj : ii, rowMajor ? ii : jj);
+      }
+      for (let jj = 0; jj < j; jj++) {
+        const v = this.getValueAt(rowMajor ? jj : ii, rowMajor ? ii : jj);
+        if (dim === 2) {
+          arr[ii][jj] = v;
+        } else {
+          arr[ii * j + jj] = v;
         }
       }
-      return arr;
     }
-    return null;
-    // return Array.from(rowMajor ? this.rowMajor : this.columnMajor);
+    return arr;
   }
 
   get isSquare() {
