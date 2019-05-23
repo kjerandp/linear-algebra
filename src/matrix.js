@@ -7,6 +7,7 @@ import {
   determinant4d,
 } from './optimalisations/matrix';
 
+// TODO
 const _fillIdentity = (size) => {
   const values = new Array(size);
   for (let r = 0, c = 0; r < size; r++, c++) {
@@ -16,8 +17,9 @@ const _fillIdentity = (size) => {
   return values;
 };
 
+// TODO
 function _calcDeterminant(m) {
-  if (!m.isSquare()) {
+  if (!m.isSquare) {
     throw new TypeError('Matrix must be a square!');
   }
   if (m.rows === 1) return m[0];
@@ -38,6 +40,7 @@ function _calcDeterminant(m) {
   return d;
 }
 
+// TODO
 function _findInverse(arr) {
   const dim = arr.length;
   const result = _fillIdentity(dim);
@@ -115,14 +118,22 @@ export class Matrix {
     return new Matrix(_fillIdentity(size));
   }
 
+  // TODO
   static fromVector(vect) {
-    const values = vect.value.map(v => [v]);
-    return new Matrix(values);
+    return new Matrix(vect._values.clone().transpose());
   }
 
   clone() {
-    const m = new Matrix(this._values, this.cols);
-    return m;
+    return new Matrix(this._values, this.cols);
+  }
+
+  copyFrom(...values) {
+    if (values.length === 1 && Number.isFinite(values[0])) {
+      this._values.assign(() => values[0]);
+    } else {
+      this._values.copyFrom(values);
+    }
+    return this;
   }
 
   set(i, j, v) {
@@ -174,15 +185,7 @@ export class Matrix {
     return this;
   }
 
-  copyFrom(...values) {
-    if (values.length === 1 && Number.isFinite(values[0])) {
-      this._values.assign(() => values[0]);
-    } else {
-      this._values.copyFrom(values);
-    }
-    return this;
-  }
-
+  // TODO
   toColumns() {
     const cols = new Array(this.cols);
 
@@ -284,8 +287,9 @@ export class Matrix {
     return this;
   }
 
+  // TODO
   det() {
-    if (!this.isSquare()) throw Error('Matrix must be square!');
+    if (!this.isSquare) throw Error('Matrix must be square!');
 
     if (this.rows === 1) {
       return this._values[0];
@@ -301,7 +305,7 @@ export class Matrix {
 
   invert() {
     let inverse;
-    if (!this.isSquare()) {
+    if (!this.isSquare) {
       inverse = null;
     // } else if (this.rows === 2 && this._optimise) {
     //   inverse = inverse2d(this.value);
@@ -321,16 +325,17 @@ export class Matrix {
     return this;
   }
 
-  isSquare() {
-    return this.rows === this.cols;
-  }
-
+  // TODO
   toVectors() {
     return this.toColumns().map(v => new Vector(v));
   }
 
   toArray(dim = 2, inRowMajor = true) {
     return this._values.toArray(dim, inRowMajor);
+  }
+
+  get isSquare() {
+    return this._values.isSquare;
   }
 
   get rows() {
@@ -349,6 +354,7 @@ export class Matrix {
     return [this.rows, this.cols];
   }
 
+  // TODO
   get columns() {
     return {
       each: (cb) => {

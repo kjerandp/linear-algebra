@@ -116,6 +116,8 @@ describe('Matrix class tests', () => {
   it('Can find matrix determinant', () => {
     expect(() => col4().det()).toThrow('Matrix must be square!');
     expect(mat3(-2, 2, 3, -1, 1, 3, 2, 0, -1).det()).toBe(6);
+    expect(Matrix.identity(10).det()).toBe(1);
+    expect(Matrix.identity(9).det()).toBe(1);
   });
 
   it('Can invert matrices', () => {
