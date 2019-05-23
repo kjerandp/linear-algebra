@@ -6,13 +6,31 @@ import {
   stepValue,
   smoothstepValue,
 } from './common';
-import { standardizeArgument } from './utils';
 import {
   DEG2RAD,
   RAD2DEG,
   TAU,
 } from './constants';
 
+function standardizeArgument(arg, matrixForm = false) {
+  let res = [];
+
+  if (Number.isFinite(arg)) {
+    res.push(matrixForm ? [arg] : arg);
+  } else if (arg instanceof Vector) {
+    res = matrixForm ? arg.value.map(v => [v]) : arg.value;
+  } else if (arg instanceof Matrix) {
+    res = matrixForm ? arg.value : arg.flatten();
+  } else if (Array.isArray(arg) && Number.isFinite(arg[0])) {
+    res = matrixForm ? arg.map(v => [v]) : arg;
+  } else if (Array.isArray(arg) && Array.isArray(arg[0])) {
+    res = matrixForm ? arg : arg.reduce((arr, el) => [...arr, ...el], []);
+  } else {
+    res = arg;
+  }
+
+  return res;
+}
 
 export function add(a, b) {
   if (a.constructor !== b.constructor)
@@ -79,7 +97,7 @@ export function mix(a, b, t) {
     if (Array.isArray(a)) {
       return mixed;
     }
-    return a.clone().fill(mixed);
+    return a.clone().copyFrom(mixed);
   }
   return mixValue(a, b, t);
 }
@@ -92,7 +110,7 @@ export function clamp(val, min = 0, max = 1) {
   const clamped = arr.map(v => clampValue(v, min, max));
   if (Array.isArray(val)) return clamped;
 
-  return val.clone().fill(clamped);
+  return val.clone().copyFrom(clamped);
 }
 
 export function step(edge, x) {
@@ -111,7 +129,7 @@ export function step(edge, x) {
     if (Array.isArray(edge)) {
       return stepped;
     }
-    return edge.clone().fill(stepped);
+    return edge.clone().copyFrom(stepped);
   }
   return stepValue(edge, x);
 }
@@ -133,7 +151,7 @@ export function smoothstep(edge0, edge1, x) {
     if (Array.isArray(edge0)) {
       return stepped;
     }
-    return edge0.clone().fill(stepped);
+    return edge0.clone().copyFrom(stepped);
   }
   return smoothstepValue(edge0, edge1, x);
 }

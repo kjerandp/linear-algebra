@@ -1,33 +1,6 @@
 import Array2d from './array-2d';
 
 export function dotArrays(a1, a2) {
-  if (a1[0].length !== a2.length)
-    throw Error(
-      'The number of columns of the left matrix must be the same as the number of rows of the right matrix!',
-    );
-
-  const rows = a1.length;
-  const cols = a2[0].length;
-
-  const v = new Array(rows);
-  for (let r = 0; r < rows; r++) {
-    v[r] = new Array(cols).fill(0);
-  }
-
-  for (let r = 0; r < rows; r++) {
-    for (let c = 0; c < cols; c++) {
-      let sum = 0;
-      for (let n = 0; n < a1[0].length; n++) {
-        sum += a1[r][n] * a2[n][c];
-      }
-      v[r][c] = sum;
-    }
-  }
-
-  return v;
-}
-
-export function dotArrays2(a1, a2) {
   if (!(a1 instanceof Array2d)) {
     if (!Array.isArray(a1))
       throw Error('Argument 1 is not an Array type!');

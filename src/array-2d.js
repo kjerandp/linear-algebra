@@ -3,7 +3,9 @@ import { argumentsToList } from './utils';
 export default class Array2d extends Array {
   constructor(values, columns = 0, rows, initValue) {
     if (values && values.length) {
-      if (!columns && values.length > 0 && values[0].length) {
+      if (values instanceof Array2d) {
+        columns = columns || values.cols;
+      } else if (!columns && values.length > 0 && values[0].length) {
         columns = values[0].length;
       }
       values = argumentsToList(values);
@@ -162,7 +164,10 @@ export default class Array2d extends Array {
 
   transpose() {
     if (this._c === 0) this._c = this.length;
-    return new Array2d(this.toArray(1, false), this.rows);
+    const tc = this.rows;
+    const transposed = this.toArray(1, false);
+    this._c = tc;
+    return this.copyFrom(transposed);
   }
 
   copy(col = 0, row = 0, cols = 0, rows = 0) {

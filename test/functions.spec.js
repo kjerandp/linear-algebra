@@ -114,11 +114,11 @@ describe('Functions tests', () => {
     const j = vec3(0, 1, 0);
     const k = vec3(0, 0, 1);
 
-    expect(add(i, j).value).toEqual([1, 1, 0]);
-    expect(sub(i, j).value).toEqual([1, -1, 0]);
+    expect(add(i, j).toArray()).toEqual([1, 1, 0]);
+    expect(sub(i, j).toArray()).toEqual([1, -1, 0]);
 
-    expect(scale(i, 2).value).toEqual([2, 0, 0]);
-    expect(scale(i, j).value).toEqual([0, 0, 0]);
+    expect(scale(i, 2).toArray()).toEqual([2, 0, 0]);
+    expect(scale(i, j).toArray()).toEqual([0, 0, 0]);
 
     expect(i.cross(j)).toEqual(k);
     expect(k.cross(i)).toEqual(j);

@@ -125,4 +125,20 @@ describe('Array2d class', () => {
     expect(c.toArray(1, false)).toEqual([1, 5, 2, 6, 3, 7, 4, 8]);
     expect(c.toArray(2, false)).toEqual([[1, 5], [2, 6], [3, 7], [4, 8]]);
   });
+
+  it('Should be able to return a copy of a subset of the array', () => {
+    const m = new Array2d([
+      1, 2, 3,
+      4, 5, 6,
+      7, 8, 9,
+    ], 3);
+
+    expect(m.rows).toBe(3);
+    expect(m.cols).toBe(3);
+    expect(m.isSquare).toBeTruthy();
+
+    expect(m.copy(0, 0)).toEqual(m);
+    expect(m.copy(2, 1, 2, 2).toArray()).toEqual([2, 3, 5, 6]);
+
+  });
 });

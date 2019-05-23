@@ -22,8 +22,8 @@ describe('Matrix class tests', () => {
       [0, 0, 0, 1],
     ];
 
-    expect(Matrix.identity().value).toEqual(identity);
-    expect(new Matrix().value).toEqual([
+    expect(Matrix.identity().toArray()).toEqual(identity);
+    expect(new Matrix().toArray()).toEqual([
       [0, 0, 0, 0],
       [0, 0, 0, 0],
       [0, 0, 0, 0],
@@ -41,7 +41,7 @@ describe('Matrix class tests', () => {
     expect(new Matrix(4, 1)).toEqual(col4());
 
     const m = mat2(1, 2, 3, 4);
-    expect(m.value).toEqual([
+    expect(m.toArray()).toEqual([
       [1, 2],
       [3, 4],
     ]);
@@ -80,35 +80,35 @@ describe('Matrix class tests', () => {
   });
 
   it('Can do basic matrix arithmetics', () => {
-    expect(mat2(1, 2, 3, 4).add(mat2(1)).value).toEqual([
+    expect(mat2(1, 2, 3, 4).add(mat2(1, 1)).toArray()).toEqual([
       [2, 3],
       [4, 5],
     ]);
 
-    expect(mat2(1, 2, 3, 4).sub(mat2(1)).value).toEqual([
+    expect(mat2(1, 2, 3, 4).sub(mat2(1, 1)).toArray()).toEqual([
       [0, 1],
       [2, 3],
     ]);
 
-    expect(mat2(1, 2, 3, 4).scale(3).value).toEqual([
+    expect(mat2(1, 2, 3, 4).scale(3).toArray()).toEqual([
       [3, 6],
       [9, 12],
     ]);
 
-    expect(mat2(1, 2, 3, 4).scale(0.5).value).toEqual([
+    expect(mat2(1, 2, 3, 4).scale(0.5).toArray()).toEqual([
       [0.5, 1],
       [1.5, 2],
     ]);
 
     const c = col4(1, 2, 3, 4).add(col4(1));
-    expect(c.value).toEqual([[2], [3], [4], [5]]);
+    expect(c.toArray()).toEqual([[2], [3], [4], [5]]);
     expect(c.size).toEqual([4, 1]);
 
     const r = row4(1, 2, 3, 4).add(row4(1));
-    expect(r.value).toEqual([[2, 3, 4, 5]]);
+    expect(r.toArray()).toEqual([[2, 3, 4, 5]]);
     expect(r.size).toEqual([1, 4]);
 
-    expect(r.transpose()).toEqual(c);
+    expect(r.transpose().toArray()).toEqual(c.toArray());
 
     expect(() => mat2(1, 2, 3, 4).add(col2(1))).toThrow('Matrices must be of same size!');
   });
@@ -122,11 +122,11 @@ describe('Matrix class tests', () => {
     expect(() => col4().invert()).toThrow('Matrix cannot be inverted!');
     expect(mat3(-2, 2, 3, -1, 1, 3, 2, 0, -1).invert()).toBeInstanceOf(Matrix);
 
-    let actual = mat2(4, 7, 2, 6).invert().flatten();
+    let actual = mat2(4, 7, 2, 6).invert().toArray(1);
     let expected = [0.6, -0.7, -0.2, 0.4];
     actual.every((a, i) => expect(a).toBeCloseTo(expected[i], 5));
 
-    actual = mat2(3, 3.5, 3.2, 3.6).invert().flatten();
+    actual = mat2(3, 3.5, 3.2, 3.6).invert().toArray(1);
     expected = [-9, 8.75, 8, -7.5];
     actual.every((a, i) => expect(a).toBeCloseTo(expected[i], 5));
   });
@@ -250,7 +250,7 @@ describe('Matrix class tests', () => {
     expect(m.submatrix(1, 2, 2, 2)).toEqual(mat2(2, 3, 5, 6));
     expect(m.submatrix(2, 1, 2, 2)).toEqual(mat2(4, 5, 7, 8));
 
-    expect(m.remove(1, 2)).toEqual(mat2(4, 6, 7, 9));
-    expect(m.remove(3, 2)).toEqual(mat2(1, 3, 4, 6));
+    expect(m.clone().remove(1, 2)).toEqual(mat2(4, 6, 7, 9));
+    expect(m.clone().remove(3, 2)).toEqual(mat2(1, 3, 4, 6));
   });
 });

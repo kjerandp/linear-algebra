@@ -1,7 +1,7 @@
 /* eslint-disable object-property-newline */
 import Array2d from './array-2d';
 import { argumentsToList } from './utils';
-import { dotArrays2, clampValue } from './common';
+import { dotArrays, clampValue } from './common';
 
 
 const accessors = ({
@@ -76,11 +76,6 @@ export class Vector {
     return this;
   }
 
-  // depricated
-  fill(...values) {
-    return this.copyFrom(...values);
-  }
-
   // get component by index
   get(idx) {
     return this._values.getValueAt(idx);
@@ -152,16 +147,14 @@ export class Vector {
 
   dot(arg) {
     if (!(arg instanceof Vector)) {
-      const mat = arg.value || arg;
-      const vec = this._values;
-      if (this.dim < 4 && vec.length < mat.length) {
+      const mat = arg._values || new Array2d(arg);
+      let vec = this._values;
+      if (this.dim < 4 && vec.cols < mat.rows) {
         // convert to homogeneous coordinates  (ex. vec3 * mat4)
-        for (let i = vec.length; i < mat.length; i++) {
-          const v = i === mat.length - 1 ? 1 : 0;
-          vec.push(v);
-        }
+        vec = this._values.clone().columns(mat.rows);
+        vec[mat.rows - 1] = 1;
       }
-      const res = dotArrays2(this._values, mat);
+      const res = dotArrays(vec, mat);
       return this.clone().copyFrom(res);
     }
     const v = arg;
@@ -185,6 +178,15 @@ export class Vector {
     return new Vector(res);
   }
 
+  dimensions(v) {
+    this.dim = v;
+    return this;
+  }
+
+  toArray() {
+    return this._values.toArray();
+  }
+
   get dim() {
     return this._values.cols;
   }
@@ -201,7 +203,7 @@ export class Vector {
   }
 
   get value() {
-    return Array.from(this._values);
+    return this._values;
   }
 }
 

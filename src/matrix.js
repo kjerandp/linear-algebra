@@ -1,3 +1,4 @@
+import Array2d from './array-2d';
 import { Vector } from './vector';
 import { clampValue, dotArrays } from './common';
 import {
@@ -19,15 +20,15 @@ function _calcDeterminant(m) {
   if (!m.isSquare()) {
     throw new TypeError('Matrix must be a square!');
   }
-  if (m.rows === 1) return m._values[0][0];
+  if (m.rows === 1) return m[0];
 
   let d = 0;
 
   for (let c = 0; c < m.cols; c++) {
-    const v = m._values[0][c];
+    const v = m[c];
     if (v === 0) continue;
-    const sm = m.remove(1, c + 1);
-    let cofactor = _calcDeterminant(sm);
+    m.remove(c + 1, 1);
+    let cofactor = _calcDeterminant(m);
 
     if (c % 2 === 1) {
       cofactor = -cofactor;
@@ -99,18 +100,13 @@ function _findInverse(arr) {
 }
 
 export class Matrix {
-  constructor(rows, cols) {
-    if (Array.isArray(rows) && Array.isArray(rows[0]) && !cols) {
-      this._values = rows;
-    } else {
-      rows = rows || 4;
+  constructor(rows = 4, cols) {
+    if (rows > 0) {
       cols = cols || rows;
-
-      const v = new Array(rows);
-      for (let r = 0; r < rows; r++) {
-        v[r] = new Array(cols).fill(0);
-      }
-      this._values = v;
+      this._values = new Array2d(null, cols, rows, 0);
+    } else {
+      const values = rows;
+      this._values = new Array2d(values, cols);
     }
     this._optimise = true;
   }
@@ -125,44 +121,34 @@ export class Matrix {
   }
 
   clone() {
-    const m = new Matrix(this._values.map(r => [...r]));
+    const m = new Matrix(this._values, this.cols);
     return m;
   }
 
   set(i, j, v) {
     if (i > 0 && i <= this.rows && j > 0 && j <= this.cols && Number.isFinite(v)) {
-      this._values[i - 1][j - 1] = v;
+      this._values.setValueAt(j - 1, i - 1, v);
     }
     return this;
   }
 
   get(i, j) {
     if (i > 0 && i <= this.rows && j > 0 && j <= this.cols) {
-      return this._values[i - 1][j - 1];
+      return this._values.getValueAt(j - 1, i - 1);
     }
     throw Error('Out of range!');
   }
 
-  assign(assignFunc) {
-    let i = 0;
-    for (let r = 0; r < this.rows; r++) {
-      for (let c = 0; c < this.cols; c++) {
-        this._values[r][c] = assignFunc(this._values[r][c], r + 1, c + 1, i++);
-      }
-    }
-    return this;
-  }
-
   row(i) {
     if (i > 0 && i <= this.rows) {
-      return this._values[i - 1];
+      return this._values.getRow(i);
     }
     throw Error('Invalid arguments!');
   }
 
   col(j) {
     if (j > 0 && j <= this.cols) {
-      return this._values.map(r => r[j - 1]);
+      return this._values.getColumn(j);
     }
     throw Error('Invalid arguments!');
   }
@@ -174,7 +160,7 @@ export class Matrix {
     for (let r = 0; r < this.rows; r++) {
       const ri = r;
       const ci = (reverse ? c - r + this.cols : r + c) % this.cols;
-      d.push(this._values[ri][ci]);
+      d.push(this._values.getValueAt(ci, ri));
     }
     return d;
   }
@@ -184,19 +170,15 @@ export class Matrix {
   }
 
   clamp(min = 0, max = 1) {
-    this.assign(v => clampValue(v, min, max));
+    this._values.assign(v => clampValue(v, min, max));
     return this;
   }
 
-  fill(...values) {
-    if (values.length === 1 && Array.isArray(values[0])) {
-      [values] = values;
-    }
-
-    if (values.length === 1) {
-      this.assign(() => values[0]);
+  copyFrom(...values) {
+    if (values.length === 1 && Number.isFinite(values[0])) {
+      this._values.assign(() => values[0]);
     } else {
-      this.assign((v, i, j, n) => (n < values.length ? values[n] : 0));
+      this._values.copyFrom(values);
     }
     return this;
   }
@@ -216,8 +198,7 @@ export class Matrix {
   }
 
   transpose() {
-    this._values = this.toColumns();
-
+    this._values.transpose();
     return this;
   }
 
@@ -225,7 +206,7 @@ export class Matrix {
     args.forEach((m) => {
       if (this.rows !== m.rows || this.cols !== m.cols)
         throw Error('Matrices must be of same size!');
-      this.assign((v, i, j) => v + m._values[i - 1][j - 1]);
+      this._values.assign((v, i) => v + m._values[i]);
     });
     return this;
   }
@@ -234,36 +215,31 @@ export class Matrix {
     args.forEach((m) => {
       if (this.rows !== m.rows || this.cols !== m.cols)
         throw Error('Matrices must be of same size!');
-
-      this.assign((v, i, j) => v - m._values[i - 1][j - 1]);
+      this._values.assign((v, i) => v - m._values[i]);
     });
     return this;
   }
 
   dot(arg) {
-    let m2;
-
     const bIsVec = arg instanceof Vector;
 
-    const m1 = this.value;
+    const a = this._values;
+    let b = arg._values;
 
     if (bIsVec) {
-      m2 = arg.value.map(v => [v]);
-      if (arg.dim < 4 && m2.length < m1.length) {
-        // convert to homogeneous coordinates (ex. mat4 * vec3)
-        for (let i = m2.length; i < m1.length; i++) {
-          const v = i === m1.length - 1 ? 1 : 0;
-          m2.push([v]);
-        }
+      b = arg._values.clone();
+      b.transpose();
+      // make homogeneous
+      if (b.rows < this.cols) {
+        b.init(this.cols, 0, true);
+        b.setValueAt(0, this.cols - 1, 1);
       }
-    } else {
-      m2 = arg.value || arg;
     }
 
-    const v = dotArrays(m1, m2);
+    const v = dotArrays(a, b || arg);
 
     if (bIsVec) {
-      return new Vector(v.map(c => c[0])).dimensions(arg.dim);
+      return new Vector(v).dimensions(arg.dim);
     }
 
     return new Matrix(v);
@@ -273,7 +249,7 @@ export class Matrix {
     args.forEach((m) => {
       if (m instanceof Matrix) {
         const v = dotArrays(this.value, m.value);
-        this.fill(v);
+        this.copyFrom(v);
       }
     });
     return this;
@@ -281,66 +257,46 @@ export class Matrix {
 
   scale(factor) {
     if (Number.isFinite(factor)) {
-      this.assign(v => v * factor);
+      this._values.assign(v => v * factor);
     }
     return this;
   }
 
   negate() {
-    this.assign(v => -v);
+    this._values.assign(v => -v);
     return this;
   }
 
   submatrix(i = 1, j = 1, rows = 2, cols = 2) {
     if (rows < 1 || cols < 1) throw Error('Invalid arguments!');
 
-    const sub = new Array(rows);
-
-    for (let r = 0; r < rows; r++) {
-      sub[r] = new Array(cols);
-      for (let c = 0; c < cols; c++) {
-        sub[r][c] = this._values[i - 1 + r][j - 1 + c];
-      }
-    }
-    return new Matrix(sub);
+    const sub = this._values.copy(j, i, cols, rows);
+    return new Matrix(sub, sub.cols);
   }
 
   remove(i = 0, j = 0) {
-    if (!i && !j) return this.clone();
+    if (!i && !j) return this;
 
     if (i > this.rows || j > this.cols)
       throw Error('Invalid arguments!');
 
-    const sub = [];
-
-    for (let r = 0; r < this.rows; r++) {
-      if (r + 1 !== i) {
-        sub.push(j ?
-          this._values[r].filter((v, idx) => idx !== j - 1) :
-          this._values[r],
-        );
-      }
-    }
-
-    const m = new Matrix(sub);
-    return m;
+    this._values.remove(j, i);
+    return this;
   }
 
   det() {
     if (!this.isSquare()) throw Error('Matrix must be square!');
 
-    const v = this.value;
-
     if (this.rows === 1) {
-      return v[0][0];
+      return this._values[0];
     } else if (this.rows === 2 && this._optimise) {
-      return determinant2d(this.value);
+      return determinant2d(this.toArray());
     } else if (this.rows === 3 && this._optimise) {
-      return determinant3d(this.value);
+      return determinant3d(this.toArray());
     } else if (this.rows === 4 && this._optimise) {
-      return determinant4d(this.value);
+      return determinant4d(this.toArray());
     }
-    return _calcDeterminant(this);
+    return _calcDeterminant(this._values.clone());
   }
 
   invert() {
@@ -354,11 +310,11 @@ export class Matrix {
     // } else if (this.rows === 4 && this._optimise) {
     //   inverse = inverse4d(this.value);
     } else {
-      inverse = _findInverse(this._values.map(r => [...r]));
+      inverse = _findInverse(this.toArray());
     }
 
     if (inverse) {
-      this._values = inverse;
+      this._values.copyFrom(inverse);
     } else {
       throw Error('Matrix cannot be inverted!');
     }
@@ -369,28 +325,20 @@ export class Matrix {
     return this.rows === this.cols;
   }
 
-  flatten() {
-    const arr = new Array(this.rows * this.cols);
-
-    for (let r = 0; r < this.rows; r++) {
-      const ri = r * this.cols;
-      for (let c = 0; c < this.cols; c++) {
-        arr[ri + c] = this._values[r][c];
-      }
-    }
-    return arr;
-  }
-
   toVectors() {
     return this.toColumns().map(v => new Vector(v));
   }
 
+  toArray(dim = 2, inRowMajor = true) {
+    return this._values.toArray(dim, inRowMajor);
+  }
+
   get rows() {
-    return this._values.length;
+    return this._values.rows;
   }
 
   get cols() {
-    return this._values[0].length;
+    return this._values.cols;
   }
 
   get value() {
@@ -399,19 +347,6 @@ export class Matrix {
 
   get size() {
     return [this.rows, this.cols];
-  }
-
-  get ascii() {
-    if (!this.value || this.value.length === 0) return '<empty>';
-    const str = this.value.reduce(
-      (s, v) => `${s + v.join('\t')}\n`,
-      '',
-    );
-    return str;
-  }
-
-  get html() {
-    return `<pre><code>${this.ascii}</code></pre>`;
   }
 
   get columns() {
@@ -439,15 +374,15 @@ for (let i = 1; i <= 4; i++) {
   }
 }
 
-export const mat2 = (...values) => new Matrix(2, 2).fill(...values);
-export const mat3 = (...values) => new Matrix(3, 3).fill(...values);
-export const mat4 = (...values) => new Matrix(4, 4).fill(...values);
+export const mat2 = (...values) => new Matrix(2, 2).copyFrom(...values);
+export const mat3 = (...values) => new Matrix(3, 3).copyFrom(...values);
+export const mat4 = (...values) => new Matrix(4, 4).copyFrom(...values);
 
-export const col2 = (...values) => new Matrix(2, 1).fill(...values);
-export const col3 = (...values) => new Matrix(3, 1).fill(...values);
-export const col4 = (...values) => new Matrix(4, 1).fill(...values);
+export const col2 = (...values) => new Matrix(2, 1).copyFrom(...values);
+export const col3 = (...values) => new Matrix(3, 1).copyFrom(...values);
+export const col4 = (...values) => new Matrix(4, 1).copyFrom(...values);
 
-export const row2 = (...values) => new Matrix(1, 2).fill(...values);
-export const row3 = (...values) => new Matrix(1, 3).fill(...values);
-export const row4 = (...values) => new Matrix(1, 4).fill(...values);
+export const row2 = (...values) => new Matrix(1, 2).copyFrom(...values);
+export const row3 = (...values) => new Matrix(1, 3).copyFrom(...values);
+export const row4 = (...values) => new Matrix(1, 4).copyFrom(...values);
 

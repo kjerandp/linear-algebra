@@ -9,11 +9,11 @@ describe('Vector class tests', () => {
 
     let v = new Vector(4);
     expect(v.dim).toEqual(4);
-    expect(v.value).toEqual([0, 0, 0, 0]);
+    expect(v.toArray()).toEqual([0, 0, 0, 0]);
 
     v = new Vector([1, 2, 3]);
     expect(v.dim).toEqual(3);
-    expect(v.value).toEqual([1, 2, 3]);
+    expect(v.toArray()).toEqual([1, 2, 3]);
     expect(v.get(0)).toBe(1);
     expect(v.get(1)).toBe(2);
     expect(v.get(2)).toBe(3);
@@ -21,54 +21,54 @@ describe('Vector class tests', () => {
     v = new Vector(1, 2, 3);
     v.dim = 4;
     expect(v.dim).toBe(4);
-    expect(v.value).toEqual([1, 2, 3, 0]);
+    expect(v.toArray()).toEqual([1, 2, 3, 0]);
 
-    v = new Vector(4).fill([1, 2, 3, 4]);
-    expect(v.value).toEqual([1, 2, 3, 4]);
+    v = new Vector(4).copyFrom([1, 2, 3, 4]);
+    expect(v.toArray()).toEqual([1, 2, 3, 4]);
 
-    v = new Vector(3).fill(1, 2, 3, 4);
-    expect(v.value).toEqual([1, 2, 3]);
+    v = new Vector(3).copyFrom(1, 2, 3, 4);
+    expect(v.toArray()).toEqual([1, 2, 3]);
 
     const v2 = vec2(1, 2);
-    expect(v2.value).toEqual([1, 2]);
+    expect(v2.toArray()).toEqual([1, 2]);
     expect(v2.dim).toBe(2);
-    v = new Vector(2).fill(v2.swizzle('yx'));
-    expect(v.value).toEqual([2, 1]);
+    v = new Vector(2).copyFrom(v2.swizzle('yx'));
+    expect(v.toArray()).toEqual([2, 1]);
 
     v = new Vector(vec2(1, 2, 3));
     expect(v.dim).toEqual(2);
-    expect(v.value).toEqual([1, 2]);
+    expect(v.toArray()).toEqual([1, 2]);
 
     v = new Vector(1, [2, 3]);
     expect(v.dim).toBe(3);
-    expect(v.value).toEqual([1, 2, 3]);
+    expect(v.toArray()).toEqual([1, 2, 3]);
 
     v = vec2();
     expect(v.dim).toBe(2);
-    expect(v.value).toEqual([0, 0]);
+    expect(v.toArray()).toEqual([0, 0]);
 
     v = vec2(1);
-    expect(v.value).toEqual([1, 1]);
+    expect(v.toArray()).toEqual([1, 1]);
 
     v = vec2(1, 2);
-    expect(v.value).toEqual([1, 2]);
+    expect(v.toArray()).toEqual([1, 2]);
 
     v = vec3();
     expect(v.dim).toBe(3);
-    expect(v.value).toEqual([0, 0, 0]);
+    expect(v.toArray()).toEqual([0, 0, 0]);
 
     v = vec3(1);
-    expect(v.value).toEqual([1, 1, 1]);
+    expect(v.toArray()).toEqual([1, 1, 1]);
 
     v = vec3(1, 0);
-    expect(v.value).toEqual([1, 0, 0]);
+    expect(v.toArray()).toEqual([1, 0, 0]);
 
     v = vec3(1, 2);
-    expect(v.value).toEqual([1, 2, 0]);
+    expect(v.toArray()).toEqual([1, 2, 0]);
 
     v = vec4(1, 2, 3, 4);
     expect(v.dim).toBe(4);
-    expect(v.value).toEqual([1, 2, 3, 4]);
+    expect(v.toArray()).toEqual([1, 2, 3, 4]);
   });
 
   it('Can clone/copy vectors', () => {
@@ -76,39 +76,39 @@ describe('Vector class tests', () => {
 
     const clone = v.clone();
 
-    expect(clone.value).toEqual(v.value);
+    expect(clone.toArray()).toEqual(v.toArray());
     clone.y = -5;
     expect(clone).not.toEqual(v);
 
     expect(v.copy()).toEqual(v);
-    expect(v.copy('xxww').value).toEqual([1, 1, 4, 4]);
+    expect(v.copy('xxww').toArray()).toEqual([1, 1, 4, 4]);
   });
 
   it('Can get/set vector components using accessors', () => {
     const v = new Vector(4);
 
-    expect(v.value).toEqual([0, 0, 0, 0]);
+    expect(v.toArray()).toEqual([0, 0, 0, 0]);
 
     v.x = 1;
     v.y = 2;
     v.z = 3;
     v.w = 4;
 
-    expect(v.value).toEqual([1, 2, 3, 4]);
+    expect(v.toArray()).toEqual([1, 2, 3, 4]);
 
     v.r = 2;
     v.g = 3;
     v.b = 4;
     v.a = 5;
 
-    expect(v.value).toEqual([2, 3, 4, 5]);
+    expect(v.toArray()).toEqual([2, 3, 4, 5]);
 
     v.dim = 3;
 
-    expect(v.value).toEqual([2, 3, 4]);
+    expect(v.toArray()).toEqual([2, 3, 4]);
 
-    v.fill([1, 2, 3, 4]);
-    expect(v.value).toEqual([1, 2, 3]);
+    v.copyFrom([1, 2, 3, 4]);
+    expect(v.toArray()).toEqual([1, 2, 3]);
 
     const u = vec4(1, 2, 3, 4);
     expect(u.x).toBe(1);
@@ -133,7 +133,7 @@ describe('Vector class tests', () => {
   it('Can use swizzle to extract/change vector values', () => {
     const v = new Vector(2, 4, 6, 8);
 
-    expect(v.value).toEqual([2, 4, 6, 8]);
+    expect(v.toArray()).toEqual([2, 4, 6, 8]);
     expect(v.swizzle('xxxx')).toEqual([2, 2, 2, 2]);
     expect(v.swizzle('zwyx')).toEqual([6, 8, 4, 2]);
     expect(v.swizzle('abgrgba')).toEqual([8, 6, 4, 2, 4, 6, 8]);
@@ -141,7 +141,7 @@ describe('Vector class tests', () => {
     expect(v.swizzle('uv')).toEqual([6, 8]);
     expect(v.swizzle('ijkl')).toEqual([2, 4, 6, 8]);
     expect(() => v.swizzle('yzp')).toThrow('Invalid arguments!');
-    expect(vec4(1, 2, 3, 4).shift('wyzx').value).toEqual([4, 2, 3, 1]);
+    expect(vec4(1, 2, 3, 4).shift('wyzx').toArray()).toEqual([4, 2, 3, 1]);
   });
 
   it('Can calculate vector lengths', () => {
@@ -177,9 +177,9 @@ describe('Vector class tests', () => {
   });
 
   it('Can normalize vectors', () => {
-    expect(vec3(1, 0, 0).normalize().value).toEqual([1, 0, 0]);
+    expect(vec3(1, 0, 0).normalize().toArray()).toEqual([1, 0, 0]);
 
-    const actual = vec3(4, 2, 1).normalize().value;
+    const actual = vec3(4, 2, 1).normalize().toArray();
     const expected = [0.87287, 0.43644, 0.21822];
     actual.every((x, i) => expect(x).toBeCloseTo(expected[i], 5));
 
@@ -191,22 +191,22 @@ describe('Vector class tests', () => {
     expect(
       vec4(1, 2, 2).add(
         vec4(3, -4, 0, -1),
-      ).value).toEqual([4, -2, 2, -1]);
+      ).toArray()).toEqual([4, -2, 2, -1]);
 
     expect(
       vec2(1, 2, 2).add(
         vec4(3, -4, 0, -1),
-      ).value).toEqual([4, -2]);
+      ).toArray()).toEqual([4, -2]);
 
     expect(
       vec4(1, 2, 2).add(
         vec2(3, -4, 0, -1),
-      ).value).toEqual([4, -2, 2, 0]);
+      ).toArray()).toEqual([4, -2, 2, 0]);
 
     expect(
       vec4(1, 2, 2).sub(
         vec4(3, -4, 0, -1),
-      ).value).toEqual([-2, 6, 2, 1]);
+      ).toArray()).toEqual([-2, 6, 2, 1]);
 
     expect(
       vec4(1, 2, 2.3).sub(
@@ -215,12 +215,12 @@ describe('Vector class tests', () => {
 
     const v = vec4(1, 2, 3, 4);
     expect(v.scale()).toBe(v);
-    expect(v.scale(0.5).value).toEqual([0.5, 1, 1.5, 2]);
-    expect(vec4(1, 2, 2.3).scale(2).value).toEqual([2, 4, 4.6, 0]);
-    expect(vec4(1, 2, 3, 4).scale(vec4(2, 4, 0, 1)).value).toEqual([2, 8, 0, 4]);
-    expect(vec4(1, 2, 3, 4).scale(vec2(2, 4)).value).toEqual([2, 8, 0, 0]);
-    expect(vec4(1, 2, 3, 4).scale(vec2(2, 4), 2, 3).value).toEqual([2, 8, 6, 12]);
-    expect(vec4(1, 2, 3, 4).scale(2, 2, 1, 0).value).toEqual([2, 4, 3, 0]);
+    expect(v.scale(0.5).toArray()).toEqual([0.5, 1, 1.5, 2]);
+    expect(vec4(1, 2, 2.3).scale(2).toArray()).toEqual([2, 4, 4.6, 0]);
+    expect(vec4(1, 2, 3, 4).scale(vec4(2, 4, 0, 1)).toArray()).toEqual([2, 8, 0, 4]);
+    expect(vec4(1, 2, 3, 4).scale(vec2(2, 4)).toArray()).toEqual([2, 8, 0, 0]);
+    expect(vec4(1, 2, 3, 4).scale(vec2(2, 4), 2, 3).toArray()).toEqual([2, 8, 6, 12]);
+    expect(vec4(1, 2, 3, 4).scale(2, 2, 1, 0).toArray()).toEqual([2, 4, 3, 0]);
 
     expect(
       vec4(1, 2, 2).dot(
@@ -247,8 +247,8 @@ describe('Vector class tests', () => {
   });
 
   it('Can clamp vectors', () => {
-    expect(vec4(1, 2, 3, 4).clamp(1.7, 3).value).toEqual([1.7, 2, 3, 3]);
-    expect(vec3(1, 2, 3).clamp(1.7, 2.5).value).toEqual([1.7, 2, 2.5]);
-    expect(vec2(1, 2).clamp(1, 2).value).toEqual([1, 2]);
+    expect(vec4(1, 2, 3, 4).clamp(1.7, 3).toArray()).toEqual([1.7, 2, 3, 3]);
+    expect(vec3(1, 2, 3).clamp(1.7, 2.5).toArray()).toEqual([1.7, 2, 2.5]);
+    expect(vec2(1, 2).clamp(1, 2).toArray()).toEqual([1, 2]);
   });
 });
