@@ -1,29 +1,7 @@
 import { argumentsToList } from './utils';
-import { EPSILON } from './constants';
-
-
-const numberTypeInterface = {
-  default: () => 0,
-  zero: () => 0,
-  unitValue: () => 1,
-  add: (a, b) => a + b,
-  subtract: (a, b) => a - b,
-  multiply: (a, b) => a * b,
-  divide: (a, b) => a / b,
-  negate: v => -v,
-  isZero: v => Math.abs(v) < EPSILON,
-  isLessThan: (a, b) => a < b,
-  isDefined: v => v !== undefined && v !== null && Number.isFinite(v),
-};
-
-const clampFunc = (min, max, op = numberTypeInterface) => (v) => {
-  if (op.isLessThan(v, min)) return min;
-  if (op.isLessThan(max, v)) return max;
-  return v;
-};
 
 export default class Array2d extends Array {
-  constructor(values, columns = 0, rows, valueInterface) {
+  constructor(values, columns = 0, rows, initValue) {
     if (values && values.length) {
       if (!columns && values.length > 0 && values[0].length) {
         columns = values[0].length;
@@ -38,11 +16,10 @@ export default class Array2d extends Array {
       super();
     }
 
-    this._op = valueInterface || numberTypeInterface;
     this._c = columns; // if zero columns => treat as regular array
 
     if (rows > 0 && this._c > 0) {
-      this.init(rows, this._op.default(), true);
+      this.init(rows, initValue, true);
     }
   }
 
@@ -66,7 +43,6 @@ export default class Array2d extends Array {
   }
 
   index(c = 0, r = 0) {
-    // if (this._c === 0 && r === 0) return c;
     if (r >= this.rows || c >= this.cols) return undefined;
     return r * this._c + c;
   }
@@ -82,7 +58,7 @@ export default class Array2d extends Array {
   }
 
   clone() {
-    return new Array2d([...this], this._c, 0, this._op);
+    return new Array2d([...this], this._c);
   }
 
   init(rows, value = undefined, preserve = false) {
@@ -94,9 +70,6 @@ export default class Array2d extends Array {
       this.splice(l);
     }
 
-    if (value === undefined) {
-      value = this._op.default();
-    }
     for (let i = preserve ? this.length : 0; i < l; i++) {
       this[i] = value;
     }
@@ -230,85 +203,6 @@ export default class Array2d extends Array {
     return this;
   }
 
-  clamp(min = 0, max = 1) {
-    const f = clampFunc(min, max, this.typeInterface);
-    this.assign(v => f(v));
-    return this;
-  }
-
-  negate() {
-    const op = this.typeInterface;
-    this.assign(v => op.negate(v));
-    return this;
-  }
-
-  scale(factor) {
-    const op = this.typeInterface;
-    this.assign(v => (op.isDefined(v) ? op.multiply(v, factor) : v));
-    return this;
-  }
-
-  dotProduct(other) {
-    if (!(other instanceof Array2d)) {
-      if (!Array.isArray(other))
-        throw Error('Argument is not an Array type!');
-      other = new Array2d(other);
-    }
-
-    if (this.cols !== other.rows)
-      throw Error('The number of columns of the left hand must be the same as the number of rows of the right hand!');
-
-    const { rows } = this;
-    const { cols } = other;
-
-    const op = this.typeInterface;
-
-    const calc = (c, r) => {
-      let sum = op.zero();
-      for (let n = 0; n < this.cols; n++) {
-        sum = op.add(sum, op.multiply(this.getValueAt(n, r), other.getValueAt(c, n)));
-      }
-      return sum;
-    };
-
-    const len = rows * cols;
-    if (len === 1) {
-      return calc(0, 0);
-    }
-
-    const res = new Array2d(len, cols, rows, op);
-
-    for (let r = 0; r < rows; r++) {
-      for (let c = 0; c < cols; c++) {
-        res.setValueAt(c, r, calc(c, r));
-      }
-    }
-    return res;
-  }
-
-  sumOf(...values) {
-    values = values.length === 0 ? this : values;
-    const op = this.typeInterface;
-    let s = op.zero();
-    for (let i = 0; i < values.length; i++) {
-      if (!op.isDefined(values[i])) return undefined;
-      s = op.add(s, values[i]);
-    }
-    return s;
-  }
-
-  productOf(...values) {
-    values = values.length === 0 ? this : values;
-    const op = this.typeInterface;
-    let p = op.unitValue();
-    for (let i = 0; i < values.length; i++) {
-      if (!op.isDefined(values[i])) return undefined;
-      if (op.isZero(values[i])) return op.zero(); // early termination
-      p = op.multiply(p, values[i]);
-    }
-    return p;
-  }
-
   toArray(dim = 1, inRowMajor = true) {
     const { rows, cols } = this;
     const i = inRowMajor ? rows : cols;
@@ -356,14 +250,6 @@ export default class Array2d extends Array {
 
   get size() {
     return [this.rows, this.cols];
-  }
-
-  get typeInterface() {
-    return this._op || numberTypeInterface;
-  }
-
-  set typeInterface(op) {
-    this._op = op;
   }
 
   get rowMajor() {

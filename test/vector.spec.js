@@ -2,13 +2,6 @@ import expect from 'expect';
 import { Vector, vec2, vec3, vec4 } from '../src/vector';
 
 describe('Vector class tests', () => {
-  it('Can convert arguments to component array', () => {
-    expect(Vector.argsToComponents([1, 2, 3])).toEqual([1, 2, 3]);
-    expect(Vector.argsToComponents([1, [2, 3]])).toEqual([1, 2, 3]);
-    expect(Vector.argsToComponents([1, vec2(2, 3)])).toEqual([1, 2, 3]);
-    expect(Vector.argsToComponents(vec4(1, 2, 3, 4))).toEqual([1, 2, 3, 4]);
-  });
-
   it('Can create vectors using constructor and helper functions', () => {
     expect(() => new Vector()).toThrow();
     expect(() => new Vector(1)).toThrow();
@@ -36,7 +29,10 @@ describe('Vector class tests', () => {
     v = new Vector(3).fill(1, 2, 3, 4);
     expect(v.value).toEqual([1, 2, 3]);
 
-    v = new Vector(2).fill(vec2(1, 2).swizzle('yx'));
+    const v2 = vec2(1, 2);
+    expect(v2.value).toEqual([1, 2]);
+    expect(v2.dim).toBe(2);
+    v = new Vector(2).fill(v2.swizzle('yx'));
     expect(v.value).toEqual([2, 1]);
 
     v = new Vector(vec2(1, 2, 3));
@@ -80,7 +76,7 @@ describe('Vector class tests', () => {
 
     const clone = v.clone();
 
-    expect(clone).toEqual(v);
+    expect(clone.value).toEqual(v.value);
     clone.y = -5;
     expect(clone).not.toEqual(v);
 
@@ -145,7 +141,7 @@ describe('Vector class tests', () => {
     expect(v.swizzle('uv')).toEqual([6, 8]);
     expect(v.swizzle('ijkl')).toEqual([2, 4, 6, 8]);
     expect(() => v.swizzle('yzp')).toThrow('Invalid arguments!');
-    expect(vec4(1, 2, 3, 4).swap('wyzx').value).toEqual([4, 2, 3, 1]);
+    expect(vec4(1, 2, 3, 4).shift('wyzx').value).toEqual([4, 2, 3, 1]);
   });
 
   it('Can calculate vector lengths', () => {
