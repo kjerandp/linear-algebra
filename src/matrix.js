@@ -5,7 +5,7 @@ import {
   determinant3d,
   determinant4d,
 } from './optimalisations/matrix';
-import op from './value-operations';
+import op from './math';
 
 export class Matrix {
   constructor(rows = 4, cols) {
@@ -207,7 +207,7 @@ export class Matrix {
     if (!this.isSquare) {
       inverse = null;
     } else {
-      inverse = op.inverse(this.toArray());
+      inverse = op.inverse(this.value);
     }
 
     if (inverse) {

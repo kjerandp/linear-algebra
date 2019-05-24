@@ -1,7 +1,7 @@
 import { Vector } from './vector';
 import { Matrix } from './matrix';
 import Array2d from './array-2d';
-import op from './value-operations';
+import op from './math';
 
 import {
   DEG2RAD,

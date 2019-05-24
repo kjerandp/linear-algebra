@@ -199,7 +199,7 @@ describe('Functions tests', () => {
     expect(smoothstep(0.2, 0.6, 0.7)).toBe(1);
   });
 
-  it('Can covert between degrees and radians', () => {
+  it('Can convert between degrees and radians', () => {
     expect(deg(0)).toBe(0);
     expect(deg(PI)).toBe(180);
     expect(deg(-PI)).toBe(-180);

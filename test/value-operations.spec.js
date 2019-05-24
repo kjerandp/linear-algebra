@@ -1,5 +1,5 @@
 import expect from 'expect';
-import op from '../src/value-operations';
+import op from '../src/math';
 
 describe('Value operations', () => {
   it('Should be able to do basic arithmetic operations', () => {

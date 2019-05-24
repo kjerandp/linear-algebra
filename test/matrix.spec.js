@@ -11,7 +11,7 @@ import {
 } from '../src/matrix';
 import { vec3, vec4 } from '../src/vector';
 import { range } from '../src/utils';
-import op from '../src/value-operations';
+import op from '../src/math';
 // import { timer } from './timer';
 
 

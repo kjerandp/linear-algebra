@@ -18,8 +18,6 @@ export function step(edge, x, op) {
 }
 
 export function smoothstep(edge0, edge1, x, op) {
-  const two = op.add(op.identity(), op.identity());
-  const three = op.add(two, op.identity());
   // t * t * (3.0 - 2.0 * t)
   const t = clamp(
     op.divide(op.subtract(x, edge0), op.subtract(edge1, edge0)),
@@ -30,6 +28,6 @@ export function smoothstep(edge0, edge1, x, op) {
 
   return op.multiply(
     op.multiply(t, t),
-    op.subtract(three, op.multiply(two, t)),
+    op.subtract(op.identity(3), op.multiply(op.identity(2), t)),
   );
 }

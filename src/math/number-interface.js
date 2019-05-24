@@ -3,7 +3,7 @@ import { EPSILON } from '../constants';
 export default {
   default: () => 0,
   zero: () => 0,
-  identity: () => 1,
+  identity: (n = 1) => n,
   add: (a, b) => a + b,
   subtract: (a, b) => a - b,
   multiply: (a, b) => a * b,

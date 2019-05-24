@@ -1,7 +1,7 @@
 /* eslint-disable object-property-newline */
 import Array2d from './array-2d';
 import { argumentsToList } from './utils';
-import op from './value-operations';
+import op from './math';
 
 
 const accessors = ({
