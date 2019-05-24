@@ -1,6 +1,6 @@
 import { EPSILON } from './constants';
 
-export const numberTypeInterface = {
+const numberTypeInterface = {
   default: () => 0,
   zero: () => 0,
   unitValue: () => 1,
@@ -14,9 +14,30 @@ export const numberTypeInterface = {
   isDefined: v => v !== undefined && v !== null && Number.isFinite(v),
 };
 
-export default (op = numberTypeInterface) => ({
+function determinant(m, op) {
+  if (!m.isSquare) {
+    throw new TypeError('Matrix must be a square!');
+  }
+  if (m.rows === 1) return m[0];
+
+  let d = op.zero();
+
+  for (let c = 0; c < m.cols; c++) {
+    const v = m[c];
+    if (op.isZero(v)) continue;
+    let cofactor = determinant(m.clone().remove(c + 1, 1), op);
+
+    if (c % 2 === 1) {
+      cofactor = op.negate(cofactor);
+    }
+    d = op.add(d, op.multiply(v, cofactor));
+  }
+  return d;
+}
+
+export const factory = (op = numberTypeInterface) => ({
   ...op,
-  sum: (...values) => {
+  sum: (values = []) => {
     let s = op.zero();
     for (let i = 0; i < values.length; i++) {
       if (!op.isDefined(values[i])) return undefined;
@@ -24,7 +45,7 @@ export default (op = numberTypeInterface) => ({
     }
     return s;
   },
-  product: (...values) => {
+  product: (values = []) => {
     let p = op.unitValue();
     for (let i = 0; i < values.length; i++) {
       if (!op.isDefined(values[i])) return undefined;
@@ -38,15 +59,17 @@ export default (op = numberTypeInterface) => ({
     if (op.isLessThan(max, v)) return max;
     return v;
   },
-  negate: (...values) => {
+  negate: (values = []) => {
     for (let i = 0; i < values.length; i++) {
       values[i] = op.negate(values[i]);
     }
   },
-  scale: (factor, ...values) => {
+  scale: (factor, values = []) => {
     for (let i = 0; i < values.length; i++) {
       values[i] = op.multiply(values[i], factor);
     }
   },
+  determinant: m => determinant(m, op),
 });
 
+export default factory();

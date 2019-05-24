@@ -18,6 +18,7 @@ export default class Array2d extends Array {
       super();
     }
 
+    if (!Number.isFinite(columns)) throw Error('Columns not a number!');
     this._c = columns; // if zero columns => treat as regular array
 
     if (rows > 0 && this._c > 0) {

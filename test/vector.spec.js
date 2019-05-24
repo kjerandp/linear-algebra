@@ -76,7 +76,7 @@ describe('Vector class tests', () => {
 
     const clone = v.clone();
 
-    expect(clone.toArray()).toEqual(v.toArray());
+    expect(clone).toEqual(v);
     clone.y = -5;
     expect(clone).not.toEqual(v);
 

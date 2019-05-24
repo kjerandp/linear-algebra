@@ -6,6 +6,7 @@ import {
   determinant3d,
   determinant4d,
 } from './optimalisations/matrix';
+import op from './value-operations';
 
 // TODO
 const _fillIdentity = (size) => {
@@ -16,29 +17,6 @@ const _fillIdentity = (size) => {
   }
   return values;
 };
-
-// TODO
-function _calcDeterminant(m) {
-  if (!m.isSquare) {
-    throw new TypeError('Matrix must be a square!');
-  }
-  if (m.rows === 1) return m[0];
-
-  let d = 0;
-
-  for (let c = 0; c < m.cols; c++) {
-    const v = m[c];
-    if (v === 0) continue;
-    m.remove(c + 1, 1);
-    let cofactor = _calcDeterminant(m);
-
-    if (c % 2 === 1) {
-      cofactor = -cofactor;
-    }
-    d += v * cofactor;
-  }
-  return d;
-}
 
 // TODO
 function _findInverse(arr) {
@@ -118,9 +96,18 @@ export class Matrix {
     return new Matrix(_fillIdentity(size));
   }
 
-  // TODO
-  static fromVector(vect) {
-    return new Matrix(vect._values.clone().transpose());
+  static fromVectors(...vect) {
+    if (vect.length === 0) throw Error('Invalid arguments!');
+    const [first] = vect;
+    const l = (first instanceof Vector) && first.dim;
+
+    if (!l || vect.some(v => v.dim !== l)) {
+      throw Error('Vectors must be of the same dimension!');
+    }
+    const m = new Array2d(null, vect.length, l);
+    m.assign((foo, c, r) => vect[c].get(r));
+
+    return new Matrix(m);
   }
 
   clone() {
@@ -183,21 +170,6 @@ export class Matrix {
   clamp(min = 0, max = 1) {
     this._values.assign(v => clampValue(v, min, max));
     return this;
-  }
-
-  // TODO
-  toColumns() {
-    const cols = new Array(this.cols);
-
-    for (let r = 0; r < this.rows; r++) {
-      for (let c = 0; c < this.cols; c++) {
-        if (cols[c] === undefined) {
-          cols[c] = new Array(this.rows);
-        }
-        cols[c][r] = this._values[r][c];
-      }
-    }
-    return cols;
   }
 
   transpose() {
@@ -294,25 +266,19 @@ export class Matrix {
     if (this.rows === 1) {
       return this._values[0];
     } else if (this.rows === 2 && this._optimise) {
-      return determinant2d(this.toArray());
+      return determinant2d(this.toArray(2));
     } else if (this.rows === 3 && this._optimise) {
-      return determinant3d(this.toArray());
+      return determinant3d(this.toArray(2));
     } else if (this.rows === 4 && this._optimise) {
-      return determinant4d(this.toArray());
+      return determinant4d(this.toArray(2));
     }
-    return _calcDeterminant(this._values.clone());
+    return op.determinant(this._values);
   }
 
   invert() {
     let inverse;
     if (!this.isSquare) {
       inverse = null;
-    // } else if (this.rows === 2 && this._optimise) {
-    //   inverse = inverse2d(this.value);
-    // } else if (this.rows === 3 && this._optimise) {
-    //   inverse = inverse3d(this.value);
-    // } else if (this.rows === 4 && this._optimise) {
-    //   inverse = inverse4d(this.value);
     } else {
       inverse = _findInverse(this.toArray());
     }
@@ -323,11 +289,6 @@ export class Matrix {
       throw Error('Matrix cannot be inverted!');
     }
     return this;
-  }
-
-  // TODO
-  toVectors() {
-    return this.toColumns().map(v => new Vector(v));
   }
 
   toArray(dim = 2, inRowMajor = true) {
@@ -352,17 +313,6 @@ export class Matrix {
 
   get size() {
     return [this.rows, this.cols];
-  }
-
-  // TODO
-  get columns() {
-    return {
-      each: (cb) => {
-        for (let c = 0; c < this.cols; c++) {
-          cb(c + 1, this.cols);
-        }
-      },
-    };
   }
 }
 

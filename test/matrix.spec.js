@@ -9,7 +9,9 @@ import {
   row2,
   row4,
 } from '../src/matrix';
-import { product } from '../src/functions';
+import { vec3, vec4 } from '../src/vector';
+import { range } from '../src/utils';
+import op from '../src/value-operations';
 // import { timer } from './timer';
 
 
@@ -132,14 +134,17 @@ describe('Matrix class tests', () => {
     expected = [-9, 8.75, 8, -7.5];
     actual.every((a, i) => expect(a).toBeCloseTo(expected[i], 5));
   });
+
   /*
   it('Can optimise matrix determinant calculations', () => {
-    const runs = 5000;
+    const runs = 500;
     let timeA = 0;
     let timeB = 0;
     for (let i = 0; i < runs; i++) {
-      const m1 = mat3().assign(() => Math.random());
+      const m1 = mat3();
+      m1._values.assign(() => Math.random());
       const m2 = m1.clone();
+      expect(m1.toArray()).toEqual(m2.toArray());
       m2._optimise = false;
       const a = timer(() => m1.det());
       const b = timer(() => m2.det());
@@ -152,7 +157,8 @@ describe('Matrix class tests', () => {
     timeA = 0;
     timeB = 0;
     for (let i = 0; i < runs; i++) {
-      const m1 = mat4().assign(() => Math.random());
+      const m1 = mat4();
+      m1._values.assign(() => Math.random());
       const m2 = m1.clone();
       m2._optimise = false;
       const a = timer(() => m1.det());
@@ -229,15 +235,15 @@ describe('Matrix class tests', () => {
     expect(() => m.diagonal(0)).toThrow();
 
     let det = 0;
-    m.columns.each((j) => {
-      det += product(m.diagonal(j)) - product(m.digonalReverse(j));
+    range(m.cols, 1).forEach((j) => {
+      det += op.product(m.diagonal(j)) - op.product(m.digonalReverse(j));
     });
     expect(det).toEqual(m.det());
 
     const m2 = mat3(-2, 2, 3, -1, 1, 3, 2, 0, -1);
     det = 0;
-    m2.columns.each((j) => {
-      det += product(m2.diagonal(j)) - product(m2.digonalReverse(j));
+    range(m2.cols, 1).forEach((j) => {
+      det += op.product(m2.diagonal(j)) - op.product(m2.digonalReverse(j));
     });
     expect(det).toEqual(m2.det());
   });
@@ -254,5 +260,21 @@ describe('Matrix class tests', () => {
 
     expect(m.clone().remove(1, 2)).toEqual(mat2(4, 6, 7, 9));
     expect(m.clone().remove(3, 2)).toEqual(mat2(1, 3, 4, 6));
+  });
+
+  it('Should be possible to create matrix from one or more vectors', () => {
+    const m1 = Matrix.fromVectors(vec3(1));
+
+    expect(m1).toBeInstanceOf(Matrix);
+    expect(m1.size).toEqual([3, 1]);
+    expect(m1.toArray()).toEqual([[1], [1], [1]]);
+
+    const m2 = Matrix.fromVectors(vec3(1, 0, 0), vec3(0, 1, 0), vec3(0, 0, 1));
+    expect(m2).toBeInstanceOf(Matrix);
+    expect(m2.size).toEqual([3, 3]);
+    expect(m2.toArray()).toEqual(Matrix.identity(3).toArray());
+
+    expect(() => Matrix.fromVectors(vec4(1, 0, 0), vec3(0, 1, 0), vec3(0, 0, 1))).toThrowError();
+    expect(() => Matrix.fromVectors([1, 2, 3, 4])).toThrowError();
   });
 });

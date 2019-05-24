@@ -1,5 +1,7 @@
 import { Vector } from './vector';
 import { Matrix } from './matrix';
+import Array2d from './array-2d';
+
 import {
   mixValue,
   clampValue,
@@ -12,19 +14,17 @@ import {
   TAU,
 } from './constants';
 
-function standardizeArgument(arg, matrixForm = false) {
+function standardizeArgument(arg) {
   let res = [];
 
   if (Number.isFinite(arg)) {
-    res.push(matrixForm ? [arg] : arg);
-  } else if (arg instanceof Vector) {
-    res = matrixForm ? arg.value.map(v => [v]) : arg.value;
-  } else if (arg instanceof Matrix) {
-    res = matrixForm ? arg.value : arg.flatten();
+    res.push(arg);
+  } else if (arg.value && arg.value instanceof Array2d) {
+    res = arg.value;
   } else if (Array.isArray(arg) && Number.isFinite(arg[0])) {
-    res = matrixForm ? arg.map(v => [v]) : arg;
+    res = arg;
   } else if (Array.isArray(arg) && Array.isArray(arg[0])) {
-    res = matrixForm ? arg : arg.reduce((arr, el) => [...arr, ...el], []);
+    res = arg.reduce((arr, el) => [...arr, ...el], []);
   } else {
     res = arg;
   }
@@ -186,29 +186,3 @@ export function nrad(r) {
   return (v < 0 ? v + TAU : v);
 }
 
-// remove
-export function sum(arr) {
-  let s = null;
-  for (let i = 0; i < arr.length; i++) {
-    if (!Number.isFinite(arr[i])) return null;
-    s += arr[i];
-  }
-  return s;
-}
-
-export function avg(arr) {
-  if (arr.length === 0) return undefined;
-  const s = sum(arr);
-  if (!Number.isFinite(s)) return undefined;
-  return s / arr.length;
-}
-
-export function product(arr) {
-  let p = 1;
-  for (let i = 0; i < arr.length; i++) {
-    if (!Number.isFinite(arr[i])) return null;
-    if (arr[i] === 0) return 0; // early termination
-    p *= arr[i];
-  }
-  return p;
-}
