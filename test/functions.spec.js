@@ -179,8 +179,9 @@ describe('Functions tests', () => {
       7, 8, 8.2,
     ));
     expect(clamp(-1)).toBe(0);
-    expect(clamp(-1, 1)).toBe(0);
+    expect(clamp(-1, 1)).toBe(1);
     expect(clamp(1.25)).toBe(1);
+    expect(clamp(1.25, 0, 0.9)).toBe(0.9);
   });
 
   it('Can generate threshold values with step and smoothstep functions (as in GLSL)', () => {

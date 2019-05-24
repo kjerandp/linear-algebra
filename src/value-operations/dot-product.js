@@ -1,6 +1,6 @@
-import Array2d from './array-2d';
+import Array2d from '../array-2d';
 
-export function dotArrays(a1, a2) {
+function dotProduct(a1, a2, op) {
   if (!(a1 instanceof Array2d)) {
     if (!Array.isArray(a1))
       throw Error('Argument 1 is not an Array type!');
@@ -19,9 +19,9 @@ export function dotArrays(a1, a2) {
   const { cols } = a2;
 
   const calc = (c, r) => {
-    let sum = 0;
+    let sum = op.zero();
     for (let n = 0; n < a1.cols; n++) {
-      sum += a1.getValueAt(n, r) * a2.getValueAt(c, n);
+      sum = op.add(sum, op.multiply(a1.getValueAt(n, r), a2.getValueAt(c, n)));
     }
     return sum;
   };
@@ -41,20 +41,4 @@ export function dotArrays(a1, a2) {
   return res;
 }
 
-export function clampValue(v, min = 0, max = 1) {
-  return Math.min(max, Math.max(min, v));
-}
-
-export function mixValue(a, b, t) {
-  const m = clampValue(t);
-  return a * (1 - m) + b * m;
-}
-
-export function stepValue(edge, x) {
-  return x >= edge ? 1 : 0;
-}
-
-export function smoothstepValue(edge0, edge1, x) {
-  const t = clampValue((x - edge0) / (edge1 - edge0));
-  return t * t * (3.0 - 2.0 * t);
-}
+export default dotProduct;

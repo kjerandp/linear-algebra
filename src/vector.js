@@ -1,7 +1,7 @@
 /* eslint-disable object-property-newline */
 import Array2d from './array-2d';
 import { argumentsToList } from './utils';
-import { dotArrays, clampValue } from './common';
+import op from './value-operations';
 
 
 const accessors = ({
@@ -135,7 +135,7 @@ export class Vector {
   }
 
   clamp(min = 0, max = 1) {
-    this._values.assign(v => clampValue(v, min, max));
+    this._values.assign(v => op.clamp(v, min, max));
     return this;
   }
 
@@ -154,7 +154,7 @@ export class Vector {
         vec = this._values.clone().columns(mat.rows);
         vec[mat.rows - 1] = 1;
       }
-      const res = dotArrays(vec, mat);
+      const res = op.dotProduct(vec, mat);
       return this.clone().copyFrom(res);
     }
     const v = arg;

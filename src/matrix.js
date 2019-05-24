@@ -1,84 +1,11 @@
 import Array2d from './array-2d';
 import { Vector } from './vector';
-import { clampValue, dotArrays } from './common';
 import {
   determinant2d,
   determinant3d,
   determinant4d,
 } from './optimalisations/matrix';
 import op from './value-operations';
-
-// TODO
-const _fillIdentity = (size) => {
-  const values = new Array(size);
-  for (let r = 0, c = 0; r < size; r++, c++) {
-    values[r] = new Array(size).fill(0);
-    values[r][c] = 1;
-  }
-  return values;
-};
-
-// TODO
-function _findInverse(arr) {
-  const dim = arr.length;
-  const result = _fillIdentity(dim);
-
-  for (let i = 0; i < dim; i++) {
-    let e = arr[i][i];
-    // if we have a 0 on the diagonal (we'll need to swap with a lower row)
-    if (e === 0) {
-      // look through every row below the i'th row
-      for (let ii = i + 1; ii < dim; ii += 1) {
-        // if the ii'th row has a non-0 in the i'th col
-        if (arr[ii][i] !== 0) {
-          // it would make the diagonal have a non-0 so swap it
-          for (let j = 0; j < dim; j++) {
-            e = arr[i][j]; // temp store i'th row
-            arr[i][j] = arr[ii][j]; // replace i'th row by ii'th
-            arr[ii][j] = e; // repace ii'th by temp
-            e = result[i][j]; // temp store i'th row
-            result[i][j] = result[ii][j]; // replace i'th row by ii'th
-            result[ii][j] = e; // repace ii'th by temp
-          }
-          // don't bother checking other rows since we've swapped
-          break;
-        }
-      }
-      // get the new diagonal
-      e = arr[i][i];
-      // if it's still 0, not invertable (error)
-      if (e === 0) return undefined;
-    }
-
-    // Scale this row down by e (so we have a 1 on the diagonal)
-    for (let j = 0; j < dim; j++) {
-      arr[i][j] /= e; // apply to original matrix
-      result[i][j] /= e; // apply to identity
-    }
-
-    // Subtract this row (scaled appropriately for each row) from ALL of
-    // the other rows so that there will be 0's in this column in the
-    // rows above and below this one
-    for (let ii = 0; ii < dim; ii++) {
-      // Only apply to other rows (we want a 1 on the diagonal)
-      if (ii === i) continue;
-
-      // We want to change this element to 0
-      e = arr[ii][i];
-
-      // Subtract (the row above(or below) scaled by e) from (the
-      // current row) but start at the i'th column and assume all the
-      // stuff left of diagonal is 0 (which it should be if we made this
-      // algorithm correctly)
-      for (let j = 0; j < dim; j++) {
-        arr[ii][j] -= e * arr[i][j]; // apply to original matrix
-        result[ii][j] -= e * result[i][j]; // apply to identity
-      }
-    }
-  }
-
-  return result;
-}
 
 export class Matrix {
   constructor(rows = 4, cols) {
@@ -93,7 +20,7 @@ export class Matrix {
   }
 
   static identity(size = 4) {
-    return new Matrix(_fillIdentity(size));
+    return new Matrix(op.identityMatrix(size));
   }
 
   static fromVectors(...vect) {
@@ -115,7 +42,7 @@ export class Matrix {
   }
 
   copyFrom(...values) {
-    if (values.length === 1 && Number.isFinite(values[0])) {
+    if (values.length === 1 && op.isDefined(values[0])) {
       this._values.assign(() => values[0]);
     } else {
       this._values.copyFrom(values);
@@ -124,7 +51,7 @@ export class Matrix {
   }
 
   set(i, j, v) {
-    if (i > 0 && i <= this.rows && j > 0 && j <= this.cols && Number.isFinite(v)) {
+    if (i > 0 && i <= this.rows && j > 0 && j <= this.cols && op.isDefined(v)) {
       this._values.setValueAt(j - 1, i - 1, v);
     }
     return this;
@@ -168,7 +95,7 @@ export class Matrix {
   }
 
   clamp(min = 0, max = 1) {
-    this._values.assign(v => clampValue(v, min, max));
+    this._values.assign(v => op.clamp(v, min, max));
     return this;
   }
 
@@ -181,7 +108,7 @@ export class Matrix {
     args.forEach((m) => {
       if (this.rows !== m.rows || this.cols !== m.cols)
         throw Error('Matrices must be of same size!');
-      this._values.assign((v, i) => v + m._values[i]);
+      this._values.assign((v, i) => op.add(v, m._values[i]));
     });
     return this;
   }
@@ -190,7 +117,7 @@ export class Matrix {
     args.forEach((m) => {
       if (this.rows !== m.rows || this.cols !== m.cols)
         throw Error('Matrices must be of same size!');
-      this._values.assign((v, i) => v - m._values[i]);
+      this._values.assign((v, i) => op.subtract(v, m._values[i]));
     });
     return this;
   }
@@ -211,7 +138,7 @@ export class Matrix {
       }
     }
 
-    const v = dotArrays(a, b || arg);
+    const v = op.dotProduct(a, b || arg);
 
     if (bIsVec) {
       return new Vector(v).dimensions(arg.dim);
@@ -223,7 +150,7 @@ export class Matrix {
   apply(...args) {
     args.forEach((m) => {
       if (m instanceof Matrix) {
-        const v = dotArrays(this.value, m.value);
+        const v = op.dotProduct(this.value, m.value);
         this.copyFrom(v);
       }
     });
@@ -232,13 +159,13 @@ export class Matrix {
 
   scale(factor) {
     if (Number.isFinite(factor)) {
-      this._values.assign(v => v * factor);
+      this._values.assign(v => op.multiply(v, factor));
     }
     return this;
   }
 
   negate() {
-    this._values.assign(v => -v);
+    this._values.assign(v => op.negate(v));
     return this;
   }
 
@@ -259,7 +186,7 @@ export class Matrix {
     return this;
   }
 
-  // TODO
+  // TODO: optimized versions
   det() {
     if (!this.isSquare) throw Error('Matrix must be square!');
 
@@ -280,7 +207,7 @@ export class Matrix {
     if (!this.isSquare) {
       inverse = null;
     } else {
-      inverse = _findInverse(this.toArray());
+      inverse = op.inverse(this.toArray());
     }
 
     if (inverse) {

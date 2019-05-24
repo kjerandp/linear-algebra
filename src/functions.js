@@ -1,13 +1,8 @@
 import { Vector } from './vector';
 import { Matrix } from './matrix';
 import Array2d from './array-2d';
+import op from './value-operations';
 
-import {
-  mixValue,
-  clampValue,
-  stepValue,
-  smoothstepValue,
-} from './common';
 import {
   DEG2RAD,
   RAD2DEG,
@@ -92,22 +87,22 @@ export function mix(a, b, t) {
       throw Error('Values must have the same number of components!');
 
     const ts = standardizeArgument(t);
-    const mixed = va.map((v, i) => mixValue(v, vb[i], i < ts.length ? ts[i] : ts[0]));
+    const mixed = va.map((v, i) => op.mix(v, vb[i], i < ts.length ? ts[i] : ts[0]));
 
     if (Array.isArray(a)) {
       return mixed;
     }
     return a.clone().copyFrom(mixed);
   }
-  return mixValue(a, b, t);
+  return op.mix(a, b, t);
 }
 
 export function clamp(val, min = 0, max = 1) {
-  if (Number.isFinite(val)) {
-    return clampValue(val);
+  if (op.isDefined(val)) {
+    return op.clamp(val, min, max);
   }
   const arr = standardizeArgument(val);
-  const clamped = arr.map(v => clampValue(v, min, max));
+  const clamped = arr.map(v => op.clamp(v, min, max));
   if (Array.isArray(val)) return clamped;
 
   return val.clone().copyFrom(clamped);
@@ -124,14 +119,14 @@ export function step(edge, x) {
     if (ve.length !== vx.length)
       throw Error('Inputs must have the same number of components!');
 
-    const stepped = ve.map((v, i) => stepValue(v, vx[i]));
+    const stepped = ve.map((v, i) => op.step(v, vx[i]));
 
     if (Array.isArray(edge)) {
       return stepped;
     }
     return edge.clone().copyFrom(stepped);
   }
-  return stepValue(edge, x);
+  return op.step(edge, x);
 }
 
 export function smoothstep(edge0, edge1, x) {
@@ -146,14 +141,14 @@ export function smoothstep(edge0, edge1, x) {
     if (ve0.length !== vx.length || ve1.length !== vx.length)
       throw Error('Inputs must have the same number of components!');
 
-    const stepped = ve0.map((v, i) => smoothstepValue(v, ve1[i], vx[i]));
+    const stepped = ve0.map((v, i) => op.smoothstep(v, ve1[i], vx[i]));
 
     if (Array.isArray(edge0)) {
       return stepped;
     }
     return edge0.clone().copyFrom(stepped);
   }
-  return smoothstepValue(edge0, edge1, x);
+  return op.smoothstep(edge0, edge1, x);
 }
 
 export function det(m) {
