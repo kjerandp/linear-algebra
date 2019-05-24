@@ -51,17 +51,14 @@ export class Matrix {
   }
 
   set(i, j, v) {
-    if (i > 0 && i <= this.rows && j > 0 && j <= this.cols && op.isDefined(v)) {
+    if (op.isDefined(v)) {
       this._values.setValueAt(j - 1, i - 1, v);
     }
     return this;
   }
 
   get(i, j) {
-    if (i > 0 && i <= this.rows && j > 0 && j <= this.cols) {
-      return this._values.getValueAt(j - 1, i - 1);
-    }
-    throw Error('Out of range!');
+    return this._values.getValueAt(j - 1, i - 1);
   }
 
   row(i) {

@@ -66,8 +66,8 @@ describe('Matrix class tests', () => {
     expect(m.get(3, 2)).toBe(8);
     expect(m.get(3, 3)).toBe(9);
 
-    expect(() => m.get(0, 2)).toThrow();
-    expect(() => m.get(2, 8)).toThrow();
+    expect(m.get(0, 2)).toBeUndefined();
+    expect(m.get(2, 8)).toBeUndefined();
 
     m.set(2, 2, -7);
     expect(m.get(2, 2)).toBe(-7);
