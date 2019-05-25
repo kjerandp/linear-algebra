@@ -46,8 +46,9 @@ export default class Array2d extends Array {
   }
 
   index(c = 0, r = 0) {
-    if (r >= this.rows || c >= this.cols) return undefined;
-    return r * this._c + c;
+    const i = r * this.cols + c;
+    if (c >= this.cols || i >= this.length) return undefined;
+    return i;
   }
 
   position(idx) {
@@ -131,7 +132,10 @@ export default class Array2d extends Array {
   }
 
   getValueAt(c, r = 0) {
-    return this[this.index(c, r)];
+    // return this[this.index(c, r)];
+    const i = r * this.cols + c;
+    if (c >= this.cols || i >= this.length) return undefined;
+    return this[i];
   }
 
   setValueAt(c, r, v) {

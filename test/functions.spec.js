@@ -1,7 +1,7 @@
 /* eslint-disable no-multi-spaces */
 
 import expect from 'expect';
-import { Matrix, mat2, mat3, mat4 } from '../src/matrix';
+import { Matrix, mat2, mat3, mat4 } from '../src/matrix2';
 import { vec2, vec3, vec4 } from '../src/vector';
 import { PI, TAU, SPI, QPI } from '../src/constants';
 import {

@@ -12,5 +12,5 @@ export default {
   isEqual: (a, b) => a === b,
   isZero: v => Math.abs(v) < EPSILON,
   isLessThan: (a, b) => a < b,
-  isDefined: v => v !== undefined && v !== null && Number.isFinite(v),
+  isDefined: v => Number.isFinite(v),
 };

@@ -8,7 +8,7 @@ import {
   col4,
   row2,
   row4,
-} from '../src/matrix';
+} from '../src/matrix2';
 import { vec3, vec4 } from '../src/vector';
 import { range } from '../src/utils';
 import op from '../src/math';
@@ -17,6 +17,36 @@ import op from '../src/math';
 
 describe('Matrix class tests', () => {
   it('Can create matrices using constructor and helper functions', () => {
+    expect(new Matrix(1).size).toEqual([1, 1]);
+    expect(new Matrix(2).size).toEqual([2, 2]);
+    expect(new Matrix(3).size).toEqual([3, 3]);
+    expect(new Matrix(2, 4).size).toEqual([2, 4]);
+    expect(new Matrix()).toEqual(mat4());
+    expect(new Matrix(2)).toEqual(mat2());
+    expect(new Matrix(3)).toEqual(mat3());
+    expect(new Matrix(1, 4)).toEqual(row4());
+    expect(new Matrix(4, 1)).toEqual(col4());
+
+    let m = mat2(1, 1);
+    expect(m.rows).toBe(2);
+    expect(m.cols).toBe(2);
+    expect(m.toArray(1)).toEqual([1, 1, 0, 0]);
+
+    m = mat2(1, 2, 3, 4);
+    expect(m.toArray()).toEqual([
+      [1, 2],
+      [3, 4],
+    ]);
+    expect(m.rows).toBe(2);
+    expect(m.cols).toBe(2);
+    expect(m.size).toEqual([2, 2]);
+
+    const clone = m.clone();
+
+    expect(clone).toEqual(m);
+    clone.a12 = 7;
+    expect(clone).not.toEqual(m);
+
     const identity = [
       [1, 0, 0, 0],
       [0, 1, 0, 0],
@@ -31,31 +61,6 @@ describe('Matrix class tests', () => {
       [0, 0, 0, 0],
       [0, 0, 0, 0],
     ]);
-
-    expect(new Matrix(1).size).toEqual([1, 1]);
-    expect(new Matrix(2).size).toEqual([2, 2]);
-    expect(new Matrix(3).size).toEqual([3, 3]);
-    expect(new Matrix(2, 4).size).toEqual([2, 4]);
-    expect(new Matrix()).toEqual(mat4());
-    expect(new Matrix(2)).toEqual(mat2());
-    expect(new Matrix(3)).toEqual(mat3());
-    expect(new Matrix(1, 4)).toEqual(row4());
-    expect(new Matrix(4, 1)).toEqual(col4());
-
-    const m = mat2(1, 2, 3, 4);
-    expect(m.toArray()).toEqual([
-      [1, 2],
-      [3, 4],
-    ]);
-    expect(m.rows).toBe(2);
-    expect(m.cols).toBe(2);
-    expect(m.size).toEqual([2, 2]);
-
-    const clone = m.clone();
-
-    expect(clone).toEqual(m);
-    clone.a12 = 7;
-    expect(clone).not.toEqual(m);
   });
 
   it('Can use accessors to get/set values', () => {
@@ -66,7 +71,7 @@ describe('Matrix class tests', () => {
     expect(m.get(3, 2)).toBe(8);
     expect(m.get(3, 3)).toBe(9);
 
-    expect(m.get(0, 2)).toBeUndefined();
+    expect(() => m.get(0, 2)).toThrow();
     expect(m.get(2, 8)).toBeUndefined();
 
     m.set(2, 2, -7);
@@ -84,12 +89,12 @@ describe('Matrix class tests', () => {
   it('Can do basic matrix arithmetics', () => {
     expect(mat2(1, 2, 3, 4).add(mat2(1, 1)).toArray()).toEqual([
       [2, 3],
-      [4, 5],
+      [3, 4],
     ]);
 
     expect(mat2(1, 2, 3, 4).sub(mat2(1, 1)).toArray()).toEqual([
       [0, 1],
-      [2, 3],
+      [3, 4],
     ]);
 
     expect(mat2(1, 2, 3, 4).scale(3).toArray()).toEqual([
@@ -264,7 +269,6 @@ describe('Matrix class tests', () => {
 
   it('Should be possible to create matrix from one or more vectors', () => {
     const m1 = Matrix.fromVectors(vec3(1));
-
     expect(m1).toBeInstanceOf(Matrix);
     expect(m1.size).toEqual([3, 1]);
     expect(m1.toArray()).toEqual([[1], [1], [1]]);

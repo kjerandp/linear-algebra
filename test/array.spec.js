@@ -1,35 +1,23 @@
 import expect from 'expect';
-import Array2d from '../src/array-2d';
+import {
+  createArray1d,
+  createArray2d,
+  subArrayFrom,
+  rows,
+  cols,
+  flatten,
+} from '../src/array';
 
-describe('Array2d class', () => {
-  it('Should be able to initialize with values and retrieve values using get', () => {
-    expect(new Array2d(4)).toBeInstanceOf(Array2d);
+describe('Array utils class', () => {
+  it('Should be able to create 1d and 2d arrays', () => {
+    expect(createArray1d([4, 2])).toEqual([4, 2]);
+    expect(createArray1d([4, 2, 1], 2)).toEqual([4, 2]);
+    expect(createArray1d(null, 4, 0)).toEqual([0, 0, 0, 0]);
 
-    const a = new Array2d([1, 2, 3, 4, 5, 6, 7, 8, 9]);
-    const b = new Array2d([1, 2, 3, 4, 5, 6, 7, 8, 9], 3);
-
-    expect(a.getValueAt(2)).toBe(3);
-    expect(a.getValueAt(3, 2)).toBeUndefined();
-    expect(b.getValueAt(0, 0)).toBe(1);
-    expect(b.getValueAt(1, 0)).toBe(2);
-    expect(b.getValueAt(2, 0)).toBe(3);
-    expect(b.getValueAt(0, 1)).toBe(4);
-    expect(b.getValueAt(1, 1)).toBe(5);
-    expect(b.getValueAt(2, 1)).toBe(6);
-    expect(b.getValueAt(0, 2)).toBe(7);
-    expect(b.getValueAt(1, 2)).toBe(8);
-    expect(b.getValueAt(2, 2)).toBe(9);
-    expect(b.getValueAt(7)).toBeUndefined();
-    expect(a.getValueAt(10)).toBeUndefined();
-    expect(b.getValueAt(1, -2)).toBeUndefined();
-
-    const c = new Array2d([
-      [1, 2, 3, 4],
-      [5, 6, 7, 8],
-    ]);
-
-    expect(c.cols).toBe(4);
-    expect(c.rows).toBe(2);
+    const a = createArray2d(2, 2);
+    expect(rows(a)).toBe(2);
+    expect(cols(a)).toBe(2);
+    expect(a).toEqual([[undefined, undefined], [undefined, undefined]]);
   });
 
   // it('Should be able to calculate dot products', () => {
@@ -114,31 +102,18 @@ describe('Array2d class', () => {
   //   expect(() => m3.dotProduct(v2)).toThrow();
   // });
 
-  it('Should be able to convert to plain js 1D and 2D arrays', () => {
-    const c = new Array2d([
-      [1, 2, 3, 4],
-      [5, 6, 7, 8],
-    ]);
-    expect(c.toArray(2)).toEqual([[1, 2, 3, 4], [5, 6, 7, 8]]);
-    expect(c.toArray(1)).toEqual([1, 2, 3, 4, 5, 6, 7, 8]);
-
-    expect(c.toArray(1, false)).toEqual([1, 5, 2, 6, 3, 7, 4, 8]);
-    expect(c.toArray(2, false)).toEqual([[1, 5], [2, 6], [3, 7], [4, 8]]);
-  });
 
   it('Should be able to return a copy of a subset of the array', () => {
-    const m = new Array2d([
+    const m = createArray2d([
       1, 2, 3,
       4, 5, 6,
       7, 8, 9,
     ], 3);
 
-    expect(m.rows).toBe(3);
-    expect(m.cols).toBe(3);
-    expect(m.isSquare).toBeTruthy();
+    expect(rows(m)).toBe(3);
+    expect(cols(m)).toBe(3);
 
-    expect(m.copy(0, 0)).toEqual(m);
-    expect(m.copy(2, 1, 2, 2).toArray()).toEqual([2, 3, 5, 6]);
+    expect(flatten(subArrayFrom(m, 1, 2, 2, 2))).toEqual([2, 3, 5, 6]);
 
   });
 });

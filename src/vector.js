@@ -1,5 +1,5 @@
 /* eslint-disable object-property-newline */
-import Array2d from './array-2d';
+import { createArray1d, copyTo1d, assignTo1d } from './array';
 import { argumentsToList } from './utils';
 import op from './math';
 
@@ -31,11 +31,11 @@ export class Vector {
     }
     if (dim < 2 || dim > 4) throw Error('Invalid arguments!');
 
-    this._values = new Array2d(values, dim, 1, 0);
+    this._values = createArray1d(values, dim, 0);
   }
 
   clone() {
-    return new Vector(this.value);
+    return new Vector(this._values);
   }
 
   // Mimic the swizzle operator for vectors in glsl
@@ -53,7 +53,7 @@ export class Vector {
   shift(args) {
     if (args.length > 0 && args.length <= this.dim) {
       const swizzled = this.swizzle(args);
-      this._values.assign((v, i) => (swizzled[i] === undefined ? v : swizzled[i]));
+      assignTo1d(this._values, (v, i) => (swizzled[i] === undefined ? v : swizzled[i]));
     }
     return this;
   }
@@ -68,22 +68,25 @@ export class Vector {
   }
 
   copyFrom(...values) {
+    if (values.length === 1 && Array.isArray(values[0])) {
+      [values] = values;
+    }
     if (values.length === 1 && Number.isFinite(values[0])) {
-      this._values.assign(() => values[0]);
+      assignTo1d(this._values, () => values[0]);
     } else {
-      this._values.copyFrom(values);
+      copyTo1d(this._values, values);
     }
     return this;
   }
 
   // get component by index
   get(idx) {
-    return this._values.getValueAt(idx);
+    return this._values[idx];
   }
 
   // set value for component at index
   set(idx, v) {
-    this._values.setValueAt(idx, 1, v);
+    if (idx < this.dim) this._values[idx] = v;
     return this;
   }
 
@@ -107,7 +110,7 @@ export class Vector {
   add(...args) {
     args.forEach((val) => {
       const vc = argumentsToList(val);
-      this._values.assign((v, i) => v + (vc[i] === undefined ? 0 : vc[i]));
+      assignTo1d(this._values, (v, i) => v + (vc[i] === undefined ? 0 : vc[i]));
     });
     return this;
   }
@@ -115,7 +118,7 @@ export class Vector {
   sub(...args) {
     args.forEach((val) => {
       const vc = argumentsToList(val);
-      this._values.assign((v, i) => v - (vc[i] === undefined ? 0 : vc[i]));
+      assignTo1d(this._values, (v, i) => v - (vc[i] === undefined ? 0 : vc[i]));
     });
     return this;
   }
@@ -126,51 +129,52 @@ export class Vector {
       [arg] = arg;
     }
     if (Number.isFinite(arg)) {
-      this._values.assign(v => v * arg);
+      assignTo1d(this._values, v => v * arg);
     } else if (Array.isArray(arg) || arg instanceof Vector) {
       const vc = argumentsToList(arg);
-      this._values.assign((v, i) => v * (vc[i] === undefined ? 0 : vc[i]));
+      assignTo1d(this._values, (v, i) => v * (vc[i] === undefined ? 0 : vc[i]));
     }
     return this;
   }
 
   clamp(min = 0, max = 1) {
-    this._values.assign(v => op.clamp(v, min, max));
+    assignTo1d(this._values, v => op.clamp(v, min, max));
     return this;
   }
 
   normalize() {
     const l = this.length;
-    this._values.assign(v => v / l);
+    assignTo1d(this._values, v => v / l);
     return this;
   }
 
   dot(arg) {
     if (!(arg instanceof Vector)) {
-      const mat = arg._values || new Array2d(arg);
+      const mat = arg._values || arg;
       let vec = this._values;
-      if (this.dim < 4 && vec.cols < mat.rows) {
+      if (this.dim < 4 && this.dim < mat.length) {
         // convert to homogeneous coordinates  (ex. vec3 * mat4)
-        vec = this._values.clone().columns(mat.rows);
-        vec[mat.rows - 1] = 1;
+        vec = createArray1d(vec, mat.length, 0);
+        vec[mat.length - 1] = 1;
       }
-      const res = op.dotProduct(vec, mat);
-      return this.clone().copyFrom(res);
+      const res = op.dotProduct([vec], mat);
+
+      return this.clone().copyFrom(res[0]);
     }
     const v = arg;
     const vc = argumentsToList(v);
-    return this.value.reduce((sum, c, i) => sum + c * vc[i], 0);
+    return this._values.reduce((sum, c, i) => sum + c * vc[i], 0);
   }
 
   cross(v) {
-    const a = this.value;
+    const a = this._values;
     const b = argumentsToList(v);
 
     if (this.dim === 2) {
       return (a[0] * b[1]) - (a[1] * b[0]);
     }
 
-    const res = new Array2d(this.dim, this.dim);
+    const res = new Array(this.dim);
     res[0] = (a[1] * b[2]) - (a[2] * b[1]);
     res[1] = (a[2] * b[0]) - (a[0] * b[2]);
     res[2] = (a[0] * b[1]) - (a[1] * b[0]);
@@ -184,26 +188,22 @@ export class Vector {
   }
 
   toArray() {
-    return this._values.toArray();
+    return this._values;
   }
 
   get dim() {
-    return this._values.cols;
+    return this._values.length;
   }
 
   set dim(v) {
     if (v >= 2 && v <= 4 && v !== this.dim) {
-      this._values.columns(v).init(1, 0, true);
+      this._values = createArray1d(this._values, v, 0);
     }
   }
 
   get length() {
     const squared = this._values.reduce((acc, c) => acc + c ** 2, 0);
     return Math.sqrt(squared);
-  }
-
-  get value() {
-    return this._values;
   }
 }
 

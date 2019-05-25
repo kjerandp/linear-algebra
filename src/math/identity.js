@@ -1,9 +1,9 @@
-import Array2d from '../array-2d';
+import { createArray2d } from '../array';
 
 export default (size, op) => {
-  const values = new Array2d(null, size, size, op.zero());
+  const values = createArray2d(null, size, size, op.zero());
   for (let i = 0; i < size; i++) {
-    values.setValueAt(i, i, op.identity());
+    values[i][i] = op.identity();
   }
   return values;
 };

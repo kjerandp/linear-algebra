@@ -1,15 +1,16 @@
+import { cols, clone2d, removeFrom } from '../array';
+
 export default function determinant(m, op) {
-  if (!m.isSquare) {
-    throw new TypeError('Matrix must be a square!');
-  }
-  if (m.rows === 1) return m[0];
+  if (m.length === 1) return m[0][0];
 
   let d = op.zero();
-
-  for (let c = 0; c < m.cols; c++) {
-    const v = m[c];
+  const ncols = cols(m);
+  for (let c = 0; c < ncols; c++) {
+    const v = m[0][c];
     if (op.isZero(v)) continue;
-    let cofactor = determinant(m.clone().remove(c + 1, 1), op);
+    const sm = clone2d(m);
+    removeFrom(sm, c + 1, 1);
+    let cofactor = determinant(sm, op);
 
     if (c % 2 === 1) {
       cofactor = op.negate(cofactor);

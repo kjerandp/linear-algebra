@@ -15,7 +15,7 @@
 
 export { default as Array2d } from './array-2d';
 export * from './vector';
-export * from './matrix';
+export * from './matrix2';
 export * from './functions';
 export * from './constants';
 

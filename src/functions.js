@@ -1,6 +1,5 @@
 import { Vector } from './vector';
-import { Matrix } from './matrix';
-import Array2d from './array-2d';
+import { Matrix } from './matrix2';
 import op from './math';
 
 import {
@@ -14,8 +13,10 @@ function standardizeArgument(arg) {
 
   if (Number.isFinite(arg)) {
     res.push(arg);
-  } else if (arg.value && arg.value instanceof Array2d) {
-    res = arg.value;
+  } else if (arg instanceof Vector) {
+    res = arg._values;
+  } else if (arg instanceof Matrix) {
+    res = arg.toArray(1);
   } else if (Array.isArray(arg) && Number.isFinite(arg[0])) {
     res = arg;
   } else if (Array.isArray(arg) && Array.isArray(arg[0])) {
