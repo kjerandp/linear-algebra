@@ -1,8 +1,5 @@
 
 export function argumentsToList(arg, rec = true, values = []) {
-  if (arg && arg.length === 1 && Array.isArray(arg[0])) {
-    [arg] = arg;
-  }
   if (arg && arg._values) {
     arg = arg._values;
   }

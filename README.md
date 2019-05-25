@@ -31,24 +31,24 @@ Both these types offer convenience functions for creating new instances, to make
 // 2d vectors - these statements produce the same result
 const v = new Vector(2, 1); // => [2, 1]
 const v = new Vector([2, 1]); // array as input
-const v = new Vector(2).fill(2, 1); // first arg is dimensions 
+const v = new Vector(2).copyFrom(2, 1); // first arg is dimensions 
 const v = vec2(2, 1); // creator function
 
 // 3d vectors - these statements produce the same result
 const v = new Vector(2, 0, 1); // => [2, 0, 1]
 const v = new Vector([2, 0, 1]); // array as input
-const v = new Vector(3).fill(2, 0, 1); // first arg is dimensions 
+const v = new Vector(3).copyFrom(2, 0, 1); // first arg is dimensions 
 const v = vec3(2, 0, 1); // creator function
 
 // 4d vectors - these statements produce the same result
 const v = new Vector(2, 2, 0, 1); // => [2, 2, 0, 1]
 const v = new Vector([2, 2, 0, 1]); // array as input
-const v = new Vector(4).fill(2, 2, 0, 1); // first arg is dimensions 
+const v = new Vector(4).copyFrom(2, 2, 0, 1); // first arg is dimensions 
 const v = vec4(2, 2, 0, 1); // creator function
 const v = vec4(vec3([2, 2], 0), 1); // combining arguments
 
 // constructing a 2x2 matrix and filling it with values top left to bottom right
-const m = new Matrix(2, 2).fill(1, 2, 3, 4); 
+const m = new Matrix(2, 2).copyFrom(1, 2, 3, 4); 
 
 // passing the values as a 2d array to the constructor gives the same result
 const m = new Matrix([
@@ -147,7 +147,7 @@ const T = tran(M); // immutable
 // +++
 ```
 
-(to be continued)
+Proper docs will be available soon. For more info please look at the tests or [this live sample](https://observablehq.com/@kjerandp/affine-transformations).
 
 
 ## License

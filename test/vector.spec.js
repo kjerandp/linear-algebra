@@ -69,6 +69,10 @@ describe('Vector class tests', () => {
     v = vec4(1, 2, 3, 4);
     expect(v.dim).toBe(4);
     expect(v.toArray()).toEqual([1, 2, 3, 4]);
+
+    v = vec4(vec2(2, 2), 7, [1]);
+    expect(v.toArray()).toEqual([2, 2, 7, 1]);
+
   });
 
   it('Can clone/copy vectors', () => {

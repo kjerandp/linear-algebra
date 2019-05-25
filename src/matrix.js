@@ -63,7 +63,7 @@ export class Matrix {
     if (values.length === 1 && op.isDefined(values[0])) {
       assignTo2d(this._values, () => values[0]);
     } else {
-      copyTo2d(this._values, values);
+      copyTo2d(this._values, argumentsToList(values));
     }
     return this;
   }

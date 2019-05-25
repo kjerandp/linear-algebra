@@ -74,7 +74,7 @@ export class Vector {
     if (values.length === 1 && Number.isFinite(values[0])) {
       assignTo1d(this._values, () => values[0]);
     } else {
-      copyTo1d(this._values, values);
+      copyTo1d(this._values, argumentsToList(values));
     }
     return this;
   }

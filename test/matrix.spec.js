@@ -9,7 +9,7 @@ import {
   row2,
   row4,
 } from '../src/matrix';
-import { vec3, vec4 } from '../src/vector';
+import { vec2, vec3, vec4 } from '../src/vector';
 import { range } from '../src/utils';
 import op from '../src/math';
 // import { timer } from './timer';
@@ -31,6 +31,12 @@ describe('Matrix class tests', () => {
     expect(m.rows).toBe(2);
     expect(m.cols).toBe(2);
     expect(m.toArray(1)).toEqual([1, 1, 0, 0]);
+
+    m.copyFrom(vec4(vec2(1, 2), 3, 4));
+    expect(m.toArray()).toEqual([1, 2, 3, 4]);
+
+    m.copyFrom([[1, 2], 3, 4]);
+    expect(m.toArray()).toEqual([1, 2, 3, 4]);
 
     m = mat2(1, 2, 3, 4);
     expect(m.toArray(2)).toEqual([
