@@ -1,4 +1,6 @@
-import { EPSILON } from '../constants';
+// import { EPSILON } from '../constants';
+
+const EPSILON = 0.0000001;
 
 export default {
   default: () => 0,

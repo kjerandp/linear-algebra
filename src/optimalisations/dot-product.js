@@ -1,5 +1,4 @@
-
-export default op => function dotProduct(a1, a2) {
+function dotProduct(a1, a2) {
   if (a1[0].length !== a2.length)
     throw Error(
       'The number of columns of the left matrix must be the same as the number of rows of the right matrix!',
@@ -15,13 +14,14 @@ export default op => function dotProduct(a1, a2) {
 
   for (let r = 0; r < rows; r++) {
     for (let c = 0; c < cols; c++) {
-      let sum = op.zero();
+      let sum = 0;
       for (let n = 0; n < a1[0].length; n++) {
-        sum = op.add(sum, op.multiply(a1[r][n], a2[n][c]));
+        sum += a1[r][n] * a2[n][c];
       }
       v[r][c] = sum;
     }
   }
 
   return v;
-};
+}
+export default dotProduct;

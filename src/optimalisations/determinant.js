@@ -1,21 +1,21 @@
 import { cols, clone2d, removeFrom } from '../array';
 
-export default op => function determinant(m) {
+export default function determinant(m) {
   if (m.length === 1) return m[0][0];
 
-  let d = op.zero();
+  let d = 0;
   const ncols = cols(m);
   for (let c = 0; c < ncols; c++) {
     const v = m[0][c];
-    if (op.isZero(v)) continue;
+    if (v === 0) continue;
     const sm = clone2d(m);
     removeFrom(sm, c + 1, 1);
-    let cofactor = determinant(sm, op);
+    let cofactor = determinant(sm);
 
     if (c % 2 === 1) {
-      cofactor = op.negate(cofactor);
+      cofactor = -cofactor;
     }
-    d = op.add(d, op.multiply(v, cofactor));
+    d += v * cofactor;
   }
   return d;
-};
+}

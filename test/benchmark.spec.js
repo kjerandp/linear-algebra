@@ -1,4 +1,4 @@
-import { Matrix, mat3 } from '../src/matrix2';
+import { Matrix, mat3 } from '../src/matrix';
 import { vec2 } from '../src/vector';
 import { mix, dot } from '../src/functions';
 import { range } from '../src/utils';
@@ -8,12 +8,6 @@ const T = mat3(
   2,    0,    2,
   0,    0,    1,
 );
-
-const Y = [
-  [0,    -2,   3],
-  [2,    0,    2],
-  [0,    0,    1],
-];
 
 const v = vec2(-1, -2);
 const columns = 20;
@@ -54,7 +48,6 @@ function drawVector(t) {
   dot(t, v);
 }
 
-
 it('mix', () => {
   for (let i = 0; i < steps * 100; i++)
     mix(I, T, 0.5);
@@ -73,16 +66,6 @@ it('accessing elements in matrix', () => {
 it('dotting', () => {
   for (let i = 0; i < steps * 100; i++)
     dot(proj, T);
-});
-
-it('accessing elements in JS array', () => {
-  for (let i = 0; i < steps * 100; i++) {
-    for (let r = 0; r < T.rows; r++) {
-      for (let c = 0; c < T.cols; c++) {
-        Y[r][c];
-      }
-    }
-  }
 });
 
 it('Benchmarking', () => {

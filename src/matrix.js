@@ -1,20 +1,32 @@
-import Array2d from './array-2d';
 import { Vector } from './vector';
 import {
   determinant2d,
   determinant3d,
   determinant4d,
 } from './optimalisations/matrix';
+import {
+  createArray2d,
+  assignTo2d,
+  copyTo2d,
+  transpose,
+  subArrayFrom,
+  removeFrom,
+  flatten,
+} from './array';
 import op from './math';
 
 export class Matrix {
   constructor(rows = 4, cols) {
     if (rows > 0) {
       cols = cols || rows;
-      this._values = new Array2d(null, cols, rows, 0);
+      this._values = createArray2d(null, cols, rows, 0);
     } else {
       const values = rows;
-      this._values = new Array2d(values, cols);
+      if (Array.isArray(values[0]) && !cols) {
+        cols = values[0].length;
+        rows = values.length;
+      }
+      this._values = createArray2d(values, cols, rows, 0);
     }
     this._optimise = true;
   }
@@ -31,49 +43,53 @@ export class Matrix {
     if (!l || vect.some(v => v.dim !== l)) {
       throw Error('Vectors must be of the same dimension!');
     }
-    const m = new Array2d(null, vect.length, l);
-    m.assign((foo, c, r) => vect[c].get(r));
-
+    const m = createArray2d(null, vect.length, l);
+    assignTo2d(m, (foo, c, r) => vect[c].get(r));
     return new Matrix(m);
   }
 
   clone() {
-    return new Matrix(this._values, this.cols);
+    return new Matrix(this._values);
   }
 
   copyFrom(...values) {
+    if (values.length === 1 && Array.isArray(values[0])) {
+      [values] = values;
+    }
     if (values.length === 1 && op.isDefined(values[0])) {
-      this._values.assign(() => values[0]);
+      assignTo2d(this._values, () => values[0]);
     } else {
-      this._values.copyFrom(values);
+      copyTo2d(this._values, values);
     }
     return this;
   }
 
   set(i, j, v) {
     if (op.isDefined(v)) {
-      this._values.setValueAt(j - 1, i - 1, v);
+      this._values[i - 1][j - 1] = v;
     }
     return this;
   }
 
   get(i, j) {
-    return this._values.getValueAt(j - 1, i - 1);
+    return this._values[i - 1][j - 1];
   }
+
 
   row(i) {
     if (i > 0 && i <= this.rows) {
-      return this._values.getRow(i);
+      return this._values[i - 1];
     }
     throw Error('Invalid arguments!');
   }
 
   col(j) {
     if (j > 0 && j <= this.cols) {
-      return this._values.getColumn(j);
+      return this._values.map(row => row[j - 1]);
     }
     throw Error('Invalid arguments!');
   }
+
 
   diagonal(j = 1, reverse = false) {
     if (j <= 0 || j > this.cols) throw Error('Invalid arguments!');
@@ -82,7 +98,7 @@ export class Matrix {
     for (let r = 0; r < this.rows; r++) {
       const ri = r;
       const ci = (reverse ? c - r + this.cols : r + c) % this.cols;
-      d.push(this._values.getValueAt(ci, ri));
+      d.push(this._values[ri][ci]);
     }
     return d;
   }
@@ -92,12 +108,13 @@ export class Matrix {
   }
 
   clamp(min = 0, max = 1) {
-    this._values.assign(v => op.clamp(v, min, max));
+    assignTo2d(this._values, v => op.clamp(v, min, max));
     return this;
   }
 
   transpose() {
-    this._values.transpose();
+    this._values = transpose(this._values);
+
     return this;
   }
 
@@ -105,7 +122,7 @@ export class Matrix {
     args.forEach((m) => {
       if (this.rows !== m.rows || this.cols !== m.cols)
         throw Error('Matrices must be of same size!');
-      this._values.assign((v, i) => op.add(v, m._values[i]));
+      assignTo2d(this._values, (v, c, r) => op.add(v, m._values[r][c]));
     });
     return this;
   }
@@ -114,7 +131,7 @@ export class Matrix {
     args.forEach((m) => {
       if (this.rows !== m.rows || this.cols !== m.cols)
         throw Error('Matrices must be of same size!');
-      this._values.assign((v, i) => op.subtract(v, m._values[i]));
+      assignTo2d(this._values, (v, c, r) => op.subtract(v, m._values[r][c]));
     });
     return this;
   }
@@ -126,13 +143,15 @@ export class Matrix {
     let b = arg._values;
 
     if (bIsVec) {
-      b = arg._values.clone();
-      b.transpose();
+      b = arg._values.slice();
       // make homogeneous
-      if (b.rows < this.cols) {
-        b.init(this.cols, 0, true);
-        b.setValueAt(0, this.cols - 1, 1);
+      if (b.length < this.cols) {
+        for (let i = b.length; i < a.length; i++) {
+          const v = i === a.length - 1 ? 1 : 0;
+          b.push(v);
+        }
       }
+      b = b.map(v => [v]);
     }
 
     const v = op.dotProduct(a, b || arg);
@@ -144,10 +163,11 @@ export class Matrix {
     return new Matrix(v);
   }
 
+  // TODO
   apply(...args) {
     args.forEach((m) => {
       if (m instanceof Matrix) {
-        const v = op.dotProduct(this.value, m.value);
+        const v = op.dotProduct(this._values, m._values);
         this.copyFrom(v);
       }
     });
@@ -156,30 +176,23 @@ export class Matrix {
 
   scale(factor) {
     if (Number.isFinite(factor)) {
-      this._values.assign(v => op.multiply(v, factor));
+      assignTo2d(this._values, v => op.multiply(v, factor));
     }
     return this;
   }
 
   negate() {
-    this._values.assign(v => op.negate(v));
+    assignTo2d(this._values, v => op.negate(v));
     return this;
   }
 
   submatrix(i = 1, j = 1, rows = 2, cols = 2) {
-    if (rows < 1 || cols < 1) throw Error('Invalid arguments!');
-
-    const sub = this._values.copy(j, i, cols, rows);
-    return new Matrix(sub, sub.cols);
+    return new Matrix(subArrayFrom(this._values, i, j, rows, cols));
   }
 
+
   remove(i = 0, j = 0) {
-    if (!i && !j) return this;
-
-    if (i > this.rows || j > this.cols)
-      throw Error('Invalid arguments!');
-
-    this._values.remove(j, i);
+    removeFrom(this._values, i, j);
     return this;
   }
 
@@ -190,11 +203,11 @@ export class Matrix {
     if (this.rows === 1) {
       return this._values[0];
     } else if (this.rows === 2 && this._optimise) {
-      return determinant2d(this.toArray(2));
+      return determinant2d(this._values);
     } else if (this.rows === 3 && this._optimise) {
-      return determinant3d(this.toArray(2));
+      return determinant3d(this._values);
     } else if (this.rows === 4 && this._optimise) {
-      return determinant4d(this.toArray(2));
+      return determinant4d(this._values);
     }
     return op.determinant(this._values);
   }
@@ -204,11 +217,10 @@ export class Matrix {
     if (!this.isSquare) {
       inverse = null;
     } else {
-      inverse = op.inverse(this.value);
+      inverse = op.inverse(this.toArray());
     }
-
     if (inverse) {
-      this._values.copyFrom(inverse);
+      this._values = inverse;
     } else {
       throw Error('Matrix cannot be inverted!');
     }
@@ -216,23 +228,20 @@ export class Matrix {
   }
 
   toArray(dim = 2, inRowMajor = true) {
-    return this._values.toArray(dim, inRowMajor);
+    const arr = inRowMajor ? this._values : this.toColumns();
+    return dim === 1 ? flatten(arr) : arr;
   }
 
   get isSquare() {
-    return this._values.isSquare;
+    return this.rows === this.cols;
   }
 
   get rows() {
-    return this._values.rows;
+    return this._values.length;
   }
 
   get cols() {
-    return this._values.cols;
-  }
-
-  get value() {
-    return this._values;
+    return this._values[0].length;
   }
 
   get size() {
@@ -245,7 +254,7 @@ for (let i = 1; i <= 4; i++) {
   for (let j = 1; j <= 4; j++) {
     Object.defineProperty(Matrix.prototype, `a${i}${j}`, {
       get() {
-        return this.get(i, j);
+        return this._values[i - 1][j - 1];
       },
       set(v) {
         this.set(i, j, v);

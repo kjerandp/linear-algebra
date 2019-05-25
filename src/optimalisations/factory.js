@@ -1,45 +1,45 @@
-import numberTypeInterface from './number-interface';
 import dotProduct from './dot-product';
 import determinant from './determinant';
 import inverse from './inverse';
 import identityMatrix from './identity';
 import { clamp, mix, step, smoothstep } from './interpolation';
+import numberTypeInterface from '../math/number-interface';
 
 export default (op = numberTypeInterface) => ({
   ...op,
   sum: (values = []) => {
-    let s = op.zero();
+    let s = 0;
     for (let i = 0; i < values.length; i++) {
       if (!op.isDefined(values[i])) return undefined;
-      s = op.add(s, values[i]);
+      s += values[i];
     }
     return s;
   },
   product: (values = []) => {
-    let p = op.identity();
+    let p = 1;
     for (let i = 0; i < values.length; i++) {
       if (!op.isDefined(values[i])) return undefined;
-      if (op.isZero(values[i])) return op.zero(); // early termination
-      p = op.multiply(p, values[i]);
+      if (values[i] === 0) return 0; // early termination
+      p *= values[i];
     }
     return p;
   },
   negate: (values = []) => {
     for (let i = 0; i < values.length; i++) {
-      values[i] = op.negate(values[i]);
+      values[i] = -values[i];
     }
   },
   scale: (factor, values = []) => {
     for (let i = 0; i < values.length; i++) {
-      values[i] = op.multiply(values[i], factor);
+      values[i] *= factor;
     }
   },
-  clamp: clamp(op),
-  dotProduct: dotProduct(op),
-  determinant: determinant(op),
-  inverse: inverse(op),
-  mix: mix(op),
-  step: step(op),
-  smoothstep: smoothstep(op),
-  identityMatrix: identityMatrix(op),
+  clamp,
+  dotProduct,
+  determinant,
+  inverse,
+  mix,
+  step,
+  smoothstep,
+  identityMatrix,
 });

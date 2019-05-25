@@ -61,7 +61,7 @@ export function assignTo1d(arr, cb) {
 
 export function copyTo2d(arr, values) {
   let i = 0;
-  for (let r = 0; r < arr.length && i < values.length; r++) {
+  for (let r = 0; r < arr.length; r++) {
     for (let c = 0; c < arr[0].length && i < values.length; c++) {
       arr[r][c] = values[i++];
     }
@@ -122,7 +122,7 @@ export function removeFrom(arr, i = 0, j = 0) {
 }
 
 export function clone2d(arr) {
-  return arr.map(row => [...row]);
+  return arr.map(row => row.slice());
 }
 
 export const rows = arr => arr.length;
@@ -130,12 +130,10 @@ export const rows = arr => arr.length;
 export const cols = arr => arr && arr[0].length;
 
 export const flatten = (inpArr) => {
-  const nrows = rows(inpArr);
-  const ncols = cols(inpArr);
-  const arr = new Array(nrows * ncols);
-  for (let r = 0; r < nrows; r++) {
-    const ri = r * ncols;
-    for (let c = 0; c < ncols; c++) {
+  const arr = new Array(inpArr.length * inpArr[0].length);
+  for (let r = 0; r < inpArr.length; r++) {
+    const ri = r * inpArr[0].length;
+    for (let c = 0; c < inpArr[0].length; c++) {
       arr[ri + c] = inpArr[r][c];
     }
   }

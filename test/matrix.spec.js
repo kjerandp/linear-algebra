@@ -8,7 +8,7 @@ import {
   col4,
   row2,
   row4,
-} from '../src/matrix2';
+} from '../src/matrix';
 import { vec3, vec4 } from '../src/vector';
 import { range } from '../src/utils';
 import op from '../src/math';

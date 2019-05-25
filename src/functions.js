@@ -1,5 +1,6 @@
 import { Vector } from './vector';
-import { Matrix } from './matrix2';
+import { Matrix } from './matrix';
+import { flatten } from './array';
 import op from './math';
 
 import {
@@ -12,15 +13,13 @@ function standardizeArgument(arg) {
   let res = [];
 
   if (Number.isFinite(arg)) {
-    res.push(arg);
+    return [arg];
   } else if (arg instanceof Vector) {
     res = arg._values;
   } else if (arg instanceof Matrix) {
     res = arg.toArray(1);
-  } else if (Array.isArray(arg) && Number.isFinite(arg[0])) {
-    res = arg;
   } else if (Array.isArray(arg) && Array.isArray(arg[0])) {
-    res = arg.reduce((arr, el) => [...arr, ...el], []);
+    res = flatten(arg);
   } else {
     res = arg;
   }

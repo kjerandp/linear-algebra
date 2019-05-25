@@ -1,3 +1,5 @@
 import factory from './factory';
+// import factory from '../optimalisations/factory';
 
-export default factory();
+const op = factory();
+export default op;
