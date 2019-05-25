@@ -12,7 +12,9 @@ import {
   subArrayFrom,
   removeFrom,
   flatten,
+  clone2d,
 } from './array';
+import { argumentsToList } from './utils';
 import op from './math';
 
 export class Matrix {
@@ -25,8 +27,10 @@ export class Matrix {
       if (Array.isArray(values[0]) && !cols) {
         cols = values[0].length;
         rows = values.length;
+        this._values = clone2d(values);
+      } else {
+        this._values = createArray2d(argumentsToList(values, false), cols, rows, 0);
       }
-      this._values = createArray2d(values, cols, rows, 0);
     }
     this._optimise = true;
   }
@@ -163,7 +167,6 @@ export class Matrix {
     return new Matrix(v);
   }
 
-  // TODO
   apply(...args) {
     args.forEach((m) => {
       if (m instanceof Matrix) {
@@ -196,7 +199,7 @@ export class Matrix {
     return this;
   }
 
-  // TODO: optimized versions
+  // TODO: optimised versions
   det() {
     if (!this.isSquare) throw Error('Matrix must be square!');
 
@@ -217,7 +220,7 @@ export class Matrix {
     if (!this.isSquare) {
       inverse = null;
     } else {
-      inverse = op.inverse(this.toArray());
+      inverse = op.inverse(this.toArray(2));
     }
     if (inverse) {
       this._values = inverse;
@@ -227,9 +230,13 @@ export class Matrix {
     return this;
   }
 
-  toArray(dim = 2, inRowMajor = true) {
-    const arr = inRowMajor ? this._values : this.toColumns();
-    return dim === 1 ? flatten(arr) : arr;
+  toArray(dim = 1, inRowMajor = true) {
+    if (dim === 2) {
+      return inRowMajor ? this._values.slice() : transpose(this._values);
+    }
+    const arr = this._values;
+    if (!inRowMajor) transpose(arr);
+    return flatten(arr);
   }
 
   get isSquare() {

@@ -10,21 +10,14 @@ import {
 } from './constants';
 
 function standardizeArgument(arg) {
-  let res = [];
-
   if (Number.isFinite(arg)) {
     return [arg];
-  } else if (arg instanceof Vector) {
-    res = arg._values;
-  } else if (arg instanceof Matrix) {
-    res = arg.toArray(1);
+  } else if (arg.toArray) {
+    return arg.toArray(1);
   } else if (Array.isArray(arg) && Array.isArray(arg[0])) {
-    res = flatten(arg);
-  } else {
-    res = arg;
+    return flatten(arg);
   }
-
-  return res;
+  return arg;
 }
 
 export function add(a, b) {

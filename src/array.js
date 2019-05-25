@@ -1,11 +1,8 @@
-import { argumentsToList } from './utils';
-
 export function createArray1d(values, columns, initValue) {
   if (values && values.length) {
-    values = argumentsToList(values);
     columns = columns > 0 ? columns : values.length;
   }
-  if (!Number.isFinite(columns)) throw Error('Columns not a number!');
+  if (columns < 1) throw Error('Columns not a number!');
   const arr = new Array(columns);
 
   for (let c = 0; c < arr.length; c++) {
@@ -20,14 +17,13 @@ export function createArray1d(values, columns, initValue) {
 
 export function createArray2d(values, columns, rows, initValue) {
   if (values && values.length) {
-    values = argumentsToList(values);
     rows = Math.ceil(values.length / columns);
   }
   if (Number.isFinite(values)) {
     rows = values;
     values = null;
   }
-  if (!Number.isFinite(columns)) throw Error('Columns not a number!');
+  if (columns < 1) throw Error('Columns not a number!');
   rows = rows || 1;
   const arr = new Array(rows);
   let i = 0;

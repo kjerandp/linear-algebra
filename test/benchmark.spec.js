@@ -11,7 +11,7 @@ const T = mat3(
 
 const v = vec2(-1, -2);
 const columns = 20;
-const steps = 100;
+const steps = 1;
 
 const w = 1000;
 const h = w * 0.75;

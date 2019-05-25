@@ -33,7 +33,7 @@ describe('Matrix class tests', () => {
     expect(m.toArray(1)).toEqual([1, 1, 0, 0]);
 
     m = mat2(1, 2, 3, 4);
-    expect(m.toArray()).toEqual([
+    expect(m.toArray(2)).toEqual([
       [1, 2],
       [3, 4],
     ]);
@@ -54,8 +54,8 @@ describe('Matrix class tests', () => {
       [0, 0, 0, 1],
     ];
 
-    expect(Matrix.identity().toArray()).toEqual(identity);
-    expect(new Matrix().toArray()).toEqual([
+    expect(Matrix.identity().toArray(2)).toEqual(identity);
+    expect(new Matrix().toArray(2)).toEqual([
       [0, 0, 0, 0],
       [0, 0, 0, 0],
       [0, 0, 0, 0],
@@ -87,35 +87,35 @@ describe('Matrix class tests', () => {
   });
 
   it('Can do basic matrix arithmetics', () => {
-    expect(mat2(1, 2, 3, 4).add(mat2(1, 1)).toArray()).toEqual([
+    expect(mat2(1, 2, 3, 4).add(mat2(1, 1)).toArray(2)).toEqual([
       [2, 3],
       [3, 4],
     ]);
 
-    expect(mat2(1, 2, 3, 4).sub(mat2(1, 1)).toArray()).toEqual([
+    expect(mat2(1, 2, 3, 4).sub(mat2(1, 1)).toArray(2)).toEqual([
       [0, 1],
       [3, 4],
     ]);
 
-    expect(mat2(1, 2, 3, 4).scale(3).toArray()).toEqual([
+    expect(mat2(1, 2, 3, 4).scale(3).toArray(2)).toEqual([
       [3, 6],
       [9, 12],
     ]);
 
-    expect(mat2(1, 2, 3, 4).scale(0.5).toArray()).toEqual([
+    expect(mat2(1, 2, 3, 4).scale(0.5).toArray(2)).toEqual([
       [0.5, 1],
       [1.5, 2],
     ]);
 
     const c = col4(1, 2, 3, 4).add(col4(1));
-    expect(c.toArray()).toEqual([[2], [3], [4], [5]]);
+    expect(c.toArray(2)).toEqual([[2], [3], [4], [5]]);
     expect(c.size).toEqual([4, 1]);
 
     const r = row4(1, 2, 3, 4).add(row4(1));
-    expect(r.toArray()).toEqual([[2, 3, 4, 5]]);
+    expect(r.toArray(2)).toEqual([[2, 3, 4, 5]]);
     expect(r.size).toEqual([1, 4]);
 
-    expect(r.transpose().toArray()).toEqual(c.toArray());
+    expect(r.transpose().toArray(2)).toEqual(c.toArray(2));
 
     expect(() => mat2(1, 2, 3, 4).add(col2(1))).toThrow('Matrices must be of same size!');
   });
@@ -149,7 +149,7 @@ describe('Matrix class tests', () => {
       const m1 = mat3();
       m1._values.assign(() => Math.random());
       const m2 = m1.clone();
-      expect(m1.toArray()).toEqual(m2.toArray());
+      expect(m1.toArray(2)).toEqual(m2.toArray(2));
       m2._optimise = false;
       const a = timer(() => m1.det());
       const b = timer(() => m2.det());
@@ -271,12 +271,12 @@ describe('Matrix class tests', () => {
     const m1 = Matrix.fromVectors(vec3(1));
     expect(m1).toBeInstanceOf(Matrix);
     expect(m1.size).toEqual([3, 1]);
-    expect(m1.toArray()).toEqual([[1], [1], [1]]);
+    expect(m1.toArray(2)).toEqual([[1], [1], [1]]);
 
     const m2 = Matrix.fromVectors(vec3(1, 0, 0), vec3(0, 1, 0), vec3(0, 0, 1));
     expect(m2).toBeInstanceOf(Matrix);
     expect(m2.size).toEqual([3, 3]);
-    expect(m2.toArray()).toEqual(Matrix.identity(3).toArray());
+    expect(m2.toArray(2)).toEqual(Matrix.identity(3).toArray(2));
 
     expect(() => Matrix.fromVectors(vec4(1, 0, 0), vec3(0, 1, 0), vec3(0, 0, 1))).toThrowError();
     expect(() => Matrix.fromVectors([1, 2, 3, 4])).toThrowError();
