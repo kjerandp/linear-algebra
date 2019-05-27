@@ -254,6 +254,32 @@ export class Matrix {
   get size() {
     return [this.rows, this.cols];
   }
+
+  get count() {
+    return this.rows * this.cols;
+  }
+
+  iterator() {
+    const _t = this;
+    let r = 0;
+    let c = 0;
+    return {
+      next: () => {
+        if (c >= this.cols) {
+          r++;
+          c = 0;
+        }
+        let v;
+        if (r < this.rows) {
+          v = _t[r][c++];
+        }
+        return {
+          value: v,
+          done: v === undefined,
+        };
+      },
+    };
+  }
 }
 
 // add extra accessors

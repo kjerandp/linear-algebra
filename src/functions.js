@@ -2,7 +2,11 @@ import { Vector } from './vector';
 import { Matrix } from './matrix';
 import { flatten } from './array';
 import op from './math';
-
+import {
+  constantIterator,
+  combinedIterator,
+  arrayIterator,
+} from './utils';
 import {
   DEG2RAD,
   RAD2DEG,
@@ -73,14 +77,25 @@ export function mix(a, b, t) {
     if (a.constructor !== b.constructor)
       throw Error('Unable to mix different types!');
 
-    const va = standardizeArgument(a);
-    const vb = standardizeArgument(b);
-
-    if (va.length !== vb.length)
-      throw Error('Values must have the same number of components!');
-
-    const ts = standardizeArgument(t);
-    const mixed = va.map((v, i) => op.mix(v, vb[i], i < ts.length ? ts[i] : ts[0]));
+    const mixed = [];
+    const iterators = [
+      arrayIterator(a._values),
+      arrayIterator(b._values),
+      t._values ? arrayIterator(t._values) : constantIterator(t),
+    ];
+    const itr = () => {
+      const va = iterators[0].next();
+      if (!va.done) {
+        const vb = iterators[1].next();
+        if (!vb.done) {
+          const vt = iterators[2].next();
+          mixed.push(op.mix(va.value, vb.value, vt.value));
+          return true;
+        }
+      }
+      return false;
+    };
+    while (itr());
 
     if (Array.isArray(a)) {
       return mixed;
@@ -94,8 +109,13 @@ export function clamp(val, min = 0, max = 1) {
   if (op.isDefined(val)) {
     return op.clamp(val, min, max);
   }
-  const arr = standardizeArgument(val);
-  const clamped = arr.map(v => op.clamp(v, min, max));
+  const itr = arrayIterator(val._values || val);
+  let v = itr.next();
+  const clamped = [];
+  while (!v.done) {
+    clamped.push(op.clamp(v.value, min, max));
+    v = itr.next();
+  }
   if (Array.isArray(val)) return clamped;
 
   return val.clone().copyFrom(clamped);

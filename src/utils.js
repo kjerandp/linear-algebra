@@ -18,3 +18,75 @@ export function range(size, start = 0, step = 1) {
   }
   return arr;
 }
+
+export function constantIterator(value, times = Infinity) {
+  let i = 0;
+  return {
+    next: () => (i++ < times ? ({
+      value,
+      done: false,
+    }) : ({ value: undefined, done: true })),
+  };
+}
+
+function array2dIterator(arr) {
+  let r = 0;
+  let c = 0;
+  const last = arr.length - 1;
+  return {
+    next: () => {
+      let value;
+      const done = r > last;
+      if (!done) {
+        value = arr[r][c];
+        c++;
+        if (c >= arr[r].length) {
+          r++;
+          c = 0;
+        }
+      }
+      return {
+        value,
+        done,
+      };
+    },
+  };
+}
+
+export function arrayIterator(arr) {
+  if (arr[0] && Array.isArray(arr[0])) return array2dIterator(arr);
+  let i = 0;
+  return {
+    next: () => {
+      const value = arr[i];
+      const done = i >= arr.length;
+      i++;
+      return {
+        value,
+        done,
+      };
+    },
+  };
+}
+
+export function combinedIterator(...iterators) {
+  const value = new Array(iterators.length);
+  let done = false;
+  const iterate = () => {
+    for (let i = 0; i < iterators.length; i++) {
+      const _c = iterators[i].next();
+      if (_c.done) {
+        done = true;
+        break;
+      }
+      value[i] = _c.value;
+    }
+    return {
+      value,
+      done,
+    };
+  };
+  return {
+    next: iterate,
+  };
+}

@@ -205,6 +205,24 @@ export class Vector {
     const squared = this._values.reduce((acc, c) => acc + c ** 2, 0);
     return Math.sqrt(squared);
   }
+
+  get count() {
+    return this.cols;
+  }
+
+  iterator() {
+    const _t = this;
+    let i = 0;
+    return {
+      next: () => {
+        const v = i >= this.cols ? undefined : _t[i++];
+        return {
+          value: v,
+          done: v === undefined,
+        };
+      },
+    };
+  }
 }
 
 // add getters and setters from accessors

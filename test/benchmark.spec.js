@@ -3,6 +3,8 @@ import { vec2 } from '../src/vector';
 import { mix, dot } from '../src/functions';
 import { range } from '../src/utils';
 
+const steps = 1000;
+
 const T = mat3(
   0,    -2,   3,
   2,    0,    2,
@@ -11,8 +13,6 @@ const T = mat3(
 
 const v = vec2(-1, -2);
 const columns = 20;
-const steps = 1;
-
 const w = 1000;
 const h = w * 0.75;
 const u = Math.ceil(w / columns);
