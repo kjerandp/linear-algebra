@@ -4,7 +4,7 @@
  */
 
 // import factory from './factory';
-import factory from '../optimalisations/factory';
+import factory from '../optimisations/factory';
 
 const op = factory();
 export default op;

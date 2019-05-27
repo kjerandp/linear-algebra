@@ -3,8 +3,8 @@ import {
   createArray1d,
   createArray2d,
   subArrayFrom,
-  rows,
-  cols,
+  nrows,
+  ncols,
   flatten,
 } from '../src/array';
 
@@ -15,8 +15,8 @@ describe('Array utils class', () => {
     expect(createArray1d(null, 4, 0)).toEqual([0, 0, 0, 0]);
 
     const a = createArray2d(2, 2);
-    expect(rows(a)).toBe(2);
-    expect(cols(a)).toBe(2);
+    expect(nrows(a)).toBe(2);
+    expect(ncols(a)).toBe(2);
     expect(a).toEqual([[undefined, undefined], [undefined, undefined]]);
   });
 
@@ -27,8 +27,8 @@ describe('Array utils class', () => {
       7, 8, 9,
     ], 3);
 
-    expect(rows(m)).toBe(3);
-    expect(cols(m)).toBe(3);
+    expect(nrows(m)).toBe(3);
+    expect(ncols(m)).toBe(3);
 
     expect(flatten(subArrayFrom(m, 1, 2, 2, 2))).toEqual([2, 3, 5, 6]);
 

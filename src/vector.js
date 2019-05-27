@@ -1,5 +1,5 @@
 /* eslint-disable object-property-newline */
-import { createArray1d, copyTo1d, assignTo1d } from './array';
+import { createArray1d, copyTo, assignTo } from './array';
 import { argumentsToList } from './utils';
 import op from './math';
 
@@ -53,7 +53,7 @@ export class Vector {
   shift(args) {
     if (args.length > 0 && args.length <= this.dim) {
       const swizzled = this.swizzle(args);
-      assignTo1d(this._values, (v, i) => (swizzled[i] === undefined ? v : swizzled[i]));
+      assignTo(this._values, (v, i) => (swizzled[i] === undefined ? v : swizzled[i]));
     }
     return this;
   }
@@ -72,9 +72,9 @@ export class Vector {
       [values] = values;
     }
     if (values.length === 1 && Number.isFinite(values[0])) {
-      assignTo1d(this._values, () => values[0]);
+      assignTo(this._values, () => values[0]);
     } else {
-      copyTo1d(this._values, argumentsToList(values));
+      copyTo(this._values, argumentsToList(values));
     }
     return this;
   }
@@ -110,7 +110,7 @@ export class Vector {
   add(...args) {
     args.forEach((val) => {
       const vc = argumentsToList(val);
-      assignTo1d(this._values, (v, i) => v + (vc[i] === undefined ? 0 : vc[i]));
+      assignTo(this._values, (v, i) => v + (vc[i] === undefined ? 0 : vc[i]));
     });
     return this;
   }
@@ -118,7 +118,7 @@ export class Vector {
   sub(...args) {
     args.forEach((val) => {
       const vc = argumentsToList(val);
-      assignTo1d(this._values, (v, i) => v - (vc[i] === undefined ? 0 : vc[i]));
+      assignTo(this._values, (v, i) => v - (vc[i] === undefined ? 0 : vc[i]));
     });
     return this;
   }
@@ -129,22 +129,22 @@ export class Vector {
       [arg] = arg;
     }
     if (Number.isFinite(arg)) {
-      assignTo1d(this._values, v => v * arg);
+      assignTo(this._values, v => v * arg);
     } else if (Array.isArray(arg) || arg instanceof Vector) {
       const vc = argumentsToList(arg);
-      assignTo1d(this._values, (v, i) => v * (vc[i] === undefined ? 0 : vc[i]));
+      assignTo(this._values, (v, i) => v * (vc[i] === undefined ? 0 : vc[i]));
     }
     return this;
   }
 
   clamp(min = 0, max = 1) {
-    assignTo1d(this._values, v => op.clamp(v, min, max));
+    assignTo(this._values, v => op.clamp(v, min, max));
     return this;
   }
 
   normalize() {
     const l = this.length;
-    assignTo1d(this._values, v => v / l);
+    assignTo(this._values, v => v / l);
     return this;
   }
 

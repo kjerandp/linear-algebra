@@ -4,13 +4,15 @@ export function createArray1d(values, columns, initValue) {
   }
   if (columns < 1) throw Error('Columns not a number!');
   const arr = new Array(columns);
-
-  for (let c = 0; c < arr.length; c++) {
-    if (values && c < values.length) {
+  let c = 0;
+  if (values) {
+    const itr = Math.min(values.length, columns);
+    for (; c < itr; c++) {
       arr[c] = values[c];
-    } else {
-      arr[c] = initValue;
     }
+  }
+  for (; c < columns; c++) {
+    arr[c] = initValue;
   }
   return arr;
 }
@@ -26,47 +28,67 @@ export function createArray2d(values, columns, rows, initValue) {
   if (columns < 1) throw Error('Columns not a number!');
   rows = rows || 1;
   const arr = new Array(rows);
+  const len = rows * columns;
   let i = 0;
-  for (let r = 0; r < arr.length; r++) {
-    arr[r] = new Array(columns);
-    for (let c = 0; c < arr[r].length; c++) {
-      if (values && i < values.length) {
-        arr[r][c] = values[i];
-      } else {
-        arr[r][c] = initValue;
+  let r = -1;
+  if (values) {
+    const itr = Math.min(len, values.length);
+    for (; i < itr; i++) {
+      const c = i % columns;
+      if (c === 0) {
+        r++;
+        arr[r] = new Array(columns);
       }
-      i++;
+      arr[r][c] = values[i];
     }
   }
+  for (; i < len; i++) {
+    const c = i % columns;
+    if (c === 0) {
+      r++;
+      arr[r] = new Array(columns);
+    }
+    arr[r][c] = initValue;
+  }
+
+  // for (let r = 0; r < arr.length; r++) {
+  //   arr[r] = new Array(columns);
+  //   for (let c = 0; c < columns; c++) {
+  //     arr[r][c] = values[i++];
+  //   }
+  //   for (let c = i; c < columns; c++) {
+  //     arr[r][c] = initValue;
+  //   }
+  // }
   return arr;
 }
 
-export function assignTo2d(arr, cb) {
-  for (let r = 0; r < arr.length; r++) {
-    for (let c = 0; c < arr[r].length; c++) {
-      arr[r][c] = cb(arr[r][c], c, r);
+export function assignTo(arr, cb) {
+  if (Array.isArray(arr[0])) {
+    for (let r = 0; r < arr.length; r++) {
+      for (let c = 0; c < arr[r].length; c++) {
+        arr[r][c] = cb(arr[r][c], c, r);
+      }
+    }
+  } else {
+    for (let c = 0; c < arr.length; c++) {
+      arr[c] = cb(arr[c], c);
     }
   }
 }
 
-export function assignTo1d(arr, cb) {
-  for (let c = 0; c < arr.length; c++) {
-    arr[c] = cb(arr[c], c);
-  }
-}
-
-export function copyTo2d(arr, values) {
-  let i = 0;
-  for (let r = 0; r < arr.length; r++) {
-    for (let c = 0; c < arr[0].length && i < values.length; c++) {
-      arr[r][c] = values[i++];
+export function copyTo(arr, values) {
+  if (Array.isArray(arr[0])) {
+    let i = 0;
+    for (let r = 0; r < arr.length; r++) {
+      for (let c = 0; c < arr[0].length && i < values.length; c++) {
+        arr[r][c] = values[i++];
+      }
     }
-  }
-}
-
-export function copyTo1d(arr, values) {
-  for (let c = 0; c < arr.length && c < values.length; c++) {
-    arr[c] = values[c];
+  } else {
+    for (let c = 0; c < arr.length && c < values.length; c++) {
+      arr[c] = values[c];
+    }
   }
 }
 
@@ -117,13 +139,13 @@ export function removeFrom(arr, i = 0, j = 0) {
   }
 }
 
-export function clone2d(arr) {
-  return arr.map(row => row.slice());
+export function clone(arr) {
+  return Array.isArray(arr[0]) ? arr.map(row => row.slice()) : arr.slice();
 }
 
-export const rows = arr => arr.length;
+export const nrows = arr => arr.length;
 
-export const cols = arr => arr && arr[0].length;
+export const ncols = arr => arr && arr[0].length;
 
 export const flatten = (inpArr) => {
   const arr = new Array(inpArr.length * inpArr[0].length);

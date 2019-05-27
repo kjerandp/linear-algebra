@@ -3,16 +3,16 @@ import {
   determinant2d,
   determinant3d,
   determinant4d,
-} from './optimalisations/matrix';
+} from './optimisations/determinant';
 import {
   createArray2d,
-  assignTo2d,
-  copyTo2d,
+  assignTo,
+  copyTo,
   transpose,
   subArrayFrom,
   removeFrom,
   flatten,
-  clone2d,
+  clone,
 } from './array';
 import { argumentsToList } from './utils';
 import op from './math';
@@ -27,7 +27,7 @@ export class Matrix {
       if (Array.isArray(values[0]) && !cols) {
         cols = values[0].length;
         rows = values.length;
-        this._values = clone2d(values);
+        this._values = clone(values);
       } else {
         this._values = createArray2d(argumentsToList(values, false), cols, rows, 0);
       }
@@ -48,7 +48,7 @@ export class Matrix {
       throw Error('Vectors must be of the same dimension!');
     }
     const m = createArray2d(null, vect.length, l);
-    assignTo2d(m, (foo, c, r) => vect[c].get(r));
+    assignTo(m, (foo, c, r) => vect[c].get(r));
     return new Matrix(m);
   }
 
@@ -61,9 +61,9 @@ export class Matrix {
       [values] = values;
     }
     if (values.length === 1 && op.isDefined(values[0])) {
-      assignTo2d(this._values, () => values[0]);
+      assignTo(this._values, () => values[0]);
     } else {
-      copyTo2d(this._values, argumentsToList(values));
+      copyTo(this._values, argumentsToList(values));
     }
     return this;
   }
@@ -112,7 +112,7 @@ export class Matrix {
   }
 
   clamp(min = 0, max = 1) {
-    assignTo2d(this._values, v => op.clamp(v, min, max));
+    assignTo(this._values, v => op.clamp(v, min, max));
     return this;
   }
 
@@ -126,7 +126,7 @@ export class Matrix {
     args.forEach((m) => {
       if (this.rows !== m.rows || this.cols !== m.cols)
         throw Error('Matrices must be of same size!');
-      assignTo2d(this._values, (v, c, r) => op.add(v, m._values[r][c]));
+      assignTo(this._values, (v, c, r) => op.add(v, m._values[r][c]));
     });
     return this;
   }
@@ -135,7 +135,7 @@ export class Matrix {
     args.forEach((m) => {
       if (this.rows !== m.rows || this.cols !== m.cols)
         throw Error('Matrices must be of same size!');
-      assignTo2d(this._values, (v, c, r) => op.subtract(v, m._values[r][c]));
+      assignTo(this._values, (v, c, r) => op.subtract(v, m._values[r][c]));
     });
     return this;
   }
@@ -179,13 +179,13 @@ export class Matrix {
 
   scale(factor) {
     if (Number.isFinite(factor)) {
-      assignTo2d(this._values, v => op.multiply(v, factor));
+      assignTo(this._values, v => op.multiply(v, factor));
     }
     return this;
   }
 
   negate() {
-    assignTo2d(this._values, v => op.negate(v));
+    assignTo(this._values, v => op.negate(v));
     return this;
   }
 
