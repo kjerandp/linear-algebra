@@ -1,68 +1,3 @@
-export function createArray1d(values, columns, initValue) {
-  if (values && values.length) {
-    columns = columns > 0 ? columns : values.length;
-  }
-  if (columns < 1) throw Error('Columns not a number!');
-  const arr = new Array(columns);
-  let c = 0;
-  if (values) {
-    const itr = Math.min(values.length, columns);
-    for (; c < itr; c++) {
-      arr[c] = values[c];
-    }
-  }
-  for (; c < columns; c++) {
-    arr[c] = initValue;
-  }
-  return arr;
-}
-
-export function createArray2d(values, columns, rows, initValue) {
-  if (values && values.length) {
-    rows = Math.ceil(values.length / columns);
-  }
-  if (Number.isFinite(values)) {
-    rows = values;
-    values = null;
-  }
-  if (columns < 1) throw Error('Columns not a number!');
-  rows = rows || 1;
-  const arr = new Array(rows);
-  const len = rows * columns;
-  let i = 0;
-  let r = -1;
-  if (values) {
-    const itr = Math.min(len, values.length);
-    for (; i < itr; i++) {
-      const c = i % columns;
-      if (c === 0) {
-        r++;
-        arr[r] = new Array(columns);
-      }
-      arr[r][c] = values[i];
-    }
-  }
-  for (; i < len; i++) {
-    const c = i % columns;
-    if (c === 0) {
-      r++;
-      arr[r] = new Array(columns);
-    }
-    arr[r][c] = initValue;
-  }
-
-  // for (let r = 0; r < arr.length; r++) {
-  //   arr[r] = new Array(columns);
-  //   for (let c = 0; c < columns; c++) {
-  //     arr[r][c] = values[i++];
-  //   }
-  //   for (let c = i; c < columns; c++) {
-  //     arr[r][c] = initValue;
-  //   }
-  // }
-  return arr;
-}
-
 export function assignTo(arr, cb) {
   if (Array.isArray(arr[0])) {
     for (let r = 0; r < arr.length; r++) {
@@ -80,13 +15,17 @@ export function assignTo(arr, cb) {
 export function copyTo(arr, values) {
   if (Array.isArray(arr[0])) {
     let i = 0;
-    for (let r = 0; r < arr.length; r++) {
-      for (let c = 0; c < arr[0].length && i < values.length; c++) {
+    const ncols = arr[0].length;
+    const nrows = arr.length;
+    for (let r = 0; r < nrows; r++) {
+      for (let c = 0; c < ncols; c++) {
+        if (i >= values.length) return;
         arr[r][c] = values[i++];
       }
     }
   } else {
-    for (let c = 0; c < arr.length && c < values.length; c++) {
+    const l = Math.min(arr.length, values.length);
+    for (let c = 0; c < l; c++) {
       arr[c] = values[c];
     }
   }
@@ -157,3 +96,47 @@ export const flatten = (inpArr) => {
   }
   return arr;
 };
+
+export function createArray1d(values, columns, initValue) {
+  if (values) {
+    columns = columns > 0 ? columns : values.length;
+    const arr = new Array(columns);
+    for (let c = 0; c < arr.length; c++) {
+      arr[c] = c < values.length ? values[c] : initValue;
+    }
+    return arr;
+  }
+  if (columns < 1) throw Error('Columns not a number!');
+
+  return new Array(columns).fill(initValue);
+}
+
+export function createArray2d(values, columns, rows, initValue) {
+  if (values) {
+    if (values.length) {
+      rows = Math.ceil(values.length / columns);
+    } else if (Number.isFinite(values)) {
+      rows = values;
+      values = null;
+    }
+  } else {
+    rows = rows || 1;
+  }
+  if (columns < 1) throw Error('Columns not a number!');
+  const arr = new Array(rows);
+  if (values) {
+    let k = 0;
+    for (let i = 0; i < arr.length; i++) {
+      arr[i] = new Array(columns);
+      for (let j = 0; j < columns; j++) {
+        arr[i][j] = k < values.length ? values[k++] : initValue;
+      }
+    }
+  } else {
+    for (let i = 0; i < arr.length; i++) {
+      arr[i] = new Array(columns);
+      if (initValue !== undefined) arr[i].fill(initValue);
+    }
+  }
+  return arr;
+}

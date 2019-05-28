@@ -4,7 +4,6 @@ import { flatten } from './array';
 import op from './math';
 import {
   constantIterator,
-  combinedIterator,
   arrayIterator,
 } from './utils';
 import {
@@ -97,6 +96,16 @@ export function mix(a, b, t) {
     };
     while (itr());
 
+    // const va = standardizeArgument(a);
+    // const vb = standardizeArgument(b);
+
+    // if (va.length !== vb.length)
+    //   throw Error('Values must have the same number of components!');
+
+    // const ts = standardizeArgument(t);
+
+    // const mixed = va.map((v, i) => op.mix(v, vb[i], i < ts.length ? ts[i] : ts[0]));
+
     if (Array.isArray(a)) {
       return mixed;
     }
@@ -116,6 +125,9 @@ export function clamp(val, min = 0, max = 1) {
     clamped.push(op.clamp(v.value, min, max));
     v = itr.next();
   }
+  // const arr = standardizeArgument(val);
+  // const clamped = arr.map(v => op.clamp(v, min, max));
+
   if (Array.isArray(val)) return clamped;
 
   return val.clone().copyFrom(clamped);

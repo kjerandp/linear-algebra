@@ -1,10 +1,17 @@
 
-export function argumentsToList(arg, rec = true, values = []) {
-  if (arg && arg._values) {
+export function argumentsToList(arg = [], rec = true, values = []) {
+  if (arg._values) {
     arg = arg._values;
   }
+
   if (rec && Array.isArray(arg)) {
-    arg.forEach(v => argumentsToList(v, rec, values));
+    arg.forEach((v) => {
+      if (v._values || Array.isArray(v)) {
+        argumentsToList(v, rec, values);
+      } else {
+        values.push(v);
+      }
+    });
   } else {
     values.push(arg);
   }
@@ -21,11 +28,21 @@ export function range(size, start = 0, step = 1) {
 
 export function constantIterator(value, times = Infinity) {
   let i = 0;
+  const res = {
+    value: undefined,
+    done: false,
+  };
   return {
-    next: () => (i++ < times ? ({
-      value,
-      done: false,
-    }) : ({ value: undefined, done: true })),
+    next: () => {
+      if (i >= times) {
+        res.done = true;
+        res.value = undefined;
+      } else {
+        res.value = value;
+      }
+      i++;
+      return res;
+    },
   };
 }
 
@@ -33,22 +50,24 @@ function array2dIterator(arr) {
   let r = 0;
   let c = 0;
   const last = arr.length - 1;
+  const res = {
+    value: undefined,
+    done: false,
+  };
   return {
     next: () => {
-      let value;
-      const done = r > last;
-      if (!done) {
-        value = arr[r][c];
+      if (r > last) {
+        res.done = true;
+        res.value = undefined;
+      } else {
+        res.value = arr[r][c];
         c++;
         if (c >= arr[r].length) {
           r++;
           c = 0;
         }
       }
-      return {
-        value,
-        done,
-      };
+      return res;
     },
   };
 }
@@ -56,15 +75,20 @@ function array2dIterator(arr) {
 export function arrayIterator(arr) {
   if (arr[0] && Array.isArray(arr[0])) return array2dIterator(arr);
   let i = 0;
+  const res = {
+    value: undefined,
+    done: false,
+  };
   return {
     next: () => {
-      const value = arr[i];
-      const done = i >= arr.length;
+      if (i >= arr.length) {
+        res.done = true;
+        res.value = undefined;
+      } else {
+        res.value = arr[i];
+      }
       i++;
-      return {
-        value,
-        done,
-      };
+      return res;
     },
   };
 }

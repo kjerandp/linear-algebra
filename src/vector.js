@@ -196,8 +196,14 @@ export class Vector {
   }
 
   set dim(v) {
-    if (v >= 2 && v <= 4 && v !== this.dim) {
-      this._values = createArray1d(this._values, v, 0);
+    const l = this._values.length;
+    if (v >= 2 && v <= 4 && v !== l) {
+      if (v < l) {
+        this._values.splice(v);
+      } else {
+        this._values.length = v;
+        this._values.fill(0, l);
+      }
     }
   }
 

@@ -10,7 +10,7 @@ import {
   row4,
 } from '../src/matrix';
 import { vec2, vec3, vec4 } from '../src/vector';
-import { range } from '../src/utils';
+import { range, argumentsToList } from '../src/utils';
 import op from '../src/math';
 // import { timer } from './timer';
 
@@ -27,15 +27,15 @@ describe('Matrix class tests', () => {
     expect(new Matrix(1, 4)).toEqual(row4());
     expect(new Matrix(4, 1)).toEqual(col4());
 
-    let m = mat2(1, 1);
+    let m = mat2(1, 1, 0, 0);
     expect(m.rows).toBe(2);
     expect(m.cols).toBe(2);
     expect(m.toArray(1)).toEqual([1, 1, 0, 0]);
 
-    m.copyFrom(vec4(vec2(1, 2), 3, 4));
+    m.copyFrom(argumentsToList(vec4(vec2(1, 2), 3, 4)));
     expect(m.toArray()).toEqual([1, 2, 3, 4]);
 
-    m.copyFrom([[1, 2], 3, 4]);
+    m.copyFrom(argumentsToList([[1, 2], 3, 4]));
     expect(m.toArray()).toEqual([1, 2, 3, 4]);
 
     m = mat2(1, 2, 3, 4);
@@ -61,7 +61,7 @@ describe('Matrix class tests', () => {
     ];
 
     expect(Matrix.identity().toArray(2)).toEqual(identity);
-    expect(new Matrix().toArray(2)).toEqual([
+    expect(new Matrix().copyFrom(0).toArray(2)).toEqual([
       [0, 0, 0, 0],
       [0, 0, 0, 0],
       [0, 0, 0, 0],
@@ -93,12 +93,12 @@ describe('Matrix class tests', () => {
   });
 
   it('Can do basic matrix arithmetics', () => {
-    expect(mat2(1, 2, 3, 4).add(mat2(1, 1)).toArray(2)).toEqual([
+    expect(mat2(1, 2, 3, 4).add(mat2(1, 1, 0, 0)).toArray(2)).toEqual([
       [2, 3],
       [3, 4],
     ]);
 
-    expect(mat2(1, 2, 3, 4).sub(mat2(1, 1)).toArray(2)).toEqual([
+    expect(mat2(1, 2, 3, 4).sub(mat2(1, 1, 0, 0)).toArray(2)).toEqual([
       [0, 1],
       [3, 4],
     ]);
@@ -128,7 +128,10 @@ describe('Matrix class tests', () => {
 
   it('Can find matrix determinant', () => {
     expect(() => col4().det()).toThrow('Matrix must be square!');
-    expect(mat3(-2, 2, 3, -1, 1, 3, 2, 0, -1).det()).toBe(6);
+    const m = mat3(-2, 2, 3, -1, 1, 3, 2, 0, -1);
+    expect(m.det()).toBe(6);
+    m._optimise = false;
+    expect(m.det()).toBe(6);
     expect(Matrix.identity(10).det()).toBe(1);
     expect(Matrix.identity(9).det()).toBe(1);
   });

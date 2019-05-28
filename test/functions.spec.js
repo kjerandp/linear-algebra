@@ -93,10 +93,10 @@ describe('Functions tests', () => {
     expect(dot(m2, v1)).toEqual(vec3(6, -2, -7));
     expect(dot(v1, m2)).toEqual(vec3(-3, -8, -1));
     expect(() => dot(m3, v1)).toThrow();
-    expect(dot(m4, v1)).toEqual(vec3(6, -2, 0));
+    expect(dot(m4, v1)).toEqual(vec2(6, -2));
     expect(dot(m2, v2)).toEqual(vec3(-15, -7, 17.5));
     expect(() => dot(m3, v2)).toThrow();
-    expect(dot(m4, v2)).toEqual(vec3(-15, -7, 0));
+    expect(dot(m4, v2)).toEqual(vec2(-15, -7));
 
     // convert vector to homogeneous coordinates if vector are of a lower dim than matrix
     expect(dot(m2, vec2(2, -2))).toEqual(vec2(6, -2));
@@ -136,6 +136,8 @@ describe('Functions tests', () => {
 
   it('Can use operator functions for matrix arithmetic', () => {
     const m = mat4(1, 2, 3, -4, -5, -6, 7, 8, 9, 10, 11, 12, -13, 14, 15, 16);
+    expect(m.det()).toBe(25344);
+    m._optimise = false;
     expect(m.det()).toBe(25344);
     expect(det(m)).toBe(m.det());
     const im = m.invert();
