@@ -1,6 +1,6 @@
 import { ncols, clone, removeFrom } from '../array';
 
-export default function determinant(m) {
+function determinantRec(m) {
   if (m.length === 1) return m[0][0];
 
   let d = 0;
@@ -9,8 +9,8 @@ export default function determinant(m) {
     const v = m[0][c];
     if (v === 0) continue;
     const sm = clone(m);
-    removeFrom(sm, c + 1, 1);
-    let cofactor = determinant(sm);
+    removeFrom(sm, 1, c + 1);
+    let cofactor = determinantRec(sm);
 
     if (c % 2 === 1) {
       cofactor = -cofactor;
@@ -60,4 +60,17 @@ export function determinant4d(v) {
     v[0][1] * v[1][0] * v[2][2] * v[3][3] +
     v[0][0] * v[1][1] * v[2][2] * v[3][3];
   return value;
+}
+
+export default function determinant(m) {
+  if (m.rows === 1) {
+    return m._values[0];
+  } else if (m.rows === 2 && m._optimise) {
+    return determinant2d(m._values);
+  } else if (m.rows === 3 && m._optimise) {
+    return determinant3d(m._values);
+  } else if (m.rows === 4 && m._optimise) {
+    return determinant4d(m._values);
+  }
+  return determinantRec(m._values);
 }

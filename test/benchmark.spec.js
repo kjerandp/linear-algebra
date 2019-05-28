@@ -1,9 +1,11 @@
+/* eslint-disable no-unused-vars */
 import { Matrix, mat3 } from '../src/matrix';
-import { vec2 } from '../src/vector';
+import { vec2, Vector } from '../src/vector';
 import { mix, dot } from '../src/functions';
+import op from '../src/math';
 import { range } from '../src/utils';
 
-const steps = 1000;
+const steps = 0;
 
 const T = mat3(
   0,    -2,   3,
@@ -30,27 +32,70 @@ const points = range(columns ** 2).map(i => vec2(
   (i % columns) - columns / 2,
 ));
 
-function drawPoints(t) {
+function processPoints(t) {
   // eslint-disable-next-line arrow-parens
   points.forEach(c => {
     dot(t, c);
   });
 }
 
-function drawBasisVectors(t) {
+function processBasisVectors(t) {
   dot(t, vec2(0, 0));
   dot(t, vec2(1, 0));
   dot(t, vec2(0, 1));
 }
 
-function drawVector(t) {
+function processVector(t) {
   dot(t, vec2(0, 0));
   dot(t, v);
 }
 
+it('create vectors', () => {
+  const values = [Math.random(), Math.random()];
+  for (let i = 0; i < steps * 1000; i++) {
+    const foo = new Vector(values);
+  }
+});
+
+it('clone vectors', () => {
+  const values = [Math.random(), Math.random()];
+  const foo = new Vector(values);
+  for (let i = 0; i < steps * 1000; i++) {
+    const bar = foo.clone();
+  }
+});
+
+it('create matrices', () => {
+  const values = [
+    Math.random(), Math.random(), Math.random,
+    Math.random(), Math.random(), Math.random,
+    Math.random(), Math.random(), Math.random,
+  ];
+  for (let i = 0; i < steps * 1000; i++) {
+    const foo = new Matrix(3, 3).copyFrom(values);
+  }
+});
+
+it('clone matrices', () => {
+  const values = [
+    Math.random(), Math.random(), Math.random,
+    Math.random(), Math.random(), Math.random,
+    Math.random(), Math.random(), Math.random,
+  ];
+  const foo = new Matrix(3, 3).copyFrom(values);
+  for (let i = 0; i < steps * 1000; i++) {
+    const bar = foo.clone();
+  }
+});
+
 it('mix', () => {
   for (let i = 0; i < steps * 100; i++)
     mix(I, T, 0.5);
+});
+
+
+it('mixValues', () => {
+  range(steps * 1000).forEach(val => op.mix(val, val + 1, 0.5));
 });
 
 it('accessing elements in matrix', () => {
@@ -76,13 +121,13 @@ it('Benchmarking', () => {
     const t = dot(proj, m);
 
     // original
-    drawPoints(basis);
-    drawBasisVectors(basis);
-    drawVector(basis);
+    processPoints(basis);
+    processBasisVectors(basis);
+    processVector(basis);
 
     // transformed
-    drawPoints(t);
-    drawBasisVectors(t);
-    drawVector(t);
+    processPoints(t);
+    processBasisVectors(t);
+    processVector(t);
   }
 });

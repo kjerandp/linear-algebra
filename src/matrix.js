@@ -1,13 +1,7 @@
 import { Vector } from './vector';
 import {
-  determinant2d,
-  determinant3d,
-  determinant4d,
-} from './optimisations/determinant';
-import {
   createArray2d,
   assignTo,
-  copyTo,
   transpose,
   subArrayFrom,
   removeFrom,
@@ -19,18 +13,14 @@ import op from './math';
 
 export class Matrix {
   constructor(rows = 4, cols) {
-    if (rows > 0) {
+    if (Array.isArray(rows) && Array.isArray(rows[0]) && !cols) {
+      this._values = rows.map(row => row.slice());
+    } else if (rows > 0) {
       cols = cols || rows;
-      this._values = createArray2d(null, cols, rows, 0);
+      this._values = createArray2d(null, cols, rows);
     } else {
       const values = rows;
-      if (Array.isArray(values[0]) && !cols) {
-        cols = values[0].length;
-        rows = values.length;
-        this._values = clone(values);
-      } else {
-        this._values = createArray2d(argumentsToList(values, false), cols, rows, 0);
-      }
+      this._values = createArray2d(argumentsToList(values, false), cols, rows, 0);
     }
     this._optimise = true;
   }
@@ -60,10 +50,16 @@ export class Matrix {
     if (values.length === 1 && Array.isArray(values[0])) {
       [values] = values;
     }
-    if (values.length === 1 && op.isDefined(values[0])) {
+    if (values.length === 1) {
       assignTo(this._values, () => values[0]);
     } else {
-      copyTo(this._values, argumentsToList(values));
+      let i = 0;
+      for (let r = 0; r < this.rows; r++) {
+        for (let c = 0; c < this.cols; c++) {
+          if (i >= values.length) return this;
+          this._values[r][c] = values[i++];
+        }
+      }
     }
     return this;
   }
@@ -147,9 +143,9 @@ export class Matrix {
     let b = arg._values;
 
     if (bIsVec) {
-      b = arg._values.slice();
       // make homogeneous
-      if (b.length < this.cols) {
+      if (arg._values.length < this.cols) {
+        b = arg._values.slice();
         for (let i = b.length; i < a.length; i++) {
           const v = i === a.length - 1 ? 1 : 0;
           b.push(v);
@@ -161,7 +157,11 @@ export class Matrix {
     const v = op.dotProduct(a, b || arg);
 
     if (bIsVec) {
-      return new Vector(v).dimensions(arg.dim);
+      const comp = v.map(val => val[0]);
+      if (arg._values.length < comp.length) {
+        comp.splice(arg._values.length);
+      }
+      return new Vector(comp);
     }
 
     return new Matrix(v);
@@ -199,20 +199,9 @@ export class Matrix {
     return this;
   }
 
-  // TODO: optimised versions
   det() {
     if (!this.isSquare) throw Error('Matrix must be square!');
-
-    if (this.rows === 1) {
-      return this._values[0];
-    } else if (this.rows === 2 && this._optimise) {
-      return determinant2d(this._values);
-    } else if (this.rows === 3 && this._optimise) {
-      return determinant3d(this._values);
-    } else if (this.rows === 4 && this._optimise) {
-      return determinant4d(this._values);
-    }
-    return op.determinant(this._values);
+    return op.determinant(this);
   }
 
   invert() {
@@ -220,7 +209,7 @@ export class Matrix {
     if (!this.isSquare) {
       inverse = null;
     } else {
-      inverse = op.inverse(this.toArray(2));
+      inverse = op.inverse(clone(this._values));
     }
     if (inverse) {
       this._values = inverse;
@@ -232,7 +221,7 @@ export class Matrix {
 
   toArray(dim = 1, inRowMajor = true) {
     if (dim === 2) {
-      return inRowMajor ? this._values.slice() : transpose(this._values);
+      return inRowMajor ? clone(this._values) : transpose(this._values);
     }
     const arr = this._values;
     if (!inRowMajor) transpose(arr);

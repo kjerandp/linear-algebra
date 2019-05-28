@@ -1,10 +1,9 @@
 import identityMatrixFactory from './identity';
-import { rows } from '../array';
 
 export default (op) => {
   const identityMatrix = identityMatrixFactory(op);
   return (m) => {
-    const dim = rows(m);
+    const dim = m.length;
     const r = identityMatrix(dim, op);
 
     for (let i = 0; i < dim; i++) {
