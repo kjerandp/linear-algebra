@@ -106,6 +106,40 @@ describe('Functions tests', () => {
     expect(dot(Matrix.identity(4), vec2(2, -2))).toEqual(vec2(2, -2));
   });
 
+  it('Can transform from one dimension to another', () => {
+    // 3d to 2d
+    let m = new Matrix([
+      [2, 0, 0],
+      [0, 3, 0],
+    ]);
+    let v = vec3(2, -2, 4);
+
+    let t = m.dot(v);
+    expect(t.dim).toBe(2);
+    expect(t.toArray()).toEqual([4, -6]);
+
+    // 3d to 1d
+    m = new Matrix([
+      [2, 0, 0],
+    ]);
+    v = vec3(2, -2, 4);
+
+    t = m.dot(v);
+    expect(t).toBe(4);
+
+    // 2d to 3d
+    m = new Matrix([
+      [1, 0],
+      [0, 1],
+      [1, 1],
+    ]);
+
+    v = vec2(2, -5);
+    t = m.dot(v);
+    expect(t.dim).toBe(3);
+    expect(t.toArray()).toEqual([2, -5, -3]);
+  });
+
   it('Can use operator functions for vector arithmetics', () => {
     const i = vec3(1, 0, 0);
     const j = vec3(0, 1, 0);

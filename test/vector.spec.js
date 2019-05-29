@@ -255,4 +255,9 @@ describe('Vector class tests', () => {
     expect(vec3(1, 2, 3).clamp(1.7, 2.5).toArray()).toEqual([1.7, 2, 2.5]);
     expect(vec2(1, 2).clamp(1, 2).toArray()).toEqual([1, 2]);
   });
+
+  it('Can find distance between vectors', () => {
+    expect(vec3(0, 0, 0).distance(vec3(3, 0, 0))).toBe(3);
+    expect(vec3(1, 2, -4).distance(vec3(3, 3, 0))).toBeCloseTo(4.582575);
+  });
 });

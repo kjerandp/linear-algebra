@@ -182,6 +182,13 @@ export class Vector {
     return new Vector(res);
   }
 
+  distance(v) {
+    if (!v || v.dim !== this.dim) throw Error('Invalid argument!');
+    const squares = this._values.reduce((sum, c, i) =>
+      sum + (c - v._values[i]) ** 2, 0);
+    return squares ? Math.sqrt(squares) : 0;
+  }
+
   dimensions(v) {
     this.dim = v;
     return this;

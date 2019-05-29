@@ -50,84 +50,86 @@ function processVector(t) {
   dot(t, v);
 }
 
-it('create vectors', () => {
-  const values = [Math.random(), Math.random()];
-  for (let i = 0; i < steps * 1000; i++) {
+describe('Benchmarking', () => {
+  it('create vectors', () => {
+    const values = [Math.random(), Math.random()];
+    for (let i = 0; i < steps * 1000; i++) {
+      const foo = new Vector(values);
+    }
+  });
+
+  it('clone vectors', () => {
+    const values = [Math.random(), Math.random()];
     const foo = new Vector(values);
-  }
-});
+    for (let i = 0; i < steps * 1000; i++) {
+      const bar = foo.clone();
+    }
+  });
 
-it('clone vectors', () => {
-  const values = [Math.random(), Math.random()];
-  const foo = new Vector(values);
-  for (let i = 0; i < steps * 1000; i++) {
-    const bar = foo.clone();
-  }
-});
+  it('create matrices', () => {
+    const values = [
+      Math.random(), Math.random(), Math.random,
+      Math.random(), Math.random(), Math.random,
+      Math.random(), Math.random(), Math.random,
+    ];
+    for (let i = 0; i < steps * 1000; i++) {
+      const foo = new Matrix(3, 3).copyFrom(values);
+    }
+  });
 
-it('create matrices', () => {
-  const values = [
-    Math.random(), Math.random(), Math.random,
-    Math.random(), Math.random(), Math.random,
-    Math.random(), Math.random(), Math.random,
-  ];
-  for (let i = 0; i < steps * 1000; i++) {
+  it('clone matrices', () => {
+    const values = [
+      Math.random(), Math.random(), Math.random,
+      Math.random(), Math.random(), Math.random,
+      Math.random(), Math.random(), Math.random,
+    ];
     const foo = new Matrix(3, 3).copyFrom(values);
-  }
-});
+    for (let i = 0; i < steps * 1000; i++) {
+      const bar = foo.clone();
+    }
+  });
 
-it('clone matrices', () => {
-  const values = [
-    Math.random(), Math.random(), Math.random,
-    Math.random(), Math.random(), Math.random,
-    Math.random(), Math.random(), Math.random,
-  ];
-  const foo = new Matrix(3, 3).copyFrom(values);
-  for (let i = 0; i < steps * 1000; i++) {
-    const bar = foo.clone();
-  }
-});
-
-it('mix', () => {
-  for (let i = 0; i < steps * 100; i++)
-    mix(I, T, 0.5);
-});
+  it('mix', () => {
+    for (let i = 0; i < steps * 100; i++)
+      mix(I, T, 0.5);
+  });
 
 
-it('mixValues', () => {
-  range(steps * 1000).forEach(val => op.mix(val, val + 1, 0.5));
-});
+  it('mixValues', () => {
+    range(steps * 1000).forEach(val => op.mix(val, val + 1, 0.5));
+  });
 
-it('accessing elements in matrix', () => {
-  for (let i = 0; i < steps * 100; i++) {
-    for (let r = 0; r < T.rows; r++) {
-      for (let c = 0; c < T.cols; c++) {
-        T.get(r + 1, c + 1);
+  it('accessing elements in matrix', () => {
+    for (let i = 0; i < steps * 100; i++) {
+      for (let r = 0; r < T.rows; r++) {
+        for (let c = 0; c < T.cols; c++) {
+          T.get(r + 1, c + 1);
+        }
       }
     }
-  }
-});
+  });
 
-it('dotting', () => {
-  for (let i = 0; i < steps * 100; i++)
-    dot(proj, T);
-});
+  it('dotting', () => {
+    for (let i = 0; i < steps * 100; i++)
+      dot(proj, T);
+  });
 
-it('Benchmarking', () => {
-  const basis = dot(proj, I);
+  it('Projection and transformation of vectors', () => {
+    const basis = dot(proj, I);
 
-  for (let n = 0; n <= steps; n++) {
-    const m = mix(I, T, n / steps);
-    const t = dot(proj, m);
+    for (let n = 0; n <= steps; n++) {
+      const m = mix(I, T, n / steps);
+      const t = dot(proj, m);
 
-    // original
-    processPoints(basis);
-    processBasisVectors(basis);
-    processVector(basis);
+      // original
+      processPoints(basis);
+      processBasisVectors(basis);
+      processVector(basis);
 
-    // transformed
-    processPoints(t);
-    processBasisVectors(t);
-    processVector(t);
-  }
+      // transformed
+      processPoints(t);
+      processBasisVectors(t);
+      processVector(t);
+    }
+  });
 });

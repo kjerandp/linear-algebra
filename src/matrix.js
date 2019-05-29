@@ -141,10 +141,11 @@ export class Matrix {
 
     const a = this._values;
     let b = arg._values;
-
+    let altered = false;
     if (bIsVec) {
-      // make homogeneous
       if (arg._values.length < this.cols) {
+        // make homogeneous
+        altered = true;
         b = arg._values.slice();
         for (let i = b.length; i < a.length; i++) {
           const v = i === a.length - 1 ? 1 : 0;
@@ -158,10 +159,10 @@ export class Matrix {
 
     if (bIsVec) {
       const comp = v.map(val => val[0]);
-      if (arg._values.length < comp.length) {
+      if (altered && arg._values.length < comp.length) {
         comp.splice(arg._values.length);
       }
-      return new Vector(comp);
+      return comp.length > 1 ? new Vector(comp) : comp[0];
     }
 
     return new Matrix(v);

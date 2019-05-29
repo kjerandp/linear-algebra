@@ -57,6 +57,13 @@ export function cross(a, b) {
   throw Error('Only defined for vectors!');
 }
 
+export function dist(a, b) {
+  if (a instanceof Vector && b instanceof Vector) {
+    return a.distance(b);
+  }
+  throw Error('Only defined for vectors!');
+}
+
 export function norm(v) {
   if (v instanceof Vector) {
     return v.clone().normalize();
