@@ -24,18 +24,27 @@ function standardizeArgument(arg) {
 }
 
 export function add(a, b) {
+  if (Array.isArray(a)) {
+    return a.map((v, i) => (i < b.length ? op.add(v, b[i]) : v));
+  }
   if (a.constructor !== b.constructor)
     throw Error('Unable to add different types!');
   return a.clone().add(b);
 }
 
 export function sub(a, b) {
+  if (Array.isArray(a)) {
+    return a.map((v, i) => (i < b.length ? op.subtract(v, b[i]) : v));
+  }
   if (a.constructor !== b.constructor)
     throw Error('Unable to subtract different types!');
   return a.clone().sub(b);
 }
 
 export function scale(v, f) {
+  if (Array.isArray(v)) {
+    return v.map(n => op.multiply(n, f));
+  }
   if (!Number.isFinite(f) && v.constructor !== f.constructor)
     throw Error('Unable to scale different types!');
   return v.clone().scale(f);
@@ -60,6 +69,10 @@ export function cross(a, b) {
 export function dist(a, b) {
   if (a instanceof Vector && b instanceof Vector) {
     return a.distance(b);
+  } else if (Array.isArray(a)) {
+    const c = sub(b, a);
+    const sumOfSquares = c.reduce((sum, v) => op.add(sum, op.pow(v, 2)), op.zero());
+    return op.pow(sumOfSquares, op.identity(0.5));
   }
   throw Error('Only defined for vectors!');
 }
@@ -213,3 +226,21 @@ export function nrad(r) {
   return (v < 0 ? v + TAU : v);
 }
 
+export function round(val, digits = 1) {
+  if (op.isDefined(val)) {
+    return op.roundTo(val, digits);
+  }
+  const itr = arrayIterator(val._values || val);
+  let v = itr.next();
+  const rounded = [];
+  while (!v.done) {
+    rounded.push(op.roundTo(v.value, digits));
+    v = itr.next();
+  }
+  // const arr = standardizeArgument(val);
+  // const clamped = arr.map(v => op.clamp(v, min, max));
+
+  if (Array.isArray(val)) return rounded;
+
+  return val.clone().copyFrom(rounded);
+}

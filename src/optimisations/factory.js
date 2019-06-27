@@ -3,6 +3,7 @@ import determinant from './determinant';
 import inverse from './inverse';
 import identityMatrix from './identity';
 import { clamp, mix, step, smoothstep } from './interpolation';
+import roundTo from './round-to';
 import numberTypeInterface from '../math/number-interface';
 
 export default (op = numberTypeInterface) => ({
@@ -35,6 +36,7 @@ export default (op = numberTypeInterface) => ({
     }
   },
   clamp,
+  roundTo,
   dotProduct,
   determinant,
   inverse,

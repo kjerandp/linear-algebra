@@ -21,6 +21,8 @@ import {
   deg,
   rad,
   nrad,
+  round,
+  dist,
 } from '../src/functions';
 
 describe('Functions tests', () => {
@@ -166,6 +168,9 @@ describe('Functions tests', () => {
     expect(norm(v)).toEqual(i);
     expect(norm(v).length).toBe(1);
     expect(v.length).toBe(7);
+
+    // using arrays
+    expect(add([1, 5], [2, 2])).toEqual([3, 7]);
   });
 
   it('Can use operator functions for matrix arithmetic', () => {
@@ -260,5 +265,19 @@ describe('Functions tests', () => {
     expect(nrad(-SPI)).toBe(TAU - SPI);
     expect(nrad(-TAU)).toBe(-0);
     expect(nrad(-TAU - SPI)).toBe(TAU - SPI);
+  });
+
+  it('Can round vectors and values', () => {
+    expect(round(1.2253455, 2)).toBe(1.23);
+    expect(round(1.2253455, 1)).toBe(1.2);
+    expect(round(1.2253455, 6)).toBe(1.225346);
+    const v = vec4(1.12345, 2.23321, 3.321, 4.033);
+    expect(round(v, 1)).toEqual(vec4(1.1, 2.2, 3.3, 4));
+  });
+
+  it('Can find distance between vectors', () => {
+    expect(dist(vec2(1, 5), vec2(2, 2))).toBeCloseTo(3.16228, 5);
+    // using arrays
+    expect(dist([1, 5], [2, 2])).toBeCloseTo(3.16228, 5);
   });
 });
