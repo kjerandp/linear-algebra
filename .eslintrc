@@ -6,6 +6,7 @@
     "one-var": "off",
     "curly": "off",
     "camelcase": "off",
+    "prefer-destructuring": "off",
     "object-curly-newline": "off",
     "no-mixed-operators": "off",
     "no-restricted-properties": "off",

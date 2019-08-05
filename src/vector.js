@@ -1,8 +1,16 @@
 /* eslint-disable object-property-newline */
-import { createArray1d, copyTo, assignTo } from './array';
-import { argumentsToList } from './utils';
-import op from './math';
-
+import {
+  add,
+  sub,
+  scale,
+  norm,
+  dot,
+  cross,
+  cross2,
+  dist,
+  scalar,
+} from './functions';
+import { flattenList } from './utils';
 
 const accessors = ({
   x: 0, r: 0, i: 0, s: 0,
@@ -11,230 +19,59 @@ const accessors = ({
   w: 3, a: 3, l: 3, v: 3,
 });
 
-export class Vector {
-  constructor(...args) {
-    if (args.length === 0)
-      throw Error('No arguments provided!');
-
-    if (args.length === 1 && Array.isArray(args[0])) {
-      [args] = args;
-    }
-
-    let dim = 0;
-    let values = null;
-
-    if (args.length === 1 && Number.isFinite(args[0])) {
-      [dim] = args;
-    } else {
-      values = argumentsToList(args);
-      dim = values.length;
-    }
-    if (dim < 2 || dim > 4) throw Error('Invalid arguments!');
-
-    this._values = createArray1d(values, dim, 0);
+class Vector extends Array {
+  static fromArray(arr) {
+    return new Vector(...arr);
   }
 
-  clone() {
-    return new Vector(this._values);
+  add(...vectors) {
+    return add(this, ...vectors);
   }
 
-  // Mimic the swizzle operator for vectors in glsl
-  swizzle(args) {
-    const components = new Array(args.length);
-    for (let i = 0; i < args.length; i++) {
-      const ai = accessors[args[i]];
-      if (!(ai >= 0)) throw new Error('Invalid arguments!');
-      components[i] = this._values[ai];
-    }
-    return components;
+  sub(...vectors) {
+    return sub(this, ...vectors);
   }
 
-  // Use swizzle to rearrange components
-  shift(args) {
-    if (args.length > 0 && args.length <= this.dim) {
-      const swizzled = this.swizzle(args);
-      assignTo(this._values, (v, i) => (swizzled[i] === undefined ? v : swizzled[i]));
-    }
-    return this;
-  }
-
-  // Same as clone but with the option to swizzle
-  copy(args) {
-    const v = this.clone();
-    if (args) {
-      v.shift(args);
-    }
-    return v;
-  }
-
-  copyFrom(...values) {
-    if (values.length === 1 && Array.isArray(values[0])) {
-      [values] = values;
-    }
-    if (values.length === 1 && Number.isFinite(values[0])) {
-      assignTo(this._values, () => values[0]);
-    } else {
-      copyTo(this._values, argumentsToList(values));
-    }
-    return this;
-  }
-
-  // get component by index
-  get(idx) {
-    return this._values[idx];
-  }
-
-  // set value for component at index
-  set(idx, v) {
-    if (idx < this.dim) this._values[idx] = v;
-    return this;
-  }
-
-  angle(axis = 0) {
-    const [x, y, z] = this._values;
-    if (this.dim === 2) {
-      return Math.atan2(y, x);
-    }
-    if (axis > 2 || axis < 0) return undefined;
-
-    let a, b, c;
-    switch (axis) {
-      case 0: a = y; b = z; c = x; break;
-      case 1: a = x; b = z; c = y; break;
-      default: a = x; b = y; c = z;
-    }
-    const l = Math.sqrt(a ** 2 + b ** 2);
-    return Math.atan2(l, c);
-  }
-
-  add(...args) {
-    args.forEach((val) => {
-      const vc = argumentsToList(val);
-      assignTo(this._values, (v, i) => v + (vc[i] === undefined ? 0 : vc[i]));
-    });
-    return this;
-  }
-
-  sub(...args) {
-    args.forEach((val) => {
-      const vc = argumentsToList(val);
-      assignTo(this._values, (v, i) => v - (vc[i] === undefined ? 0 : vc[i]));
-    });
-    return this;
-  }
-
-  scale(...arg) {
-    if (arg.length === 0) return this;
-    if (arg.length === 1) {
-      [arg] = arg;
-    }
-    if (Number.isFinite(arg)) {
-      assignTo(this._values, v => v * arg);
-    } else if (Array.isArray(arg) || arg instanceof Vector) {
-      const vc = argumentsToList(arg);
-      assignTo(this._values, (v, i) => v * (vc[i] === undefined ? 0 : vc[i]));
-    }
-    return this;
-  }
-
-  clamp(min = 0, max = 1) {
-    assignTo(this._values, v => op.clamp(v, min, max));
-    return this;
+  scale(factor) {
+    return scale(this, factor, this);
   }
 
   normalize() {
-    const l = this.length;
-    assignTo(this._values, v => v / l);
-    return this;
+    return norm(this, this);
   }
 
-  dot(arg) {
-    if (!(arg instanceof Vector)) {
-      const mat = arg._values || arg;
-      let vec = this._values;
-      if (this.dim < 4 && this.dim < mat.length) {
-        // convert to homogeneous coordinates  (ex. vec3 * mat4)
-        vec = createArray1d(vec, mat.length, 0);
-        vec[mat.length - 1] = 1;
-      }
-      const res = op.dotProduct([vec], mat);
+  dot(other) {
+    return dot(this, other);
+  }
 
-      return this.clone().copyFrom(res[0]);
+  cross(other) {
+    return this.length === 2 ? cross2(this, other) : cross(this, other);
+  }
+
+  distance(other) {
+    return dist(this, other);
+  }
+
+  clone() {
+    return new Vector(...this);
+  }
+
+  swizzle(pattern, target = null) {
+    let values = this;
+    if (!target) {
+      target = this;
+      values = [...this];
     }
-    const v = arg;
-    const vc = argumentsToList(v);
-    return this._values.reduce((sum, c, i) => sum + c * vc[i], 0);
-  }
-
-  cross(v) {
-    const a = this._values;
-    const b = argumentsToList(v);
-
-    if (this.dim === 2) {
-      return (a[0] * b[1]) - (a[1] * b[0]);
+    const l = target.length || pattern.length;
+    for (let i = 0; i < l; i++) {
+      const ai = accessors[pattern[i]];
+      target[i] = values[ai];
     }
-
-    const res = new Array(this.dim);
-    res[0] = (a[1] * b[2]) - (a[2] * b[1]);
-    res[1] = (a[2] * b[0]) - (a[0] * b[2]);
-    res[2] = (a[0] * b[1]) - (a[1] * b[0]);
-
-    return new Vector(res);
+    return target;
   }
 
-  distance(v) {
-    if (!v || v.dim !== this.dim) throw Error('Invalid argument!');
-    const squares = this._values.reduce((sum, c, i) =>
-      sum + (c - v._values[i]) ** 2, 0);
-    return squares ? Math.sqrt(squares) : 0;
-  }
-
-  dimensions(v) {
-    this.dim = v;
-    return this;
-  }
-
-  toArray() {
-    return this._values;
-  }
-
-  get dim() {
-    return this._values.length;
-  }
-
-  set dim(v) {
-    const l = this._values.length;
-    if (v >= 2 && v <= 4 && v !== l) {
-      if (v < l) {
-        this._values.splice(v);
-      } else {
-        this._values.length = v;
-        this._values.fill(0, l);
-      }
-    }
-  }
-
-  get length() {
-    const squared = this._values.reduce((acc, c) => acc + c ** 2, 0);
-    return Math.sqrt(squared);
-  }
-
-  get count() {
-    return this.cols;
-  }
-
-  iterator() {
-    const _t = this;
-    let i = 0;
-    return {
-      next: () => {
-        const v = i >= this.cols ? undefined : _t[i++];
-        return {
-          value: v,
-          done: v === undefined,
-        };
-      },
-    };
+  scalar() {
+    return scalar(this);
   }
 }
 
@@ -242,16 +79,42 @@ export class Vector {
 Object.keys(accessors).forEach((a) => {
   Object.defineProperty(Vector.prototype, a, {
     get() {
-      return this._values[accessors[a]];
+      return this[accessors[a]];
     },
     set(v) {
       if (Number.isFinite(v)) {
-        this._values[accessors[a]] = v;
+        this[accessors[a]] = v;
       }
     },
   });
 });
 
-export const vec2 = (...args) => new Vector(2).copyFrom(...args);
-export const vec3 = (...args) => new Vector(3).copyFrom(...args);
-export const vec4 = (...args) => new Vector(4).copyFrom(...args);
+export default Vector;
+
+export function vec(arr) {
+  return Vector.fromArray(arr);
+}
+
+export function nvec(dim = 0, values = [0]) {
+  if (values.length === 1 && Number.isFinite(values[0])) {
+    return new Vector(dim).fill(values[0]);
+  }
+  const v = new Vector();
+  flattenList(values, v, dim);
+  for (let i = v.length; i < dim; i++) {
+    v.push(0);
+  }
+  return v;
+}
+
+export function vec2(...args) {
+  return nvec(2, args);
+}
+
+export function vec3(...args) {
+  return nvec(3, args);
+}
+
+export function vec4(...args) {
+  return nvec(4, args);
+}

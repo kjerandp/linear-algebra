@@ -1,116 +1,49 @@
+/**
+ * Transpose a single dimensional array, representing 2d data, from
+ * rows first to columns first.
+ * @param {*} arr Array to transpose
+ * @param {*} cols Number of columns in source array
+ * @param {*} target If omitted, result will be returned as a new array
+ */
+export function rowsToColumns(arr, cols, target = null) {
+  cols = cols || 1;
+  const rows = cols === 1 ? arr.length : ~~(arr.length / cols);
 
-export function argumentsToList(arg = [], rec = true, values = []) {
-  if (arg._values) {
-    arg = arg._values;
-  }
-
-  if (rec && Array.isArray(arg)) {
-    arg.forEach((v) => {
-      if (v._values || Array.isArray(v)) {
-        argumentsToList(v, rec, values);
-      } else {
-        values.push(v);
-      }
-    });
-  } else {
-    values.push(arg);
-  }
-  return values;
-}
-
-export function range(size, start = 0, step = 1) {
-  const arr = new Array(size);
-  for (let i = 0; i < size; i++) {
-    arr[i] = start + (i * step);
-  }
-  return arr;
-}
-
-export function constantIterator(value, times = Infinity) {
-  let i = 0;
-  const res = {
-    value: undefined,
-    done: false,
-  };
-  return {
-    next: () => {
-      if (i >= times) {
-        res.done = true;
-        res.value = undefined;
-      } else {
-        res.value = value;
-      }
-      i++;
-      return res;
-    },
-  };
-}
-
-function array2dIterator(arr) {
-  let r = 0;
-  let c = 0;
-  const last = arr.length - 1;
-  const res = {
-    value: undefined,
-    done: false,
-  };
-  return {
-    next: () => {
-      if (r > last) {
-        res.done = true;
-        res.value = undefined;
-      } else {
-        res.value = arr[r][c];
-        c++;
-        if (c >= arr[r].length) {
-          r++;
-          c = 0;
-        }
-      }
-      return res;
-    },
-  };
-}
-
-export function arrayIterator(arr) {
-  if (arr[0] && Array.isArray(arr[0])) return array2dIterator(arr);
-  let i = 0;
-  const res = {
-    value: undefined,
-    done: false,
-  };
-  return {
-    next: () => {
-      if (i >= arr.length) {
-        res.done = true;
-        res.value = undefined;
-      } else {
-        res.value = arr[i];
-      }
-      i++;
-      return res;
-    },
-  };
-}
-
-export function combinedIterator(...iterators) {
-  const value = new Array(iterators.length);
-  let done = false;
-  const iterate = () => {
-    for (let i = 0; i < iterators.length; i++) {
-      const _c = iterators[i].next();
-      if (_c.done) {
-        done = true;
-        break;
-      }
-      value[i] = _c.value;
+  if (target) {
+    if (target === arr) {
+      arr = [...arr]; // copy
     }
-    return {
-      value,
-      done,
-    };
-  };
-  return {
-    next: iterate,
-  };
+  } else {
+    target = new Array(rows * cols);
+  }
+
+  let n = 0;
+  for (let i = 0; i < rows; i++) {
+    for (let j = 0; j < cols; j++) {
+      target[rows * j + i] = arr[n++];
+    }
+  }
+  return target;
 }
+
+function flatRec(array, flattend, max) {
+  for (let i = 0; i < array.length; i++) {
+    if (max && flattend.length === max) return;
+    const el = array[i];
+    if (Array.isArray(el)) flatRec(el, flattend, max);
+    else flattend.push(el);
+  }
+}
+
+/**
+ * Recursivly flattens a list of arguments to a 1 dimensional array
+ * @param {*} arg Arguments to be flattended
+ * @param {*} values Resulting array of values
+ * @param {*} max Max returned values (default is 0 for all)
+ */
+export function flattenList(arg = [], flattend = [], max = 0) {
+  if (flattend.length > 0) flattend.length = 0;
+  flatRec(arg, flattend, max);
+  return flattend;
+}
+

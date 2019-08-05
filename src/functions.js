@@ -1,246 +1,152 @@
-import { Vector } from './vector';
-import { Matrix } from './matrix';
-import { flatten } from './array';
-import op from './math';
-import {
-  constantIterator,
-  arrayIterator,
-} from './utils';
-import {
-  DEG2RAD,
-  RAD2DEG,
-  TAU,
-} from './constants';
 
-function standardizeArgument(arg) {
-  if (Number.isFinite(arg)) {
-    return [arg];
-  } else if (arg.toArray) {
-    return arg.toArray(1);
-  } else if (Array.isArray(arg) && Array.isArray(arg[0])) {
-    return flatten(arg);
+import { RAD2DEG, DEG2RAD, TAU } from './const';
+
+export function add(target, ...vectors) {
+  target = target || [...vectors.shift()];
+  return vectors.reduce((res, v) => {
+    for (let i = 0; i < target.length; i++) {
+      res[i] += v[i];
+    }
+    return res;
+  }, target);
+}
+
+export function sub(target, ...vectors) {
+  target = target || [...vectors.shift()];
+  return vectors.reduce((res, v) => {
+    for (let i = 0; i < target.length; i++) {
+      res[i] -= v[i];
+    }
+    return res;
+  }, target);
+}
+
+export function scale(vector, factor, target = null) {
+  target = target || vector;
+  for (let i = 0; i < vector.length; i++) {
+    target[i] = vector[i] * factor;
   }
-  return arg;
+  return target;
 }
 
-export function add(a, b) {
-  if (Array.isArray(a)) {
-    return a.map((v, i) => (i < b.length ? op.add(v, b[i]) : v));
-  }
-  if (a.constructor !== b.constructor)
-    throw Error('Unable to add different types!');
-  return a.clone().add(b);
+export function sumsqr(vector) {
+  return vector.reduce((sum, v) => sum + v ** 2, 0);
 }
 
-export function sub(a, b) {
-  if (Array.isArray(a)) {
-    return a.map((v, i) => (i < b.length ? op.subtract(v, b[i]) : v));
-  }
-  if (a.constructor !== b.constructor)
-    throw Error('Unable to subtract different types!');
-  return a.clone().sub(b);
+export function scalar(vector) {
+  const sq = sumsqr(vector);
+  if (sq === 0) return sq;
+  return Math.sqrt(sq);
 }
 
-export function scale(v, f) {
-  if (Array.isArray(v)) {
-    return v.map(n => op.multiply(n, f));
-  }
-  if (!Number.isFinite(f) && v.constructor !== f.constructor)
-    throw Error('Unable to scale different types!');
-  return v.clone().scale(f);
+export function norm(vector, target = null) {
+  target = target || vector;
+  const sc = scalar(vector);
+  const f = sc === 0 ? 0 : 1 / sc;
+  return scale(vector, f, target);
 }
 
-export function length(v) {
-  return v.length;
+export function orth(vector, target = null) {
+  target = target || vector;
+  const x = -vector[1];
+  target[1] = vector[0];
+  target[0] = x;
+  return target;
 }
 
-
-export function dot(a, b) {
-  return a.dot(b);
+export function dir(p1, p2, target = null) {
+  target = target || new Array(p1.length).fill(0);
+  return norm(sub(target, p1, p2));
 }
 
-export function cross(a, b) {
-  if (a instanceof Vector && b instanceof Vector) {
-    return a.cross(b);
-  }
-  throw Error('Only defined for vectors!');
+export function dist(p1, p2) {
+  return scalar(sub(p2, p1));
 }
 
-export function dist(a, b) {
-  if (a instanceof Vector && b instanceof Vector) {
-    return a.distance(b);
-  } else if (Array.isArray(a)) {
-    const c = sub(b, a);
-    const sumOfSquares = c.reduce((sum, v) => op.add(sum, op.pow(v, 2)), op.zero());
-    return op.pow(sumOfSquares, op.identity(0.5));
-  }
-  throw Error('Only defined for vectors!');
+export function dot(v1, v2) {
+  return v1.reduce((sum, c, i) => sum + c * v2[i], 0);
 }
 
-export function norm(v) {
-  if (v instanceof Vector) {
-    return v.clone().normalize();
-  }
-  throw Error('Currently only defined for vectors!');
+export function cross(a, b, target = null) {
+  target = target || new Array(3);
+  target[0] = (a[1] * b[2]) - (a[2] * b[1]);
+  target[1] = (a[2] * b[0]) - (a[0] * b[2]);
+  target[2] = (a[0] * b[1]) - (a[1] * b[0]);
+
+  return target;
 }
 
 export function triple(a, b, c) {
-  if (a instanceof Vector && b instanceof Vector && c instanceof Vector) {
-    return dot(a, cross(b, c));
-  }
-  throw Error('Only defined for vectors!');
+  return dot(a, cross(b, c));
 }
 
-export function mix(a, b, t) {
-  if (typeof (a) === 'object' || typeof (b) === 'object') {
-    if (a.constructor !== b.constructor)
-      throw Error('Unable to mix different types!');
-
-    const mixed = [];
-    const iterators = [
-      arrayIterator(a._values),
-      arrayIterator(b._values),
-      t._values ? arrayIterator(t._values) : constantIterator(t),
-    ];
-    const itr = () => {
-      const va = iterators[0].next();
-      if (!va.done) {
-        const vb = iterators[1].next();
-        if (!vb.done) {
-          const vt = iterators[2].next();
-          mixed.push(op.mix(va.value, vb.value, vt.value));
-          return true;
-        }
-      }
-      return false;
-    };
-    while (itr());
-
-    // const va = standardizeArgument(a);
-    // const vb = standardizeArgument(b);
-
-    // if (va.length !== vb.length)
-    //   throw Error('Values must have the same number of components!');
-
-    // const ts = standardizeArgument(t);
-
-    // const mixed = va.map((v, i) => op.mix(v, vb[i], i < ts.length ? ts[i] : ts[0]));
-
-    if (Array.isArray(a)) {
-      return mixed;
-    }
-    return a.clone().copyFrom(mixed);
-  }
-  return op.mix(a, b, t);
+export function cross2(a, b) {
+  return (a[0] * b[1]) - (a[1] * b[0]);
 }
 
-export function clamp(val, min = 0, max = 1) {
-  if (op.isDefined(val)) {
-    return op.clamp(val, min, max);
-  }
-  const itr = arrayIterator(val._values || val);
-  let v = itr.next();
-  const clamped = [];
-  while (!v.done) {
-    clamped.push(op.clamp(v.value, min, max));
-    v = itr.next();
-  }
-  // const arr = standardizeArgument(val);
-  // const clamped = arr.map(v => op.clamp(v, min, max));
+export function props(p1, p2) {
+  const vector = sub(p2, p1);
+  const sqr = sumsqr(vector);
+  const dst = Math.sqrt(sqr);
+  const unit = scale(vector, dist > 0 ? 1 / dist : 0, vector.slice(0, 0));
+  return {
+    vector,
+    sqr,
+    dist: dst,
+    unit,
+  };
+}
 
-  if (Array.isArray(val)) return clamped;
-
-  return val.clone().copyFrom(clamped);
+export default function clamp(value, min = 0, max = 1) {
+  if (value < min) return min;
+  if (value > max) return max;
+  return value;
 }
 
 export function step(edge, x) {
-  if (typeof (edge) === 'object' || typeof (x) === 'object') {
-    if (edge.constructor !== x.constructor)
-      throw Error('Unable to step using different input types!');
-
-    const ve = standardizeArgument(edge);
-    const vx = standardizeArgument(x);
-
-    if (ve.length !== vx.length)
-      throw Error('Inputs must have the same number of components!');
-
-    const stepped = ve.map((v, i) => op.step(v, vx[i]));
-
-    if (Array.isArray(edge)) {
-      return stepped;
-    }
-    return edge.clone().copyFrom(stepped);
-  }
-  return op.step(edge, x);
+  return x >= edge ? 1 : 0;
 }
 
 export function smoothstep(edge0, edge1, x) {
-  if (typeof (edge0) === 'object' || typeof (edge1) === 'object' || typeof (x) === 'object') {
-    if (edge0.constructor !== x.constructor || edge1.constructor !== x.constructor)
-      throw Error('Unable to smoothstep using different input types!');
-
-    const ve0 = standardizeArgument(edge0);
-    const ve1 = standardizeArgument(edge1);
-    const vx = standardizeArgument(x);
-
-    if (ve0.length !== vx.length || ve1.length !== vx.length)
-      throw Error('Inputs must have the same number of components!');
-
-    const stepped = ve0.map((v, i) => op.smoothstep(v, ve1[i], vx[i]));
-
-    if (Array.isArray(edge0)) {
-      return stepped;
-    }
-    return edge0.clone().copyFrom(stepped);
-  }
-  return op.smoothstep(edge0, edge1, x);
+  const t = clamp((x - edge0) / (edge1 - edge0));
+  return t * t * (3.0 - 2.0 * t);
 }
 
-export function det(m) {
-  if (m instanceof Matrix) {
-    return m.det();
-  }
-  throw Error('Only defined for matrices!');
+export function lerp(a, b, t) {
+  const m = clamp(t, 0, 1);
+  return a * (1 - m) + b * m;
 }
 
-export function inv(m) {
-  if (m instanceof Matrix) {
-    return m.clone().invert();
+export function mix(a, b, t, target = null) {
+  const m = Array.isArray(t) ? i => t[i] : () => t;
+  target = target || new Array(a.length);
+  for (let i = 0; i < target.length; i++) {
+    target[i] = lerp(a[i], b[i], m(i));
   }
-  throw Error('Only defined for matrices!');
+  return target;
 }
 
-export function tran(m) {
-  if (m instanceof Matrix) {
-    return m.clone().transpose();
+export function round(v, digits) {
+  const f = 10 ** digits;
+  if (!Array.isArray(v)) {
+    return Math.round(v * f) / f;
   }
-  throw Error('Only defined for matrices!');
+  for (let i = 0; i < v.length; i++) {
+    v[i] = Math.round(v[i] * f) / f;
+  }
+  return v;
 }
 
-export const rad = d => d * DEG2RAD;
+export function rad(d) {
+  return d * DEG2RAD;
+}
 
-export const deg = r => r * RAD2DEG;
+export function deg(r) {
+  return r * RAD2DEG;
+}
 
 export function nrad(r) {
   const v = r % TAU;
   return (v < 0 ? v + TAU : v);
 }
 
-export function round(val, digits = 1) {
-  if (op.isDefined(val)) {
-    return op.roundTo(val, digits);
-  }
-  const itr = arrayIterator(val._values || val);
-  let v = itr.next();
-  const rounded = [];
-  while (!v.done) {
-    rounded.push(op.roundTo(v.value, digits));
-    v = itr.next();
-  }
-  // const arr = standardizeArgument(val);
-  // const clamped = arr.map(v => op.clamp(v, min, max));
-
-  if (Array.isArray(val)) return rounded;
-
-  return val.clone().copyFrom(rounded);
-}
