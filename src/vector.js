@@ -19,7 +19,7 @@ const accessors = ({
   w: 3, a: 3, l: 3, v: 3,
 });
 
-class Vector extends Array {
+export class Vector extends Array {
   static fromArray(arr) {
     return new Vector(...arr);
   }
@@ -88,8 +88,6 @@ Object.keys(accessors).forEach((a) => {
     },
   });
 });
-
-export default Vector;
 
 export function vec(arr) {
   return Vector.fromArray(arr);

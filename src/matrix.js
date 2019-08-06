@@ -1,7 +1,7 @@
 import { flattenList, rowsToColumns } from './utils';
 
 // values are stored columns first, base zero
-class Matrix extends Array {
+export class Matrix extends Array {
   static identity(size = 4) {
     const m = new Matrix(size).fill(0);
     for (let i = 0; i < m.length; i += size + 1) {
@@ -351,8 +351,6 @@ for (let i = 1; i <= 4; i++) {
     });
   }
 }
-
-export default Matrix;
 
 export function mat(arr, cols) {
   return Matrix.fromArray(arr, cols);
