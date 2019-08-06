@@ -32,20 +32,20 @@ export class Vector extends Array {
     return sub(this, ...vectors);
   }
 
-  scale(factor) {
-    return scale(this, factor, this);
+  scale(factor, mutate = true) {
+    return scale(this, factor, mutate ? this : new Vector(this.length));
   }
 
-  normalize() {
-    return norm(this, this);
+  normalize(mutate = true) {
+    return norm(this, mutate ? this : new Vector(this.length));
   }
 
   dot(other) {
     return dot(this, other);
   }
 
-  cross(other) {
-    return this.length === 2 ? cross2(this, other) : cross(this, other);
+  cross(other, target = null) {
+    return this.length === 2 ? cross2(this, other) : cross(this, other, target);
   }
 
   distance(other) {
