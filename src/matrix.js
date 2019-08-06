@@ -1,4 +1,5 @@
 import { flattenList, rowsToColumns } from './utils';
+import { scale } from './functions';
 
 // values are stored columns first, base zero
 export class Matrix extends Array {
@@ -297,6 +298,10 @@ export class Matrix extends Array {
     }
 
     return determinantRec(this);
+  }
+
+  scale(factor) {
+    return scale(this, factor);
   }
 
   columnsFirst() {

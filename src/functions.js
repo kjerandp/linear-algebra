@@ -21,16 +21,16 @@ export function sub(target, ...vectors) {
   }, target);
 }
 
-export function scale(vector, factor, target = null) {
-  target = target || vector;
-  for (let i = 0; i < vector.length; i++) {
-    target[i] = vector[i] * factor;
+export function scale(arr, factor, target = null) {
+  target = target || arr;
+  for (let i = 0; i < arr.length; i++) {
+    target[i] = arr[i] * factor;
   }
   return target;
 }
 
-export function sumsqr(vector) {
-  return vector.reduce((sum, v) => sum + v ** 2, 0);
+export function sumsqr(arr) {
+  return arr.reduce((sum, v) => sum + v ** 2, 0);
 }
 
 export function scalar(vector) {
@@ -76,12 +76,12 @@ export function cross(a, b, target = null) {
   return target;
 }
 
-export function triple(a, b, c) {
-  return dot(a, cross(b, c));
+export function triple(v1, v2, v3) {
+  return dot(v1, cross(v2, v3));
 }
 
-export function cross2(a, b) {
-  return (a[0] * b[1]) - (a[1] * b[0]);
+export function cross2(v1, v2) {
+  return (v1[0] * v2[1]) - (v1[1] * v2[0]);
 }
 
 export function props(p1, p2) {
@@ -97,7 +97,7 @@ export function props(p1, p2) {
   };
 }
 
-export default function clamp(value, min = 0, max = 1) {
+export function clamp(value, min = 0, max = 1) {
   if (value < min) return min;
   if (value > max) return max;
   return value;
