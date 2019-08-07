@@ -1,4 +1,4 @@
-import { flattenList, rowsToColumns } from './utils';
+import { rowsToColumns } from './utils';
 import { scale } from './functions';
 
 // values are stored columns first, base zero
@@ -26,9 +26,10 @@ export class Matrix extends Array {
     }
   }
 
-  static fromArray(arr, columns = 1) {
+  static fromArray(arr, columns = 1, rowsFirst = true, mutateArgs = false) {
     const rows = columns === 1 ? arr.length : ~~(arr.length / columns);
-    return new Matrix(rows, columns, arr);
+
+    return new Matrix(rows, columns, arr, rowsFirst, mutateArgs);
   }
 
   static fromVectors(...vectors) {
@@ -44,7 +45,7 @@ export class Matrix extends Array {
     return m;
   }
 
-  constructor(rows = 4, cols, args) {
+  constructor(rows = 4, cols, args, rowsFirst = true, mutateArgs = false) {
     cols = cols || rows;
     super(rows * cols);
     this._c = cols;
@@ -54,13 +55,26 @@ export class Matrix extends Array {
       if (args.length === 1 && Array.isArray(args[0])) {
         [args] = args;
       }
-      this.copyFrom(args);
+      this.copyFrom(args, rowsFirst, mutateArgs);
     }
   }
 
-  copyFrom(values) {
-    if (values.length > this.length) values.length = this.length;
-    rowsToColumns(values, this.columns, this);
+  copyFrom(values, rowsFirst = true, mutateArgs = false) {
+    if (!rowsFirst) {
+      for (let i = 0; i < Math.min(this.length, values.length); i++) {
+        this[i] = values[i];
+      }
+    } else {
+      if (values.length > this.length) {
+        if (mutateArgs) {
+          values.length = this.length;
+        } else {
+          values = values.slice(0, this.length);
+        }
+      }
+      rowsToColumns(values, this.columns, this);
+    }
+    return this;
   }
 
   traverse(callback = () => ({}), rowsFirst = true) {
@@ -68,7 +82,7 @@ export class Matrix extends Array {
   }
 
   clone() {
-    return new Matrix(this.rows, this.columns, this);
+    return new Matrix(this.rows, this.columns, this, false);
   }
 
   index(row, col) {
@@ -173,10 +187,22 @@ export class Matrix extends Array {
     return target;
   }
 
-  submatrix(row = 0, col = 0, rows = 2, cols = 2) {
+  submatrix(row = 0, col = 0, rows = 2, cols = 2, target = null) {
     const start = this.index(row, col);
     const end = start + cols * this.rows;
-    const subm = new Matrix(rows, cols);
+
+    let subm;
+    if (target) {
+      if (target instanceof Matrix) {
+        target._c = cols;
+        target._r = rows;
+        target.length = this.length;
+      }
+      subm = target;
+    } else {
+      subm = new Matrix(rows, cols);
+    }
+
     let k = 0;
     for (let i = start; i < end; i += this.rows) {
       for (let j = 0; j < rows; j++) {
@@ -186,16 +212,26 @@ export class Matrix extends Array {
     return subm;
   }
 
-  remove(row = -1, col = -1, mutate = false) {
-    const target = mutate ? this : this.clone();
-    if (col > -1 && col < target.columns) {
-      const idx = col * target.rows;
+  remove(row = null, col = null, target = null) {
+    if (target && target instanceof Matrix) {
+      target._r = this._r;
+      target._c = this._c;
+      target.length = this.length;
+      target.copyFrom(this, false);
+    } else {
+      target = this;
+    }
+
+    let idx;
+    if (Number.isFinite(col) && col >= 0 && col < target.columns) {
+      idx = col * target.rows;
       target.splice(idx, target.rows);
       target._c--;
     }
-    if (row > -1 && row < target.rows) {
-      for (let c = target.columns - 1; c >= 0; c--) {
-        target.splice(row + c * target.rows, 1);
+    if (Number.isFinite(row) && row >= 0 && row < target.rows) {
+      for (let r = 0; r < target.columns; r++) {
+        idx = r * target.rows + row - r;
+        target.splice(idx, 1);
       }
       target._r--;
     }
@@ -206,6 +242,10 @@ export class Matrix extends Array {
     const cols = this.rows;
     if (!target) {
       target = this;
+    } else {
+      target.length = this.length;
+    }
+    if (target instanceof Matrix) {
       target._r = this._c;
       target._c = cols;
     }
@@ -217,7 +257,14 @@ export class Matrix extends Array {
     if (!this.isSquare) throw Error('Matrix must be square!');
 
     const dim = this.rows;
-    target = target || this;
+    if (target && target instanceof Matrix) {
+      target._c = this.columns;
+      target._r = this.rows;
+      target.length = this.length;
+      target.copyFrom(this, false);
+    } else {
+      target = this;
+    }
     const src = Matrix.identity(dim);
 
     for (let i = 0; i < dim; i++) {
@@ -300,7 +347,7 @@ export class Matrix extends Array {
       for (let c = 0; c < m.columns; c++) {
         const v = m[c];
         if (v === 0) continue;
-        const sm = m.remove(0, c, false);
+        const sm = m.remove(0, c, new Matrix());
         let cofactor = determinantRec(sm);
 
         if (c % 2 === 1) {
@@ -324,7 +371,7 @@ export class Matrix extends Array {
 
   rowsFirst() {
     const res = new Array(this.length);
-    rowsToColumns(this, this.columns, res);
+    rowsToColumns(this, this.rows, res);
     return res;
   }
 
@@ -376,17 +423,17 @@ for (let i = 1; i <= 4; i++) {
 }
 
 export function mat(arr, cols) {
-  return Matrix.fromArray(arr, cols);
+  return Matrix.fromArray(arr, cols, true, true);
 }
 
 export function mat2(...args) {
-  return new Matrix(2, 2, args);
+  return new Matrix(2, 2, args, true, true);
 }
 
 export function mat3(...args) {
-  return new Matrix(3, 3, args);
+  return new Matrix(3, 3, args, true, true);
 }
 
 export function mat4(...args) {
-  return new Matrix(4, 4, args);
+  return new Matrix(4, 4, args, true, true);
 }
