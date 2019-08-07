@@ -84,7 +84,7 @@ export function cross2(v1, v2) {
   return (v1[0] * v2[1]) - (v1[1] * v2[0]);
 }
 
-export function props(p1, p2) {
+export function descr(p1, p2) {
   const vector = sub(p2, p1);
   const sqr = sumsqr(vector);
   const dst = Math.sqrt(sqr);
