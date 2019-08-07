@@ -345,7 +345,7 @@ export class Matrix extends Array {
 
       let d = 0;
       for (let c = 0; c < m.columns; c++) {
-        const v = m[c];
+        const v = m[c * m.rows];
         if (v === 0) continue;
         const sm = m.remove(0, c, new Matrix());
         let cofactor = determinantRec(sm);

@@ -296,6 +296,7 @@ describe('matrix', () => {
     expect(() => new Matrix(3, 2).determinant()).toThrow();
     expect(Matrix.identity().determinant()).toBe(1);
     expect(mat3(-2, 2, 3, -1, 1, 3, 2, 0, -1).determinant()).toBe(6);
+    expect(mat4(1, 3, 5, 9, 1, 3, 1, 7, 4, 3, 9, 7, 5, 2, 0, 9).determinant()).toBe(-376);
     expect(mat4(1, 2, 3, -4, -5, -6, 7, 8, 9, 10, 11, 12, -13, 14, 15, 16).determinant()).toBe(25344);
   });
 });
