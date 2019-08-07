@@ -1,8 +1,8 @@
 
 import { RAD2DEG, DEG2RAD, TAU } from './const';
 
-export function add(target, ...vectors) {
-  target = target || [...vectors.shift()];
+export function add(...vectors) {
+  const target = vectors.shift();
   return vectors.reduce((res, v) => {
     for (let i = 0; i < target.length; i++) {
       res[i] += v[i];
@@ -11,8 +11,8 @@ export function add(target, ...vectors) {
   }, target);
 }
 
-export function sub(target, ...vectors) {
-  target = target || [...vectors.shift()];
+export function sub(...vectors) {
+  const target = vectors.shift();
   return vectors.reduce((res, v) => {
     for (let i = 0; i < target.length; i++) {
       res[i] -= v[i];

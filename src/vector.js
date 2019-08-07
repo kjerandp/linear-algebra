@@ -32,12 +32,16 @@ export class Vector extends Array {
     return sub(this, ...vectors);
   }
 
-  scale(factor, mutate = true) {
-    return scale(this, factor, mutate ? this : new Vector(this.length));
+  scale(factor, target = null) {
+    return scale(this, factor, target || this);
   }
 
-  normalize(mutate = true) {
-    return norm(this, mutate ? this : new Vector(this.length));
+  negate(target = null) {
+    return this.scale(-1, target);
+  }
+
+  normalize(target = null) {
+    return norm(this, target || this);
   }
 
   dot(other) {

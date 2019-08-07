@@ -44,17 +44,23 @@ export class Matrix extends Array {
     return m;
   }
 
-  constructor(rows = 4, cols, ...args) {
+  constructor(rows = 4, cols, args) {
     cols = cols || rows;
     super(rows * cols);
     this._c = cols;
     this._r = rows;
 
-    if (args.length > 0) this.copyFrom(args);
+    if (args) {
+      if (args.length === 1 && Array.isArray(args[0])) {
+        [args] = args;
+      }
+      this.copyFrom(args);
+    }
   }
 
-  copyFrom(values, flatten = true) {
-    rowsToColumns(flatten ? flattenList(values) : values, this.columns, this);
+  copyFrom(values) {
+    if (values.length > this.length) values.length = this.length;
+    rowsToColumns(values, this.columns, this);
   }
 
   traverse(callback = () => ({}), rowsFirst = true) {
@@ -81,7 +87,7 @@ export class Matrix extends Array {
   }
 
 
-  dot(...matrices) {
+  dotMat(...matrices) {
     let m = this;
     let target = this;
     matrices.forEach((other) => {
@@ -139,6 +145,13 @@ export class Matrix extends Array {
       }
     }
     return vec;
+  }
+
+  dot(other, target = null) {
+    if (other instanceof Matrix) {
+      return this.dotMat(other);
+    }
+    return this.dotVec(other, target);
   }
 
   col(j, target = null) {
@@ -200,29 +213,29 @@ export class Matrix extends Array {
     return target;
   }
 
-  inverse(mutate = false) {
+  inverse(target = null) {
     if (!this.isSquare) throw Error('Matrix must be square!');
 
     const dim = this.rows;
-    const trg = mutate ? this : this.clone();
+    target = target || this;
     const src = Matrix.identity(dim);
 
     for (let i = 0; i < dim; i++) {
-      const d = trg.index(i, i);
-      let e = trg[d];
+      const d = target.index(i, i);
+      let e = target[d];
       // if we have a 0 on the diagonal (we'll need to swap with a lower row)
       if (e === 0) {
         // look through every row below the i'th row
         for (let ii = i + 1; ii < dim; ii += 1) {
           // if the ii'th row has a non-0 in the i'th col
-          if (trg.get(ii, i) !== 0) {
+          if (target.get(ii, i) !== 0) {
             // it would make the diagonal have a non-0 so swap it
             for (let j = 0; j < dim; j++) {
-              const ij = trg.index(i, j);
-              const iij = trg.index(ii, j);
-              e = trg[ij]; // temp store i'th row
-              trg[ij] = trg[iij]; // replace i'th row by ii'th
-              trg[iij] = e; // repace ii'th by temp
+              const ij = target.index(i, j);
+              const iij = target.index(ii, j);
+              e = target[ij]; // temp store i'th row
+              target[ij] = target[iij]; // replace i'th row by ii'th
+              target[iij] = e; // repace ii'th by temp
               e = src[ij]; // temp store i'th row
               src[ij] = src[iij]; // replace i'th row by ii'th
               src[iij] = e; // repace ii'th by temp
@@ -232,15 +245,15 @@ export class Matrix extends Array {
           }
         }
         // get the new diagonal
-        e = trg[d];
+        e = target[d];
         // if it's still 0, not srcertable (error)
         if (e === 0) return undefined;
       }
 
       // Scale this row down by e (so we have a 1 on the diagonal)
       for (let j = 0; j < dim; j++) {
-        const ij = trg.index(i, j);
-        trg[ij] /= e; // apply to original thisrix
+        const ij = target.index(i, j);
+        target[ij] /= e; // apply to original thisrix
         src[ij] /= e; // apply to identity
       }
 
@@ -252,16 +265,16 @@ export class Matrix extends Array {
         if (ii === i) continue;
 
         // We want to change this element to 0
-        e = trg.get(ii, i);
+        e = target.get(ii, i);
 
         // Subtract (the row above(or below) scaled by e) from (the
         // current row) but start at the i'th column and assume all the
         // stuff left of diagonal is 0 (which it should be if we made this
         // algorithm correctly)
         for (let j = 0; j < dim; j++) {
-          const ij = trg.index(i, j);
-          const iij = trg.index(ii, j);
-          trg[iij] -= e * trg[ij]; // apply to original matrix
+          const ij = target.index(i, j);
+          const iij = target.index(ii, j);
+          target[iij] -= e * target[ij]; // apply to original matrix
           src[iij] -= e * src[ij]; // apply to identity
         }
       }
@@ -301,8 +314,8 @@ export class Matrix extends Array {
     return determinantRec(this);
   }
 
-  scale(factor, mutate = false) {
-    return scale(this, factor, mutate ? this : new Matrix(this.rows, this.columns));
+  scale(factor, target = null) {
+    return scale(this, factor, target || this);
   }
 
   columnsFirst() {
@@ -311,8 +324,12 @@ export class Matrix extends Array {
 
   rowsFirst() {
     const res = new Array(this.length);
-    this.traverse((v, i) => { res[i] = v; });
+    rowsToColumns(this, this.columns, res);
     return res;
+  }
+
+  toArray(rowsFirst = false) {
+    return rowsFirst ? this.rowsFirst() : this.columnsFirst();
   }
 
   toArray2d(rowsFirst = false) {
