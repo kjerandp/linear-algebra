@@ -124,7 +124,7 @@ export class Matrix extends Array {
 
   dotVec(vec, target = null) {
     if (target) { // optimized for immutable input vector
-      for (let c = 0; c < this.rows; c++) {
+      for (let c = 0; c < this.columns; c++) {
         const n = c * this.rows;
         for (let r = 0; r < target.length; r++) {
           if (c === 0) target[r] = 0;
@@ -146,7 +146,7 @@ export class Matrix extends Array {
       vec[i] = 0;
     }
 
-    for (let c = 0; c < this.rows; c++) {
+    for (let c = 0; c < this.columns; c++) {
       const n = c * this.rows;
       for (let r = 0; r < vec.length; r++) {
         let compVal = 0;
@@ -157,6 +157,9 @@ export class Matrix extends Array {
         }
         vec[r] += this[n + r] * compVal;
       }
+    }
+    if (vec.length > this.rows) {
+      vec.length = this.rows;
     }
     return vec;
   }

@@ -49,7 +49,11 @@ export class Vector extends Array {
   }
 
   cross(other, target = null) {
-    return this.length === 2 ? cross2(this, other) : cross(this, other, target);
+    return cross(this, other, target);
+  }
+
+  cross2(other) {
+    return cross2(this, other);
   }
 
   distance(other) {
@@ -92,10 +96,6 @@ Object.keys(accessors).forEach((a) => {
     },
   });
 });
-
-export function vec(arr) {
-  return Vector.fromArray(arr);
-}
 
 export function nvec(dim = 0, values = [0]) {
   if (values.length === 1 && Number.isFinite(values[0])) {

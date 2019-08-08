@@ -4,7 +4,7 @@ import { Matrix, mat2, mat3, mat4 } from '../src/matrix';
 import { Vector } from '../src/vector';
 
 
-describe('matrix', () => {
+describe('matrix.js', () => {
   it('should be possible to instantiate and assign values using factory functions', () => {
     expect(new Matrix().length).toBe(16);
     expect(new Matrix(2).length).toBe(4);
@@ -239,7 +239,7 @@ describe('matrix', () => {
       0, 0, 1,
     );
 
-    const v = new Vector(2, -1.5);
+    let v = new Vector(2, -1.5);
 
     const a = S.dot(T, mat3());
     const b = S.dot(v, new Vector(2));
@@ -258,6 +258,31 @@ describe('matrix', () => {
     expect(c).toBeInstanceOf(Array);
     expect(c).toEqual([-6, 4]);
 
+    const M = mat4(
+      1, 0, 0, -4,
+      0, 1, 0, 2,
+      0, 0, 1, 1,
+      0, 0, 0, 1,
+    );
+    v = new Vector(-250, -250, 1);
+
+    // mutates input array
+    expect(M.dot([-250, -250, 1, 1])).toEqual([-254, -248, 2, 1]);
+
+    // To allow affine transformations supporting translations
+    // you need to use 4d matrices in 3d space and 3d matrices
+    // in 2d space etc. This lib will treat any vector as
+    // if it had the same number of components as the matrix has
+    // rows, i.e. it fills in the blanks or truncate its size.
+
+    // immutable: M4 * V3 = V4
+    expect(M.dot(v, new Vector(4))).toEqual([-254, -248, 2, 1]);
+
+    // immutable: M4 * V3 = V3
+    expect(M.dot(v, new Vector(3))).toEqual([-254, -248, 2]);
+
+    // mutable: M4 * V3 = V3
+    expect(M.dot(v)).toEqual([-254, -248, 2]);
   });
 
   it('should be able to find the inverse of a (square) matrix', () => {
@@ -297,6 +322,11 @@ describe('matrix', () => {
     expect(Matrix.identity().determinant()).toBe(1);
     expect(mat3(-2, 2, 3, -1, 1, 3, 2, 0, -1).determinant()).toBe(6);
     expect(mat4(1, 3, 5, 9, 1, 3, 1, 7, 4, 3, 9, 7, 5, 2, 0, 9).determinant()).toBe(-376);
-    expect(mat4(1, 2, 3, -4, -5, -6, 7, 8, 9, 10, 11, 12, -13, 14, 15, 16).determinant()).toBe(25344);
+    expect(mat4(
+      1, 2, 3, -4,
+      -5, -6, 7, 8,
+      9, 10, 11, 12,
+      -13, 14, 15, 16,
+    ).determinant()).toBe(25344);
   });
 });

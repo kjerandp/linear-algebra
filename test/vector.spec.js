@@ -1,14 +1,14 @@
 import expect from 'expect';
-import { Vector, vec, nvec, vec2, vec3, vec4 } from '../src/vector';
+import { Vector, nvec, vec2, vec3, vec4 } from '../src/vector';
 
 
-describe('vector', () => {
+describe('vector.js', () => {
   it('should be possible to instantiate and assign values using factory functions', () => {
     expect(vec3()).toEqual([0, 0, 0]);
     expect(vec4(1)).toEqual([1, 1, 1, 1]);
     expect(vec3(vec2(1, 2), 3)).toEqual([1, 2, 3]);
     expect(nvec(10)).toEqual([0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
-    const vectorFromArray = vec([1, 2, 3, 4]);
+    const vectorFromArray = Vector.fromArray([1, 2, 3, 4]);
     expect(vectorFromArray).toEqual([1, 2, 3, 4]);
     expect(vectorFromArray).toBeInstanceOf(Vector);
     expect(vectorFromArray).toBeInstanceOf(Array);
