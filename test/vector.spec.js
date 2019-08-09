@@ -77,6 +77,17 @@ describe('vector.js', () => {
     expect(f[3]).toBeCloseTo(4.3);
   });
 
+  it('should be possible to add/subtract two vectors', () => {
+    const v1 = vec2(-3, 2);
+    const v2 = vec2(3, -7);
+    expect(v1.add(v2)).toEqual([0, -5]);
+    expect(v1).toEqual([0, -5]);
+
+    v1.set(-3, 2);
+
+    expect(v2.sub(v1)).toEqual([6, -9]);
+  });
+
   it('should be possible to add/subtract multiple vectors', () => {
     const vectors = [
       vec2(1, 4),
@@ -94,5 +105,26 @@ describe('vector.js', () => {
   it('should calculate the vector scalar (length)', () => {
     const v = vec2(-3, 2);
     expect(v.scalar()).toBeCloseTo(Math.sqrt(13));
+  });
+
+  it('should be able to scale vector', () => {
+    const v = vec2(-3, 2);
+    expect(v.scale(2)).toEqual([-6, 4]);
+  });
+
+  it('should be able to negate a vector', () => {
+    const v = vec2(-3, 2);
+    expect(v.negate()).toEqual([3, -2]);
+  });
+
+  it('should be able to calculate the psudo cross product of two 2d vectors', () => {
+    const v = vec2(-3, 2);
+    expect(v.cross2([1, 1])).toBe(-5);
+  });
+
+  it('should be able to calculate the distance between two vectors', () => {
+    const v1 = vec2(-3, 2);
+    const v2 = vec2(3, -7);
+    expect(v1.distance(v2)).toBeCloseTo(10.8166538);
   });
 });

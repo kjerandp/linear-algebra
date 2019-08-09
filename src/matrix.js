@@ -327,7 +327,7 @@ export class Matrix extends Array {
       if (target instanceof Matrix) {
         target._c = cols;
         target._r = rows;
-        target.length = this.length;
+        target.length = rows * cols;
       }
       subm = target;
     } else {

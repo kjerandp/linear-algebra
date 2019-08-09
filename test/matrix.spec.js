@@ -146,7 +146,7 @@ describe('matrix.js', () => {
     expect(sm.columns).toBe(1);
     expect(sm.toArray(true)).toEqual([4, 7]);
 
-    sm = m.submatrix(1, 1, 2, 2);
+    sm = m.submatrix(1, 1, 2, 2, new Matrix(2, 2));
     expect(sm.rows).toBe(2);
     expect(sm.columns).toBe(2);
     expect(sm.toArray(true)).toEqual([5, 6, 8, 9]);
@@ -315,11 +315,14 @@ describe('matrix.js', () => {
     ]);
     expected = [0.5, 0, 0, 0, 0, 0.666667, 0, 0, 0, 0, 0.333333, 0, 0, 0, 0, 1];
     actual.every((a, i) => expect(a).toBeCloseTo(expected[i], 5));
+
+    expect(mat2(0, -1, 2, 4).inverse().toArray(true)).toEqual([2, 0.5, -1, -0]);
   });
 
   it('should be able to calculate its determinant', () => {
     expect(() => new Matrix(3, 2).determinant()).toThrow();
     expect(Matrix.identity().determinant()).toBe(1);
+    expect(mat2(1, 3, 2, -1).determinant()).toBe(-7);
     expect(mat3(-2, 2, 3, -1, 1, 3, 2, 0, -1).determinant()).toBe(6);
     expect(mat4(1, 3, 5, 9, 1, 3, 1, 7, 4, 3, 9, 7, 5, 2, 0, 9).determinant()).toBe(-376);
     expect(mat4(
