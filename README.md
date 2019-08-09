@@ -22,5 +22,7 @@ const mat3 = lib.mat3;
 (...)
 ```
 
+See this [live sample](https://observablehq.com/@kjerandp/affine-transformations) of usage or refer to the [docs](https://kjerandp.github.io/linear-algebra/) and tests for more details.
+
 ## License
 MIT

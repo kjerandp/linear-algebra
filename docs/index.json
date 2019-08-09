@@ -3929,7 +3929,7 @@
     "__docId__": 133,
     "kind": "file",
     "name": "src/vector.js",
-    "content": "/* eslint-disable object-property-newline */\nimport {\n  add,\n  addAll,\n  sub,\n  subAll,\n  scale,\n  norm,\n  dot,\n  cross,\n  cross2,\n  dist,\n  scalar,\n} from './functions';\nimport { flattenList } from './utils';\n\n/** mapping of additional accessors to array index */\nconst accessors = ({\n  x: 0, r: 0, i: 0, s: 0,\n  y: 1, g: 1, j: 1, t: 1,\n  z: 2, b: 2, k: 2, u: 2,\n  w: 3, a: 3, l: 3, v: 3,\n});\n\n/**\n * Simple extension to js Array to allow function chaining when doing vector operations.\n * A vector instance can be used the same way as a native Array instance. Note that length will\n * therefore return the number of vector components, and not its scalar value.\n * Use the scalar function if you want to know the vector's length.\n *\n * Instantiate a vector by its constructor or using one of the factory functions (vec2, vec3...)\n */\n\nexport class Vector extends Array {\n  /**\n   * Instantiate a vector from an array.\n   * @param {Array} arr array of numbers\n   * @return {Vector}\n   */\n  static fromArray(arr) {\n    return new Vector(...arr);\n  }\n\n  /**\n   * Add one or more vectors to this vector\n   * @param  {...Array} vectors vectors to add to this\n   * @return {Vector}\n   */\n  add(...vectors) {\n    if (vectors.length === 1) {\n      return add(this, vectors[0]);\n    }\n    return addAll(vectors, this);\n  }\n\n  /**\n   * Subtract one or more vectors from this vector\n   * @param  {...Array} vectors vectors to subtract from this vector\n   * @return {Vector}\n   */\n  sub(...vectors) {\n    if (vectors.length === 1) {\n      return sub(this, vectors[0]);\n    }\n    return subAll(this, vectors);\n  }\n\n  /**\n   * Calculate the scalar product (length) of this vector.\n   */\n  scalar() {\n    return scalar(this);\n  }\n\n  /**\n   * Scale this vector by a factor\n   * @param {number} factor scaling factor\n   * @param {Array/Vector} target optional array/vector to avoid mutating this vector\n   * @return {Vector}\n   */\n  scale(factor, target = null) {\n    return scale(this, factor, target || this);\n  }\n\n  /**\n   * Negate all components of this vector\n   * @param {Array/Vector} target optional array/vector to avoid mutating this vector\n   * @return {Vector}\n   */\n  negate(target = null) {\n    return this.scale(-1, target);\n  }\n\n  /**\n   * Normalize this vector\n   * @param {Array/Vector} target optional array/vector to avoid mutating this vector\n   * @return {Vector}\n   */\n  normalize(target = null) {\n    return norm(this, target || this);\n  }\n\n  /**\n   * Calculate the dot product between this vector and the passed in argument\n   * @param {Array} other vector\n   * @return {number} dot product\n   */\n  dot(other) {\n    return dot(this, other);\n  }\n\n  /**\n   * Find the cross product vector between this vector and the passed in argument.\n   * Only for 3d vectors!\n   * @param {Array} other 3d vector\n   * @param {Array/Vector} target optional array/vector to avoid mutating this vector\n   * @return {Vector}\n   */\n  cross(other, target = null) {\n    return cross(this, other, target);\n  }\n\n  /**\n   * Calculate the psudo cross product between this vector and the passed in argument.\n   * Only for 2d vectors!\n   * @param {Array} other 2d vector\n   * @return {number} psudo cross product\n   */\n  cross2(other) {\n    return cross2(this, other);\n  }\n\n  /**\n   * Calculate the distance between this coordinates to the coordinates supplied in the argument\n   * @param {Array} other coordinates\n   * @return {number} distance\n   */\n  distance(other) {\n    return dist(this, other);\n  }\n\n  /**\n   * Clone/copy vector\n   * @return {Vector}\n   */\n  clone() {\n    return new Vector(...this);\n  }\n\n  /**\n   * Mimic the swizzle feature in glsl. Supply the swizzle pattern as a string, using the\n   * defined accessors (xyzw, rgba, ijkl or stuv):\n   * ex: vec.swizzle('xxyw') or vec.swizzle('rrra)\n   * @param {string} pattern swizzle pattern\n   * @param {Array/Vector} target optional array/vector to avoid mutating this vector\n   * @return {Vector}\n   */\n  swizzle(pattern, target = null) {\n    let values = this;\n    if (!target) {\n      target = this;\n      values = [...this];\n    }\n    const l = target.length || pattern.length;\n    for (let i = 0; i < l; i++) {\n      const ai = accessors[pattern[i]];\n      target[i] = values[ai];\n    }\n    return target;\n  }\n\n  /**\n   * Assign values to this vector\n   * @param  {...number} v values to set\n   * @return {Vector}\n   */\n  set(...v) {\n    for (let i = 0; i < v.length; i++) {\n      /** assign value */\n      this[i] = v[i];\n    }\n    return this;\n  }\n}\n\n// add getters and setters from accessors\nObject.keys(accessors).forEach((a) => {\n  Object.defineProperty(Vector.prototype, a, {\n    get() {\n      return this[accessors[a]];\n    },\n    set(v) {\n      if (Number.isFinite(v)) {\n        this[accessors[a]] = v;\n      }\n    },\n  });\n});\n\n/**\n * Create a vector of specific dimension and optionally set its values.\n * If values contains only one element, the all components will be set to\n * this value. Elements in values exceeding the specified dimension will\n * be neglected.\n * @param {number} dim the number of components\n * @param {Array<number>} values optional initial values\n * @return {Vector}\n */\nexport function nvec(dim = 0, values = [0]) {\n  if (values.length === 1 && Number.isFinite(values[0])) {\n    return new Vector(dim).fill(values[0]);\n  }\n  const v = new Vector();\n  flattenList(values, v, dim);\n  for (let i = v.length; i < dim; i++) {\n    v.push(0);\n  }\n  return v;\n}\n\n/**\n * Factory function for creating and assigning a 2d vector. If a single\n * argument is passed, then all components will be assigned with its value.\n * Missing initial values will be filled with zeros.\n * @param  {...number} args initial values\n * @return {Vector}\n */\nexport function vec2(...args) {\n  return nvec(2, args);\n}\n\n/**\n * Factory function for creating and assigning a 3d vector. If a single\n * argument is passed, then all components will be assigned with its value.\n * Missing initial values will be filled with zeros.\n * @param  {...number} args initial values\n * @return {Vector}\n */\nexport function vec3(...args) {\n  return nvec(3, args);\n}\n\n/**\n * Factory function for creating and assigning a 4d vector. If a single\n * argument is passed, then all components will be assigned with its value.\n * Missing initial values will be filled with zeros.\n * @param  {...number} args initial values\n * @return {Vector}\n */\nexport function vec4(...args) {\n  return nvec(4, args);\n}\n",
+    "content": "/* eslint-disable object-property-newline */\nimport {\n  add,\n  addAll,\n  sub,\n  subAll,\n  scale,\n  norm,\n  dot,\n  cross,\n  cross2,\n  dist,\n  scalar,\n} from './functions';\nimport { flattenList } from './utils';\n\n/** mapping of additional accessors to array index */\nconst accessors = ({\n  x: 0, r: 0, i: 0, s: 0,\n  y: 1, g: 1, j: 1, t: 1,\n  z: 2, b: 2, k: 2, u: 2,\n  w: 3, a: 3, l: 3, v: 3,\n});\n\n/**\n * Simple extension to js Array to allow function chaining when doing vector operations.\n * A vector instance can be used the same way as a native Array instance. Note that length will\n * therefore return the number of vector components, and not its scalar value.\n * Use the scalar function if you want to know the vector's length.\n *\n * Instantiate a vector by its constructor or using one of the factory functions (vec2, vec3...)\n */\n\nexport class Vector extends Array {\n  /**\n   * Instantiate a vector from an array.\n   * @param {Array} arr array of numbers\n   * @return {Vector}\n   */\n  static fromArray(arr) {\n    return new Vector(...arr);\n  }\n\n  /**\n   * Add one or more vectors to this vector\n   * @param  {...Array} vectors vectors to add to this\n   * @return {Vector}\n   */\n  add(...vectors) {\n    if (vectors.length === 1) {\n      return add(this, vectors[0]);\n    }\n    return addAll(vectors, this);\n  }\n\n  /**\n   * Subtract one or more vectors from this vector\n   * @param  {...Array} vectors vectors to subtract from this vector\n   * @return {Vector}\n   */\n  sub(...vectors) {\n    if (vectors.length === 1) {\n      return sub(this, vectors[0]);\n    }\n    return subAll(this, vectors);\n  }\n\n  /**\n   * Calculate the scalar product (length) of this vector.\n   * @return {number}\n   */\n  scalar() {\n    return scalar(this);\n  }\n\n  /**\n   * Scale this vector by a factor\n   * @param {number} factor scaling factor\n   * @param {Array/Vector} target optional array/vector to avoid mutating this vector\n   * @return {Vector}\n   */\n  scale(factor, target = null) {\n    return scale(this, factor, target || this);\n  }\n\n  /**\n   * Negate all components of this vector\n   * @param {Array/Vector} target optional array/vector to avoid mutating this vector\n   * @return {Vector}\n   */\n  negate(target = null) {\n    return this.scale(-1, target);\n  }\n\n  /**\n   * Normalize this vector\n   * @param {Array/Vector} target optional array/vector to avoid mutating this vector\n   * @return {Vector}\n   */\n  normalize(target = null) {\n    return norm(this, target || this);\n  }\n\n  /**\n   * Calculate the dot product between this vector and the passed in argument\n   * @param {Array} other vector\n   * @return {number} dot product\n   */\n  dot(other) {\n    return dot(this, other);\n  }\n\n  /**\n   * Find the cross product vector between this vector and the passed in argument.\n   * Only for 3d vectors!\n   * @param {Array} other 3d vector\n   * @param {Array/Vector} target optional array/vector to avoid mutating this vector\n   * @return {Vector}\n   */\n  cross(other, target = null) {\n    return cross(this, other, target);\n  }\n\n  /**\n   * Calculate the psudo cross product between this vector and the passed in argument.\n   * Only for 2d vectors!\n   * @param {Array} other 2d vector\n   * @return {number} psudo cross product\n   */\n  cross2(other) {\n    return cross2(this, other);\n  }\n\n  /**\n   * Calculate the distance between this coordinates to the coordinates supplied in the argument\n   * @param {Array} other coordinates\n   * @return {number} distance\n   */\n  distance(other) {\n    return dist(this, other);\n  }\n\n  /**\n   * Clone/copy vector\n   * @return {Vector}\n   */\n  clone() {\n    return new Vector(...this);\n  }\n\n  /**\n   * Mimic the swizzle feature in glsl. Supply the swizzle pattern as a string, using the\n   * defined accessors (xyzw, rgba, ijkl or stuv):\n   * ex: vec.swizzle('xxyw') or vec.swizzle('rrra)\n   * @param {string} pattern swizzle pattern\n   * @param {Array/Vector} target optional array/vector to avoid mutating this vector\n   * @return {Vector}\n   */\n  swizzle(pattern, target = null) {\n    let values = this;\n    if (!target) {\n      target = this;\n      values = [...this];\n    }\n    const l = target.length || pattern.length;\n    for (let i = 0; i < l; i++) {\n      const ai = accessors[pattern[i]];\n      target[i] = values[ai];\n    }\n    return target;\n  }\n\n  /**\n   * Assign values to this vector\n   * @param  {...number} v values to set\n   * @return {Vector}\n   */\n  set(...v) {\n    for (let i = 0; i < v.length; i++) {\n      /** assign value */\n      this[i] = v[i];\n    }\n    return this;\n  }\n}\n\n// add getters and setters from accessors\nObject.keys(accessors).forEach((a) => {\n  Object.defineProperty(Vector.prototype, a, {\n    get() {\n      return this[accessors[a]];\n    },\n    set(v) {\n      if (Number.isFinite(v)) {\n        this[accessors[a]] = v;\n      }\n    },\n  });\n});\n\n/**\n * Create a vector of specific dimension and optionally set its values.\n * If values contains only one element, the all components will be set to\n * this value. Elements in values exceeding the specified dimension will\n * be neglected.\n * @param {number} dim the number of components\n * @param {Array<number>} values optional initial values\n * @return {Vector}\n */\nexport function nvec(dim = 0, values = [0]) {\n  if (values.length === 1 && Number.isFinite(values[0])) {\n    return new Vector(dim).fill(values[0]);\n  }\n  const v = new Vector();\n  flattenList(values, v, dim);\n  for (let i = v.length; i < dim; i++) {\n    v.push(0);\n  }\n  return v;\n}\n\n/**\n * Factory function for creating and assigning a 2d vector. If a single\n * argument is passed, then all components will be assigned with its value.\n * Missing initial values will be filled with zeros.\n * @param  {...number} args initial values\n * @return {Vector}\n */\nexport function vec2(...args) {\n  return nvec(2, args);\n}\n\n/**\n * Factory function for creating and assigning a 3d vector. If a single\n * argument is passed, then all components will be assigned with its value.\n * Missing initial values will be filled with zeros.\n * @param  {...number} args initial values\n * @return {Vector}\n */\nexport function vec3(...args) {\n  return nvec(3, args);\n}\n\n/**\n * Factory function for creating and assigning a 4d vector. If a single\n * argument is passed, then all components will be assigned with its value.\n * Missing initial values will be filled with zeros.\n * @param  {...number} args initial values\n * @return {Vector}\n */\nexport function vec4(...args) {\n  return nvec(4, args);\n}\n",
     "static": true,
     "longname": "/Users/kjerandp/Projects/linear-algebra/src/vector.js",
     "access": "public",
@@ -4084,13 +4084,16 @@
     "longname": "src/vector.js~Vector#scalar",
     "access": "public",
     "description": "Calculate the scalar product (length) of this vector.",
-    "lineNumber": 71,
-    "params": [],
+    "lineNumber": 72,
     "return": {
+      "nullable": null,
       "types": [
-        "*"
-      ]
-    }
+        "number"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "params": []
   },
   {
     "__docId__": 140,
@@ -4103,7 +4106,7 @@
     "longname": "src/vector.js~Vector#scale",
     "access": "public",
     "description": "Scale this vector by a factor",
-    "lineNumber": 81,
+    "lineNumber": 82,
     "params": [
       {
         "nullable": null,
@@ -4146,7 +4149,7 @@
     "longname": "src/vector.js~Vector#negate",
     "access": "public",
     "description": "Negate all components of this vector",
-    "lineNumber": 90,
+    "lineNumber": 91,
     "params": [
       {
         "nullable": null,
@@ -4179,7 +4182,7 @@
     "longname": "src/vector.js~Vector#normalize",
     "access": "public",
     "description": "Normalize this vector",
-    "lineNumber": 99,
+    "lineNumber": 100,
     "params": [
       {
         "nullable": null,
@@ -4212,7 +4215,7 @@
     "longname": "src/vector.js~Vector#dot",
     "access": "public",
     "description": "Calculate the dot product between this vector and the passed in argument",
-    "lineNumber": 108,
+    "lineNumber": 109,
     "params": [
       {
         "nullable": null,
@@ -4245,7 +4248,7 @@
     "longname": "src/vector.js~Vector#cross",
     "access": "public",
     "description": "Find the cross product vector between this vector and the passed in argument.\nOnly for 3d vectors!",
-    "lineNumber": 119,
+    "lineNumber": 120,
     "params": [
       {
         "nullable": null,
@@ -4288,7 +4291,7 @@
     "longname": "src/vector.js~Vector#cross2",
     "access": "public",
     "description": "Calculate the psudo cross product between this vector and the passed in argument.\nOnly for 2d vectors!",
-    "lineNumber": 129,
+    "lineNumber": 130,
     "params": [
       {
         "nullable": null,
@@ -4321,7 +4324,7 @@
     "longname": "src/vector.js~Vector#distance",
     "access": "public",
     "description": "Calculate the distance between this coordinates to the coordinates supplied in the argument",
-    "lineNumber": 138,
+    "lineNumber": 139,
     "params": [
       {
         "nullable": null,
@@ -4354,7 +4357,7 @@
     "longname": "src/vector.js~Vector#clone",
     "access": "public",
     "description": "Clone/copy vector",
-    "lineNumber": 146,
+    "lineNumber": 147,
     "return": {
       "nullable": null,
       "types": [
@@ -4376,7 +4379,7 @@
     "longname": "src/vector.js~Vector#swizzle",
     "access": "public",
     "description": "Mimic the swizzle feature in glsl. Supply the swizzle pattern as a string, using the\ndefined accessors (xyzw, rgba, ijkl or stuv):\nex: vec.swizzle('xxyw') or vec.swizzle('rrra)",
-    "lineNumber": 158,
+    "lineNumber": 159,
     "params": [
       {
         "nullable": null,
@@ -4419,7 +4422,7 @@
     "longname": "src/vector.js~Vector#set",
     "access": "public",
     "description": "Assign values to this vector",
-    "lineNumber": 177,
+    "lineNumber": 178,
     "params": [
       {
         "nullable": null,
@@ -4450,7 +4453,7 @@
     "longname": "src/vector.js~Vector#[i]",
     "access": "public",
     "description": "assign value",
-    "lineNumber": 180,
+    "lineNumber": 181,
     "type": {
       "types": [
         "*"
@@ -4471,7 +4474,7 @@
     "importPath": "@kjerandp/linear-algebra/src/vector.js",
     "importStyle": "{nvec}",
     "description": "Create a vector of specific dimension and optionally set its values.\nIf values contains only one element, the all components will be set to\nthis value. Elements in values exceeding the specified dimension will\nbe neglected.",
-    "lineNumber": 209,
+    "lineNumber": 210,
     "params": [
       {
         "nullable": null,
@@ -4517,7 +4520,7 @@
     "importPath": "@kjerandp/linear-algebra/src/vector.js",
     "importStyle": "{vec2}",
     "description": "Factory function for creating and assigning a 2d vector. If a single\nargument is passed, then all components will be assigned with its value.\nMissing initial values will be filled with zeros.",
-    "lineNumber": 228,
+    "lineNumber": 229,
     "params": [
       {
         "nullable": null,
@@ -4553,7 +4556,7 @@
     "importPath": "@kjerandp/linear-algebra/src/vector.js",
     "importStyle": "{vec3}",
     "description": "Factory function for creating and assigning a 3d vector. If a single\nargument is passed, then all components will be assigned with its value.\nMissing initial values will be filled with zeros.",
-    "lineNumber": 239,
+    "lineNumber": 240,
     "params": [
       {
         "nullable": null,
@@ -4589,7 +4592,7 @@
     "importPath": "@kjerandp/linear-algebra/src/vector.js",
     "importStyle": "{vec4}",
     "description": "Factory function for creating and assigning a 4d vector. If a single\nargument is passed, then all components will be assigned with its value.\nMissing initial values will be filled with zeros.",
-    "lineNumber": 250,
+    "lineNumber": 251,
     "params": [
       {
         "nullable": null,
@@ -4613,7 +4616,7 @@
   },
   {
     "kind": "index",
-    "content": "# Linear algebra\n\nMath library for doing basic linear algebra operations, inspired by GLSL.\n\n## Installation\n```\nnpm install --save @kjerandp/linear-algebra\n```\n## Usage\n\nThe package exports an object containing all types and functions. \n\n```js\n// es6\nimport { vec3, mat3, ... } from '@kjerandp/linear-algebra';\n\n// commonjs\nconst lib = require('@kjerandp/linear-algebra');\n\nconst vec3 = lib.vec3;\nconst mat3 = lib.mat3;\n(...)\n```\n\n## License\nMIT\n",
+    "content": "# Linear algebra\n\nMath library for doing basic linear algebra operations, inspired by GLSL.\n\n## Installation\n```\nnpm install --save @kjerandp/linear-algebra\n```\n## Usage\n\nThe package exports an object containing all types and functions. \n\n```js\n// es6\nimport { vec3, mat3, ... } from '@kjerandp/linear-algebra';\n\n// commonjs\nconst lib = require('@kjerandp/linear-algebra');\n\nconst vec3 = lib.vec3;\nconst mat3 = lib.mat3;\n(...)\n```\n\nSee this [live sample](https://observablehq.com/@kjerandp/affine-transformations) of usage or refer to the [docs](https://kjerandp.github.io/linear-algebra/) and tests for more details.\n\n## License\nMIT\n",
     "longname": "/Users/kjerandp/Projects/linear-algebra/README.md",
     "name": "./README.md",
     "static": true,
@@ -4621,7 +4624,7 @@
   },
   {
     "kind": "packageJSON",
-    "content": "{\n  \"private\": false,\n  \"name\": \"@kjerandp/linear-algebra\",\n  \"version\": \"1.0.0-alpha.5\",\n  \"description\": \"Math library for doing basic linear algebra operations\",\n  \"repository\": \"https://github.com/kjerandp/linear-algebra\",\n  \"author\": \"Kjerand Pedersen\",\n  \"license\": \"MIT\",\n  \"keywords\": [\n    \"vector\",\n    \"math\",\n    \"matrix\",\n    \"matricies\",\n    \"linear\",\n    \"algebra\",\n    \"transformations\",\n    \"2d\",\n    \"3d\",\n    \"4d\"\n  ],\n  \"main\": \"dist/@kjerandp/linear-algebra.cjs.js\",\n  \"module\": \"dist/@kjerandp/linear-algebra.esm.js\",\n  \"browser\": \"dist/@kjerandp/linear-algebra.min.js\",\n  \"devDependencies\": {\n    \"@babel/cli\": \"^7.4.4\",\n    \"@babel/core\": \"^7.4.4\",\n    \"@babel/preset-env\": \"^7.4.4\",\n    \"@babel/register\": \"^7.4.4\",\n    \"esdoc\": \"^1.1.0\",\n    \"esdoc-standard-plugin\": \"^1.0.0\",\n    \"eslint\": \"^4.18.2\",\n    \"eslint-config-airbnb\": \"^16.1.0\",\n    \"eslint-plugin-import\": \"^2.9.0\",\n    \"eslint-plugin-jsx-a11y\": \"^6.0.3\",\n    \"eslint-plugin-react\": \"^7.7.0\",\n    \"expect\": \"^24.8.0\",\n    \"mocha\": \"^6.1.4\",\n    \"nyc\": \"^14.1.1\",\n    \"rollup\": \"^1.11.3\",\n    \"rollup-plugin-babel\": \"^4.3.2\",\n    \"rollup-plugin-commonjs\": \"^9.3.4\",\n    \"rollup-plugin-node-resolve\": \"^4.2.4\",\n    \"rollup-plugin-uglify\": \"^6.0.2\"\n  },\n  \"scripts\": {\n    \"build\": \"node node_modules/.bin/rollup -c\",\n    \"dev\": \"node node_modules/.bin/rollup -c -w\",\n    \"coverage\": \"NODE_ENV=test npx nyc --reporter=html --reporter=text mocha --require @babel/register\",\n    \"test\": \"NODE_ENV=test npx mocha --require @babel/register\",\n    \"test:watch\": \"NODE_ENV=test npx mocha --require @babel/register --reporter min --watch\",\n    \"lint\": \"npx eslint src test tools\",\n    \"prepub\": \"npm run build\",\n    \"pub\": \"npm publish --access=public\",\n    \"docs\": \"./node_modules/.bin/esdoc\"\n  },\n  \"files\": [\n    \"dist\"\n  ]\n}\n",
+    "content": "{\n  \"private\": false,\n  \"name\": \"@kjerandp/linear-algebra\",\n  \"version\": \"1.0.0\",\n  \"description\": \"Math library for doing basic linear algebra operations\",\n  \"repository\": \"https://github.com/kjerandp/linear-algebra\",\n  \"author\": \"Kjerand Pedersen\",\n  \"license\": \"MIT\",\n  \"keywords\": [\n    \"vector\",\n    \"math\",\n    \"matrix\",\n    \"matricies\",\n    \"linear\",\n    \"algebra\",\n    \"transformations\",\n    \"2d\",\n    \"3d\",\n    \"4d\"\n  ],\n  \"main\": \"dist/@kjerandp/linear-algebra.cjs.js\",\n  \"module\": \"dist/@kjerandp/linear-algebra.esm.js\",\n  \"browser\": \"dist/@kjerandp/linear-algebra.min.js\",\n  \"devDependencies\": {\n    \"@babel/cli\": \"^7.4.4\",\n    \"@babel/core\": \"^7.4.4\",\n    \"@babel/preset-env\": \"^7.4.4\",\n    \"@babel/register\": \"^7.4.4\",\n    \"esdoc\": \"^1.1.0\",\n    \"esdoc-standard-plugin\": \"^1.0.0\",\n    \"eslint\": \"^4.18.2\",\n    \"eslint-config-airbnb\": \"^16.1.0\",\n    \"eslint-plugin-import\": \"^2.9.0\",\n    \"eslint-plugin-jsx-a11y\": \"^6.0.3\",\n    \"eslint-plugin-react\": \"^7.7.0\",\n    \"expect\": \"^24.8.0\",\n    \"mocha\": \"^6.1.4\",\n    \"nyc\": \"^14.1.1\",\n    \"rollup\": \"^1.11.3\",\n    \"rollup-plugin-babel\": \"^4.3.2\",\n    \"rollup-plugin-commonjs\": \"^9.3.4\",\n    \"rollup-plugin-node-resolve\": \"^4.2.4\",\n    \"rollup-plugin-uglify\": \"^6.0.2\"\n  },\n  \"scripts\": {\n    \"build\": \"node node_modules/.bin/rollup -c\",\n    \"dev\": \"node node_modules/.bin/rollup -c -w\",\n    \"coverage\": \"NODE_ENV=test npx nyc --reporter=html --reporter=text mocha --require @babel/register\",\n    \"test\": \"NODE_ENV=test npx mocha --require @babel/register\",\n    \"test:watch\": \"NODE_ENV=test npx mocha --require @babel/register --reporter min --watch\",\n    \"lint\": \"npx eslint src test tools\",\n    \"prepub\": \"npm run build\",\n    \"pub\": \"npm publish --access=public\",\n    \"docs\": \"./node_modules/.bin/esdoc\"\n  },\n  \"files\": [\n    \"dist\"\n  ]\n}\n",
     "longname": "/Users/kjerandp/Projects/linear-algebra/package.json",
     "name": "package.json",
     "static": true,

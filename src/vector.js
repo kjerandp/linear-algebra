@@ -67,6 +67,7 @@ export class Vector extends Array {
 
   /**
    * Calculate the scalar product (length) of this vector.
+   * @return {number}
    */
   scalar() {
     return scalar(this);
