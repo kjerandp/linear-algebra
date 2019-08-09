@@ -439,7 +439,7 @@ window.esdocSearchIndex = [
   ],
   [
     "",
-    "test-file/test/matrix.spec.js.html#lineNumber320",
+    "test-file/test/matrix.spec.js.html#lineNumber322",
     "matrix.js should be able to calculate its determinant",
     "test"
   ],
@@ -1165,6 +1165,30 @@ window.esdocSearchIndex = [
   ],
   [
     "",
+    "test-file/test/vector.spec.js.html#lineNumber125",
+    "vector.js should be able to calculate the distance between two vectors",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/vector.spec.js.html#lineNumber120",
+    "vector.js should be able to calculate the psudo cross product of two 2d vectors",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/vector.spec.js.html#lineNumber115",
+    "vector.js should be able to negate a vector",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/vector.spec.js.html#lineNumber110",
+    "vector.js should be able to scale vector",
+    "test"
+  ],
+  [
+    "",
     "test-file/test/vector.spec.js.html#lineNumber18",
     "vector.js should be able to use array getters/setters and extended/added vector getter/setters",
     "test"
@@ -1177,8 +1201,14 @@ window.esdocSearchIndex = [
   ],
   [
     "",
-    "test-file/test/vector.spec.js.html#lineNumber80",
+    "test-file/test/vector.spec.js.html#lineNumber91",
     "vector.js should be possible to add/subtract multiple vectors",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/vector.spec.js.html#lineNumber80",
+    "vector.js should be possible to add/subtract two vectors",
     "test"
   ],
   [
@@ -1195,7 +1225,7 @@ window.esdocSearchIndex = [
   ],
   [
     "",
-    "test-file/test/vector.spec.js.html#lineNumber94",
+    "test-file/test/vector.spec.js.html#lineNumber105",
     "vector.js should calculate the vector scalar (length)",
     "test"
   ]
