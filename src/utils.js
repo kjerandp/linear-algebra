@@ -1,9 +1,9 @@
 /**
  * Transpose a single dimensional array, representing 2d data, from
  * rows first to columns first.
- * @param {*} arr Array to transpose
- * @param {*} cols Number of columns in source array
- * @param {*} target If omitted, result will be returned as a new array
+ * @param {Array} arr Array to transpose
+ * @param {number} cols Number of columns in source array
+ * @param {Array} target If omitted, result will be returned as a new array
  */
 export function rowsToColumns(arr, cols, target = null) {
   cols = cols || 1;
@@ -26,6 +26,12 @@ export function rowsToColumns(arr, cols, target = null) {
   return target;
 }
 
+/**
+ * Recursive function used by flattenList
+ * @param {Array} array array to be flattended
+ * @param {Array} flattend resulting array of values
+ * @param {number} max max returned values (default is 0 for all)
+ */
 function flatRec(array, flattend, max) {
   for (let i = 0; i < array.length; i++) {
     if (max && flattend.length === max) return;
@@ -37,9 +43,9 @@ function flatRec(array, flattend, max) {
 
 /**
  * Recursivly flattens a list of arguments to a 1 dimensional array
- * @param {*} arg Arguments to be flattended
- * @param {*} values Resulting array of values
- * @param {*} max Max returned values (default is 0 for all)
+ * @param {Array} arg Arguments to be flattended
+ * @param {Array} flattend Resulting array of values
+ * @param {number} max Max returned values (default is 0 for all)
  */
 export function flattenList(arg = [], flattend = [], max = 0) {
   if (flattend.length > 0) flattend.length = 0;

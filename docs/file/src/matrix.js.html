@@ -1,5 +1,92 @@
-import { rowsToColumns } from './utils';
-import { scale } from './functions';
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../">
+  <title data-ice="title">src/matrix.js | @kjerandp/linear-algebra</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  <script src="script/manual.js"></script>
+<meta name="description" content="Math library for doing basic linear algebra operations"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="@kjerandp/linear-algebra"><meta property="twitter:description" content="Math library for doing basic linear algebra operations"></head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  <a href="test.html" data-ice="testLink">Test</a>
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+<a style="position:relative; top:3px;" href="https://github.com/kjerandp/linear-algebra"><img width="20px" src="./image/github.png"></a></header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/matrix.js~Matrix.html">Matrix</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/vector.js~Vector.html">Vector</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-add">add</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-addAll">addAll</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-angle">angle</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-angle2">angle2</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-clamp">clamp</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-clampArray">clampArray</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-clampValue">clampValue</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-cross">cross</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-cross2">cross2</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-deg">deg</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-descr">descr</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-dir">dir</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-dist">dist</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-dot">dot</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-lerp">lerp</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-mix">mix</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-norm">norm</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-nrad">nrad</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-orth2">orth2</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-rad">rad</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-round">round</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-scalar">scalar</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-scale">scale</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-smoothstep">smoothstep</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-step">step</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-stepArray">stepArray</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-stepValue">stepValue</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-sub">sub</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-subAll">subAll</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-sumsqr">sumsqr</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-triple">triple</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-vec">vec</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-mat">mat</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-mat2">mat2</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-mat3">mat3</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-mat4">mat4</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-flattenList">flattenList</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-rowsToColumns">rowsToColumns</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-nvec">nvec</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-vec2">vec2</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-vec3">vec3</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-vec4">vec4</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-DEG2RAD">DEG2RAD</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-EPSILON">EPSILON</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-PI">PI</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-QPI">QPI</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-RAD2DEG">RAD2DEG</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-SPI">SPI</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-TAU">TAU</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">src/matrix.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import { rowsToColumns } from &apos;./utils&apos;;
+import { scale } from &apos;./functions&apos;;
 
 /**
  * A class for storing values in rows and columns and for doing
@@ -17,7 +104,7 @@ export class Matrix extends Array {
    */
   static identity(size = 4) {
     const m = new Matrix(size).fill(0);
-    for (let i = 0; i < m.length; i += size + 1) {
+    for (let i = 0; i &lt; m.length; i += size + 1) {
       m[i] = 1;
     }
     return m;
@@ -30,18 +117,18 @@ export class Matrix extends Array {
    * @param {function} callback function to be executed for each element
    * @param {boolean} rowsFirst traverse order
    */
-  static traverse(arr, cols = 1, callback = () => ({}), rowsFirst = true) {
+  static traverse(arr, cols = 1, callback = () =&gt; ({}), rowsFirst = true) {
     const rows = arr.rows || ~~(arr.length / cols);
     if (rowsFirst) {
       let n = 0;
-      for (let c = 0; c < cols; c++) {
-        for (let r = 0; r < rows; r++) {
+      for (let c = 0; c &lt; cols; c++) {
+        for (let r = 0; r &lt; rows; r++) {
           const idx = c * rows + r;
           callback(arr[idx], n++, r, c, idx);
         }
       }
     } else {
-      arr.forEach((v, i) => callback(v, i, i % cols, ~~(i / rows), i));
+      arr.forEach((v, i) =&gt; callback(v, i, i % cols, ~~(i / rows), i));
     }
   }
 
@@ -70,8 +157,8 @@ export class Matrix extends Array {
     const rows = vectors[0].length;
     const m = new Matrix(rows, cols);
     let n = 0;
-    for (let i = 0; i < cols; i++) {
-      for (let j = 0; j < rows; j++) {
+    for (let i = 0; i &lt; cols; i++) {
+      for (let j = 0; j &lt; rows; j++) {
         m[n++] = vectors[i][j];
       }
     }
@@ -96,7 +183,7 @@ export class Matrix extends Array {
     this._r = rows;
 
     if (values) {
-      if (values.length === 1 && Array.isArray(values[0])) {
+      if (values.length === 1 &amp;&amp; Array.isArray(values[0])) {
         [values] = values;
       }
       this.copyFrom(values, rowsFirst, mutateArgs);
@@ -111,12 +198,12 @@ export class Matrix extends Array {
    */
   copyFrom(values, rowsFirst = true, mutateArgs = false) {
     if (!rowsFirst) {
-      for (let i = 0; i < Math.min(this.length, values.length); i++) {
+      for (let i = 0; i &lt; Math.min(this.length, values.length); i++) {
         /** assign value */
         this[i] = values[i];
       }
     } else {
-      if (values.length > this.length) {
+      if (values.length &gt; this.length) {
         if (mutateArgs) {
           values.length = this.length;
         } else {
@@ -134,7 +221,7 @@ export class Matrix extends Array {
    * @param {boolean} rowsFirst if values should be read rows-first or columns-first
    * @return {Matrix} returns itself for chaining
    */
-  traverse(callback = () => ({}), rowsFirst = true) {
+  traverse(callback = () =&gt; ({}), rowsFirst = true) {
     Matrix.traverse(this, this.columns, callback, rowsFirst);
     return this;
   }
@@ -192,14 +279,14 @@ export class Matrix extends Array {
   dotMat(...matrices) {
     let m = this;
     let target = this;
-    matrices.forEach((other) => {
+    matrices.forEach((other) =&gt; {
       target = m.clone();
-      if (m.columns !== other.rows) throw Error('Columns of left hand matrix must match rows of right hand matrix!');
+      if (m.columns !== other.rows) throw Error(&apos;Columns of left hand matrix must match rows of right hand matrix!&apos;);
       let idx = 0;
-      for (let c = 0; c < other.columns; c++) {
-        for (let r = 0; r < m.rows; r++) {
+      for (let c = 0; c &lt; other.columns; c++) {
+        for (let r = 0; r &lt; m.rows; r++) {
           let sum = 0;
-          for (let n = 0; n < m.columns; n++) {
+          for (let n = 0; n &lt; m.columns; n++) {
             sum += m.get(r, n) * other.get(n, c);
           }
           target[idx++] = sum;
@@ -224,12 +311,12 @@ export class Matrix extends Array {
   */
   dotVec(vec, target = null) {
     if (target) { // optimized for immutable input vector
-      for (let c = 0; c < this.columns; c++) {
+      for (let c = 0; c &lt; this.columns; c++) {
         const n = c * this.rows;
-        for (let r = 0; r < target.length; r++) {
+        for (let r = 0; r &lt; target.length; r++) {
           if (c === 0) target[r] = 0;
           let compVal = 0;
-          if (c < vec.length) {
+          if (c &lt; vec.length) {
             compVal = vec[c];
           } else if (c === this.rows - 1) {
             compVal = 1;
@@ -241,16 +328,16 @@ export class Matrix extends Array {
     }
     // optimized for mutation of input vector
     const comp = new Array(vec.length);
-    for (let i = 0; i < vec.length; i++) {
+    for (let i = 0; i &lt; vec.length; i++) {
       comp[i] = vec[i];
       vec[i] = 0;
     }
 
-    for (let c = 0; c < this.columns; c++) {
+    for (let c = 0; c &lt; this.columns; c++) {
       const n = c * this.rows;
-      for (let r = 0; r < vec.length; r++) {
+      for (let r = 0; r &lt; vec.length; r++) {
         let compVal = 0;
-        if (c < comp.length) {
+        if (c &lt; comp.length) {
           compVal = comp[c];
         } else if (c === this.rows - 1) {
           compVal = 1;
@@ -258,7 +345,7 @@ export class Matrix extends Array {
         vec[r] += this[n + r] * compVal;
       }
     }
-    if (vec.length > this.rows) {
+    if (vec.length &gt; this.rows) {
       vec.length = this.rows;
     }
     return vec;
@@ -288,7 +375,7 @@ export class Matrix extends Array {
     target = target || new Array(this.rows);
     const idx = j * this.rows;
 
-    for (let i = idx; i < idx + this.rows; i++) {
+    for (let i = idx; i &lt; idx + this.rows; i++) {
       target[i - idx] = this[i];
     }
     return target;
@@ -303,7 +390,7 @@ export class Matrix extends Array {
   row(i, target = null) {
     target = target || new Array(this.columns);
 
-    for (let j = 0; j < this.columns; j++) {
+    for (let j = 0; j &lt; this.columns; j++) {
       target[j] = this[i + j * this.rows];
     }
     return target;
@@ -335,8 +422,8 @@ export class Matrix extends Array {
     }
 
     let k = 0;
-    for (let i = start; i < end; i += this.rows) {
-      for (let j = 0; j < rows; j++) {
+    for (let i = start; i &lt; end; i += this.rows) {
+      for (let j = 0; j &lt; rows; j++) {
         subm[k++] = this[i + j];
       }
     }
@@ -351,7 +438,7 @@ export class Matrix extends Array {
    * @return {Matrix} reduced matrix
    */
   remove(row = null, col = null, target = null) {
-    if (target && target instanceof Matrix) {
+    if (target &amp;&amp; target instanceof Matrix) {
       target._r = this._r;
       target._c = this._c;
       target.length = this.length;
@@ -361,13 +448,13 @@ export class Matrix extends Array {
     }
 
     let idx;
-    if (Number.isFinite(col) && col >= 0 && col < target.columns) {
+    if (Number.isFinite(col) &amp;&amp; col &gt;= 0 &amp;&amp; col &lt; target.columns) {
       idx = col * target.rows;
       target.splice(idx, target.rows);
       target._c--;
     }
-    if (Number.isFinite(row) && row >= 0 && row < target.rows) {
-      for (let r = 0; r < target.columns; r++) {
+    if (Number.isFinite(row) &amp;&amp; row &gt;= 0 &amp;&amp; row &lt; target.rows) {
+      for (let r = 0; r &lt; target.columns; r++) {
         idx = r * target.rows + row - r;
         target.splice(idx, 1);
       }
@@ -402,10 +489,10 @@ export class Matrix extends Array {
    * @return {Matrix} transposed matrix
    */
   inverse(target = null) {
-    if (!this.isSquare) throw Error('Matrix must be square!');
+    if (!this.isSquare) throw Error(&apos;Matrix must be square!&apos;);
 
     const dim = this.rows;
-    if (target && target instanceof Matrix) {
+    if (target &amp;&amp; target instanceof Matrix) {
       target._c = this.columns;
       target._r = this.rows;
       target.length = this.length;
@@ -415,47 +502,47 @@ export class Matrix extends Array {
     }
     const src = Matrix.identity(dim);
 
-    for (let i = 0; i < dim; i++) {
+    for (let i = 0; i &lt; dim; i++) {
       const d = target.index(i, i);
       let e = target[d];
-      // if we have a 0 on the diagonal (we'll need to swap with a lower row)
+      // if we have a 0 on the diagonal (we&apos;ll need to swap with a lower row)
       if (e === 0) {
-        // look through every row below the i'th row
-        for (let ii = i + 1; ii < dim; ii += 1) {
-          // if the ii'th row has a non-0 in the i'th col
+        // look through every row below the i&apos;th row
+        for (let ii = i + 1; ii &lt; dim; ii += 1) {
+          // if the ii&apos;th row has a non-0 in the i&apos;th col
           if (target.get(ii, i) !== 0) {
             // it would make the diagonal have a non-0 so swap it
-            for (let j = 0; j < dim; j++) {
+            for (let j = 0; j &lt; dim; j++) {
               const ij = target.index(i, j);
               const iij = target.index(ii, j);
-              e = target[ij]; // temp store i'th row
-              target[ij] = target[iij]; // replace i'th row by ii'th
-              target[iij] = e; // repace ii'th by temp
-              e = src[ij]; // temp store i'th row
-              src[ij] = src[iij]; // replace i'th row by ii'th
-              src[iij] = e; // repace ii'th by temp
+              e = target[ij]; // temp store i&apos;th row
+              target[ij] = target[iij]; // replace i&apos;th row by ii&apos;th
+              target[iij] = e; // repace ii&apos;th by temp
+              e = src[ij]; // temp store i&apos;th row
+              src[ij] = src[iij]; // replace i&apos;th row by ii&apos;th
+              src[iij] = e; // repace ii&apos;th by temp
             }
-            // don't bother checking other rows since we've swapped
+            // don&apos;t bother checking other rows since we&apos;ve swapped
             break;
           }
         }
         // get the new diagonal
         e = target[d];
-        // if it's still 0, not srcertable (error)
+        // if it&apos;s still 0, not srcertable (error)
         if (e === 0) return undefined;
       }
 
       // Scale this row down by e (so we have a 1 on the diagonal)
-      for (let j = 0; j < dim; j++) {
+      for (let j = 0; j &lt; dim; j++) {
         const ij = target.index(i, j);
         target[ij] /= e; // apply to original thisrix
         src[ij] /= e; // apply to identity
       }
 
       // Subtract this row (scaled appropriately for each row) from ALL of
-      // the other rows so that there will be 0's in this column in the
+      // the other rows so that there will be 0&apos;s in this column in the
       // rows above and below this one
-      for (let ii = 0; ii < dim; ii++) {
+      for (let ii = 0; ii &lt; dim; ii++) {
         // Only apply to other rows (we want a 1 on the diagonal)
         if (ii === i) continue;
 
@@ -463,10 +550,10 @@ export class Matrix extends Array {
         e = target.get(ii, i);
 
         // Subtract (the row above(or below) scaled by e) from (the
-        // current row) but start at the i'th column and assume all the
+        // current row) but start at the i&apos;th column and assume all the
         // stuff left of diagonal is 0 (which it should be if we made this
         // algorithm correctly)
-        for (let j = 0; j < dim; j++) {
+        for (let j = 0; j &lt; dim; j++) {
           const ij = target.index(i, j);
           const iij = target.index(ii, j);
           target[iij] -= e * target[ij]; // apply to original matrix
@@ -478,11 +565,11 @@ export class Matrix extends Array {
   }
 
   /**
-   * Calculate this matrix's determinant (where applicable)
+   * Calculate this matrix&apos;s determinant (where applicable)
    * @return {number} the determinant
    */
   determinant() {
-    if (!this.isSquare) throw Error('Matrix must be square!');
+    if (!this.isSquare) throw Error(&apos;Matrix must be square!&apos;);
 
     if (this.rows === 2) {
       return this[0] * this[3] - this[2] * this[1];
@@ -496,7 +583,7 @@ export class Matrix extends Array {
       if (m.length === 1) return m[0];
 
       let d = 0;
-      for (let c = 0; c < m.columns; c++) {
+      for (let c = 0; c &lt; m.columns; c++) {
         const v = m[c * m.rows];
         if (v === 0) continue;
         const sm = m.remove(0, c, new Matrix());
@@ -553,16 +640,16 @@ export class Matrix extends Array {
   /**
    * Returns a 2d native javascript Array representation of this matrix.
    * @param {boolean} rowsFirst if the output should be rows-first or columns-first
-   * @return {Array<Array>}
+   * @return {Array&lt;Array&gt;}
    */
   toArray2d(rowsFirst = false) {
     const res = new Array(rowsFirst ? this.rows : this.columns);
     const cf = rowsFirst ?
-      (v, i, r, c) => {
+      (v, i, r, c) =&gt; {
         if (!res[r]) res[r] = new Array(this.columns);
         res[r][c] = v;
       } :
-      (v, i, r, c) => {
+      (v, i, r, c) =&gt; {
         if (!res[c]) res[c] = new Array(this.rows);
         res[c][r] = v;
       };
@@ -598,8 +685,8 @@ export class Matrix extends Array {
 }
 
 // add extra accessors
-for (let i = 1; i <= 4; i++) {
-  for (let j = 1; j <= 4; j++) {
+for (let i = 1; i &lt;= 4; i++) {
+  for (let j = 1; j &lt;= 4; j++) {
     Object.defineProperty(Matrix.prototype, `a${i}${j}`, {
       get() {
         return this.get(i - 1, j - 1);
@@ -614,7 +701,7 @@ for (let i = 1; i <= 4; i++) {
 /**
  * Factory function for creating and assigning a matrix from an array.
  * The array must be 1 dimensional, and will be split into rows and columns based
- * on the specified cols parameter. If array length divided by cols doesn't add up
+ * on the specified cols parameter. If array length divided by cols doesn&apos;t add up
  * to a whole number, then only floor(args.length / cols) values will be read from
  * the input array.
  *
@@ -658,3 +745,20 @@ export function mat3(...args) {
 export function mat4(...args) {
   return new Matrix(4, 4, args, true, true);
 }
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(1.1.0)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

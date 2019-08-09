@@ -2,7 +2,9 @@ import expect from 'expect';
 import {
   vec,
   add,
+  addAll,
   sub,
+  subAll,
   sumsqr,
   scalar,
   norm,
@@ -46,55 +48,106 @@ describe('functions.js', () => {
   });
 
   it('should be able to add and subtract vectors/arrays', () => {
+    /* single */
+    const v1 = vec3(1, 2, 3);
+    const v2 = vec3(2, -2, -1);
+
+    const a1 = [1, 2, 3];
+    const a2 = [2, -2, -1];
+
+    let res = add(v1, v2, new Vector());
+    expect(res).toEqual([3, 0, 2]);
+    expect(res).toBeInstanceOf(Vector);
+
+    res = add(a1, a2, new Vector());
+    expect(res).toEqual([3, 0, 2]);
+    expect(res).toBeInstanceOf(Vector);
+
+    // only add first two components into a 2d vector
+    res = add(v1, v2, new Vector(2));
+    expect(res).toEqual([3, 0]);
+
+    res = add(a1, a2, new Vector(2));
+    expect(res).toEqual([3, 0]);
+
+    // mutate first argument by not specifying a target
+    res = add(v1, v2);
+    expect(res).toBe(v1);
+    expect(v1).toEqual([3, 0, 2]);
+
+    res = sub(a1, v2, new Vector());
+    expect(res).toEqual([-1, 4, 4]);
+    expect(res).toBeInstanceOf(Vector);
+
+    // target will be overwritten and not part of the sum
+    sub(a1, v2, new Vector(10, 10, 10));
+    expect(res).toEqual([-1, 4, 4]);
+    expect(res).toBeInstanceOf(Vector);
+
+    /* multiple */
     const vectors = [
       vec2(1, -1),
       vec2(3, 2),
       vec2(-6, 0.5),
-      vec2(-3.7, 4.3),
+      vec2(-3.7, 4.5),
     ];
 
     const arrays = [
       [1, -1],
       [3, 2],
       [-6, 0.5],
-      [-3.7, 4.3],
+      [-3.7, 4.5],
     ];
 
-    // Adds all values to the first first argument.
-    // Pass a null-vector first if you want to avoid
-    // mutating any of the input arguments like below
-    let res = add(vec2(), ...vectors);
+    res = addAll(vectors, vec2());
     expect(res).toBeInstanceOf(Vector);
-    expect(res).toEqual([-5.7, 5.8]);
+    expect(res).toEqual([-5.7, 6]);
 
     expect(vectors[0]).toEqual([1, -1]);
 
+    // we're adding a target to avoid mutation of the first element in vectors
+    res = addAll(vectors, vec2());
+    expect(res).toEqual([-5.7, 6]);
+    expect(vectors[0]).toEqual([1, -1]);
+
     // this will mutate the first vector in vectors
-    res = add(...vectors);
-    expect(vectors[0]).toEqual([-5.7, 5.8]);
+    res = addAll(vectors);
+    expect(vectors[0]).toEqual([-5.7, 6]);
 
     // vectors can also be plain arrays.
-    res = add(vec2(), ...arrays);
+    res = addAll(arrays, vec2());
     expect(res).toBeInstanceOf(Vector);
-    expect(res).toEqual([-5.7, 5.8]);
+    expect(res).toEqual([-5.7, 6]);
 
     // return result as plain array
-    res = add([0, 0], ...arrays);
+    res = addAll(arrays, [0, 0]);
     expect(res).toBeInstanceOf(Array);
-    expect(res).toEqual([-5.7, 5.8]);
+    expect(res).toEqual([-5.7, 6]);
 
     // or allow the first array to be mutated
-    res = add(...arrays);
+    const from = vec2(5, 5);
+    res = subAll(from, arrays);
     expect(res).toBeInstanceOf(Array);
-    expect(res).toBe(arrays[0]);
-    expect(res).toEqual([-5.7, 5.8]);
+    expect(res).toBe(from);
+    expect(res).toEqual([10.7, -1]);
+
+    arrays[0] = [1, -1]; // reset to original value
 
     // subtracts all following vectors/arrays from the first parameter
-    res = sub([5, 6], [3, -1], [0, 5]);
+    res = subAll([10, 10], [[5, 6], [3, -1], [0, 5]]);
     expect(res).toBeInstanceOf(Array);
+    expect(res).toEqual([2, 0]);
+
+    // we're adding a target to avoid mutation of the first element in vectors
+    res = subAll(arrays[0], arrays.slice(1), []);
+    expect(arrays[0]).toEqual([1, -1]);
+    expect(res).toEqual([7.7, -8]);
+
+    // target will NOT be part of sum when subtracting a list
+    res = subAll(vec2(5, 6), [[3, -1], [0, 5]], [100, 100]);
     expect(res).toEqual([2, 2]);
 
-    res = sub(vec2(5, 6), [3, -1], [0, 5]);
+    res = subAll(vec2(5, 6), [[3, -1], [0, 5]]);
     expect(res).toBeInstanceOf(Vector);
     expect(res).toEqual([2, 2]);
   });

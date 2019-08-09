@@ -1,0 +1,32 @@
+{
+  "coverage": "100%",
+  "expectCount": 101,
+  "actualCount": 101,
+  "files": {
+    "src/const.js": {
+      "expectCount": 7,
+      "actualCount": 7,
+      "undocumentLines": []
+    },
+    "src/functions.js": {
+      "expectCount": 32,
+      "actualCount": 32,
+      "undocumentLines": []
+    },
+    "src/matrix.js": {
+      "expectCount": 38,
+      "actualCount": 38,
+      "undocumentLines": []
+    },
+    "src/utils.js": {
+      "expectCount": 3,
+      "actualCount": 3,
+      "undocumentLines": []
+    },
+    "src/vector.js": {
+      "expectCount": 21,
+      "actualCount": 21,
+      "undocumentLines": []
+    }
+  }
+}

@@ -8,6 +8,7 @@
   "license": "MIT",
   "keywords": [
     "vector",
+    "math",
     "matrix",
     "matricies",
     "linear",
@@ -15,8 +16,7 @@
     "transformations",
     "2d",
     "3d",
-    "4d",
-    "math"
+    "4d"
   ],
   "main": "dist/@kjerandp/linear-algebra.cjs.js",
   "module": "dist/@kjerandp/linear-algebra.esm.js",
@@ -26,6 +26,8 @@
     "@babel/core": "^7.4.4",
     "@babel/preset-env": "^7.4.4",
     "@babel/register": "^7.4.4",
+    "esdoc": "^1.1.0",
+    "esdoc-standard-plugin": "^1.0.0",
     "eslint": "^4.18.2",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-plugin-import": "^2.9.0",
@@ -38,8 +40,7 @@
     "rollup-plugin-babel": "^4.3.2",
     "rollup-plugin-commonjs": "^9.3.4",
     "rollup-plugin-node-resolve": "^4.2.4",
-    "rollup-plugin-uglify": "^6.0.2",
-    "sinon": "^7.3.2"
+    "rollup-plugin-uglify": "^6.0.2"
   },
   "scripts": {
     "build": "node node_modules/.bin/rollup -c",
@@ -49,7 +50,8 @@
     "test:watch": "NODE_ENV=test npx mocha --require @babel/register --reporter min --watch",
     "lint": "npx eslint src test tools",
     "prepub": "npm run build",
-    "pub": "npm publish --access=public"
+    "pub": "npm publish --access=public",
+    "docs": "./node_modules/.bin/esdoc"
   },
   "files": [
     "dist"
