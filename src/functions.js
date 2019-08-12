@@ -22,6 +22,28 @@ export function add(to, from, target = null) {
 }
 
 /**
+ * Component-wise addition of one vector with a scaled version of another vector.
+ * If target is NOT specified, the first argument will
+ * be mutated. Target will be overwritten and NOT included in the sum.
+ * @param {Array} to left operand
+ * @param {Array} from right operand
+ * @param {number} factor scaling factor to apply to from-vector
+ * @param {Array} target optional array/vector to store the result
+ * @return {Array} array/vector
+ */
+export function addScaled(to, from, factor, target = null) {
+  if (target) {
+    if (target.length === 0) target.length = to.length;
+  } else {
+    target = to;
+  }
+  for (let i = 0; i < target.length; i++) {
+    target[i] = to[i] + from[i] * factor;
+  }
+  return target;
+}
+
+/**
  * Component-wise addition of a set of arrays/vectors.
  * If target is NOT specified, the first element in the set will
  * be mutated. Target (if it has valid values) WILL be included in the sum.
@@ -65,6 +87,28 @@ export function sub(from, vector, target = null) {
   }
   for (let i = 0; i < target.length; i++) {
     target[i] = from[i] - vector[i];
+  }
+  return target;
+}
+
+/**
+ * Component-wise addition of one vector with a scaled version of another vector.
+ * If target is NOT specified, the first argument will
+ * be mutated. Target will be overwritten and NOT included in the sum.
+ * @param {Array} from left operand
+ * @param {Array} vector right operand
+ * @param {number} factor scaling factor to apply to vector that will be subtracted
+ * @param {Array} target optional array/vector to store the result
+ * @return {Array} array/vector
+ */
+export function subScaled(from, vector, factor, target = null) {
+  if (target) {
+    if (target.length === 0) target.length = from.length;
+  } else {
+    target = from;
+  }
+  for (let i = 0; i < target.length; i++) {
+    target[i] = from[i] - vector[i] * factor;
   }
   return target;
 }

@@ -33,6 +33,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/vector.js~Vector.html">Vector</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-add">add</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-addAll">addAll</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-addScaled">addScaled</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-angle">angle</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-angle2">angle2</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-clamp">clamp</a></span></span></li>
@@ -60,6 +61,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-stepValue">stepValue</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-sub">sub</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-subAll">subAll</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-subScaled">subScaled</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-sumsqr">sumsqr</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-triple">triple</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-vec">vec</a></span></span></li>
@@ -173,6 +175,26 @@ describe(&apos;vector.js&apos;, () =&gt; {
     v1.set(-3, 2);
 
     expect(v2.sub(v1)).toEqual([6, -9]);
+  });
+
+  it(&apos;should be possible to add/subtract a scaled version of a vector&apos;, () =&gt; {
+    const v1 = vec2(-3, 2);
+    const v2 = vec2(3, -7);
+    expect(v1.add(v2)).toEqual([0, -5]);
+    expect(v1).toEqual([0, -5]);
+
+    v1.set(-3, 2);
+
+    expect(v2.sub(v1)).toEqual([6, -9]);
+
+    v2.set(3, -7);
+
+    expect(v1.addScaled(v2, 0.5)).toEqual([-1.5, -1.5]);
+
+    v1.set(-3, 2);
+
+    expect(v1.subScaled(v2, 0.5)).toEqual([-4.5, 5.5]);
+
   });
 
   it(&apos;should be possible to add/subtract multiple vectors&apos;, () =&gt; {

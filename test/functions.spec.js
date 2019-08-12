@@ -3,8 +3,10 @@ import {
   vec,
   add,
   addAll,
+  addScaled,
   sub,
   subAll,
+  subScaled,
   sumsqr,
   scalar,
   norm,
@@ -70,10 +72,31 @@ describe('functions.js', () => {
     res = add(a1, a2, new Vector(2));
     expect(res).toEqual([3, 0]);
 
+    // add scaled vector
+    res = addScaled(v1, v2, 2, new Vector(3));
+    expect(res).toEqual([5, -2, 1]);
+
+    // sub scaled vector
+    res = subScaled(v1, v2, 2, new Vector(3));
+    expect(res).toEqual([-3, 6, 5]);
+
     // mutate first argument by not specifying a target
     res = add(v1, v2);
     expect(res).toBe(v1);
     expect(v1).toEqual([3, 0, 2]);
+
+    // mutate scaled
+    v1.set(1, 2, 3);
+    res = addScaled(v1, v2, 2);
+    expect(res).toEqual([5, -2, 1]);
+    expect(res).toBe(v1);
+    expect(v2).toEqual([2, -2, -1]); // should not be mutated
+
+    v1.set(1, 2, 3);
+    res = subScaled(v1, v2, 2);
+    expect(res).toEqual([-3, 6, 5]);
+    expect(res).toBe(v1);
+    expect(v2).toEqual([2, -2, -1]); // should not be mutated
 
     res = sub(a1, v2, new Vector());
     expect(res).toEqual([-1, 4, 4]);

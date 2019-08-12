@@ -33,6 +33,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/vector.js~Vector.html">Vector</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-add">add</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-addAll">addAll</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-addScaled">addScaled</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-angle">angle</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-angle2">angle2</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-clamp">clamp</a></span></span></li>
@@ -60,6 +61,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-stepValue">stepValue</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-sub">sub</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-subAll">subAll</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-subScaled">subScaled</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-sumsqr">sumsqr</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-triple">triple</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-vec">vec</a></span></span></li>
@@ -109,6 +111,28 @@ export function add(to, from, target = null) {
 }
 
 /**
+ * Component-wise addition of one vector with a scaled version of another vector.
+ * If target is NOT specified, the first argument will
+ * be mutated. Target will be overwritten and NOT included in the sum.
+ * @param {Array} to left operand
+ * @param {Array} from right operand
+ * @param {number} factor scaling factor to apply to from-vector
+ * @param {Array} target optional array/vector to store the result
+ * @return {Array} array/vector
+ */
+export function addScaled(to, from, factor, target = null) {
+  if (target) {
+    if (target.length === 0) target.length = to.length;
+  } else {
+    target = to;
+  }
+  for (let i = 0; i &lt; target.length; i++) {
+    target[i] = to[i] + from[i] * factor;
+  }
+  return target;
+}
+
+/**
  * Component-wise addition of a set of arrays/vectors.
  * If target is NOT specified, the first element in the set will
  * be mutated. Target (if it has valid values) WILL be included in the sum.
@@ -152,6 +176,28 @@ export function sub(from, vector, target = null) {
   }
   for (let i = 0; i &lt; target.length; i++) {
     target[i] = from[i] - vector[i];
+  }
+  return target;
+}
+
+/**
+ * Component-wise addition of one vector with a scaled version of another vector.
+ * If target is NOT specified, the first argument will
+ * be mutated. Target will be overwritten and NOT included in the sum.
+ * @param {Array} from left operand
+ * @param {Array} vector right operand
+ * @param {number} factor scaling factor to apply to vector that will be subtracted
+ * @param {Array} target optional array/vector to store the result
+ * @return {Array} array/vector
+ */
+export function subScaled(from, vector, factor, target = null) {
+  if (target) {
+    if (target.length === 0) target.length = from.length;
+  } else {
+    target = from;
+  }
+  for (let i = 0; i &lt; target.length; i++) {
+    target[i] = from[i] - vector[i] * factor;
   }
   return target;
 }

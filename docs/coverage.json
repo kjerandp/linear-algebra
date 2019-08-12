@@ -1,7 +1,7 @@
 {
   "coverage": "100%",
-  "expectCount": 101,
-  "actualCount": 101,
+  "expectCount": 105,
+  "actualCount": 105,
   "files": {
     "src/const.js": {
       "expectCount": 7,
@@ -9,8 +9,8 @@
       "undocumentLines": []
     },
     "src/functions.js": {
-      "expectCount": 32,
-      "actualCount": 32,
+      "expectCount": 34,
+      "actualCount": 34,
       "undocumentLines": []
     },
     "src/matrix.js": {
@@ -24,8 +24,8 @@
       "undocumentLines": []
     },
     "src/vector.js": {
-      "expectCount": 21,
-      "actualCount": 21,
+      "expectCount": 23,
+      "actualCount": 23,
       "undocumentLines": []
     }
   }

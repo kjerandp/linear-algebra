@@ -88,6 +88,26 @@ describe('vector.js', () => {
     expect(v2.sub(v1)).toEqual([6, -9]);
   });
 
+  it('should be possible to add/subtract a scaled version of a vector', () => {
+    const v1 = vec2(-3, 2);
+    const v2 = vec2(3, -7);
+    expect(v1.add(v2)).toEqual([0, -5]);
+    expect(v1).toEqual([0, -5]);
+
+    v1.set(-3, 2);
+
+    expect(v2.sub(v1)).toEqual([6, -9]);
+
+    v2.set(3, -7);
+
+    expect(v1.addScaled(v2, 0.5)).toEqual([-1.5, -1.5]);
+
+    v1.set(-3, 2);
+
+    expect(v1.subScaled(v2, 0.5)).toEqual([-4.5, 5.5]);
+
+  });
+
   it('should be possible to add/subtract multiple vectors', () => {
     const vectors = [
       vec2(1, 4),

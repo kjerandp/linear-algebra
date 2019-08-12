@@ -2,8 +2,10 @@
 import {
   add,
   addAll,
+  addScaled,
   sub,
   subAll,
+  subScaled,
   scale,
   norm,
   dot,
@@ -54,6 +56,16 @@ export class Vector extends Array {
   }
 
   /**
+   * Add a scaled version of a vector to this vector
+   * @param  {Array} vector vectors to add to this
+   * @param {number} factor scaling factor
+   * @return {Vector}
+   */
+  addScaled(vector, factor) {
+    return addScaled(this, vector, factor, this);
+  }
+
+  /**
    * Subtract one or more vectors from this vector
    * @param  {...Array} vectors vectors to subtract from this vector
    * @return {Vector}
@@ -63,6 +75,17 @@ export class Vector extends Array {
       return sub(this, vectors[0]);
     }
     return subAll(this, vectors);
+  }
+
+
+  /**
+   * Subtract a scaled version of a vector from this vector
+   * @param  {Array} vector vector to subtract from this
+   * @param {number} factor scaling factor
+   * @return {Vector}
+   */
+  subScaled(vector, factor) {
+    return subScaled(this, vector, factor, this);
   }
 
   /**

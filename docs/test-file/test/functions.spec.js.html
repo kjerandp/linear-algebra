@@ -33,6 +33,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/vector.js~Vector.html">Vector</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-add">add</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-addAll">addAll</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-addScaled">addScaled</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-angle">angle</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-angle2">angle2</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-clamp">clamp</a></span></span></li>
@@ -60,6 +61,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-stepValue">stepValue</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-sub">sub</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-subAll">subAll</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-subScaled">subScaled</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-sumsqr">sumsqr</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-triple">triple</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-vec">vec</a></span></span></li>
@@ -90,8 +92,10 @@ import {
   vec,
   add,
   addAll,
+  addScaled,
   sub,
   subAll,
+  subScaled,
   sumsqr,
   scalar,
   norm,
@@ -157,10 +161,31 @@ describe(&apos;functions.js&apos;, () =&gt; {
     res = add(a1, a2, new Vector(2));
     expect(res).toEqual([3, 0]);
 
+    // add scaled vector
+    res = addScaled(v1, v2, 2, new Vector(3));
+    expect(res).toEqual([5, -2, 1]);
+
+    // sub scaled vector
+    res = subScaled(v1, v2, 2, new Vector(3));
+    expect(res).toEqual([-3, 6, 5]);
+
     // mutate first argument by not specifying a target
     res = add(v1, v2);
     expect(res).toBe(v1);
     expect(v1).toEqual([3, 0, 2]);
+
+    // mutate scaled
+    v1.set(1, 2, 3);
+    res = addScaled(v1, v2, 2);
+    expect(res).toEqual([5, -2, 1]);
+    expect(res).toBe(v1);
+    expect(v2).toEqual([2, -2, -1]); // should not be mutated
+
+    v1.set(1, 2, 3);
+    res = subScaled(v1, v2, 2);
+    expect(res).toEqual([-3, 6, 5]);
+    expect(res).toBe(v1);
+    expect(v2).toEqual([2, -2, -1]); // should not be mutated
 
     res = sub(a1, v2, new Vector());
     expect(res).toEqual([-1, 4, 4]);

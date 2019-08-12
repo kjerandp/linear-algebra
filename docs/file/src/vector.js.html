@@ -33,6 +33,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/vector.js~Vector.html">Vector</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-add">add</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-addAll">addAll</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-addScaled">addScaled</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-angle">angle</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-angle2">angle2</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-clamp">clamp</a></span></span></li>
@@ -60,6 +61,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-stepValue">stepValue</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-sub">sub</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-subAll">subAll</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-subScaled">subScaled</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-sumsqr">sumsqr</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-triple">triple</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-vec">vec</a></span></span></li>
@@ -89,8 +91,10 @@
 import {
   add,
   addAll,
+  addScaled,
   sub,
   subAll,
+  subScaled,
   scale,
   norm,
   dot,
@@ -141,6 +145,16 @@ export class Vector extends Array {
   }
 
   /**
+   * Add a scaled version of a vector to this vector
+   * @param  {Array} vector vectors to add to this
+   * @param {number} factor scaling factor
+   * @return {Vector}
+   */
+  addScaled(vector, factor) {
+    return addScaled(this, vector, factor, this);
+  }
+
+  /**
    * Subtract one or more vectors from this vector
    * @param  {...Array} vectors vectors to subtract from this vector
    * @return {Vector}
@@ -150,6 +164,17 @@ export class Vector extends Array {
       return sub(this, vectors[0]);
     }
     return subAll(this, vectors);
+  }
+
+
+  /**
+   * Subtract a scaled version of a vector from this vector
+   * @param  {Array} vector vector to subtract from this
+   * @param {number} factor scaling factor
+   * @return {Vector}
+   */
+  subScaled(vector, factor) {
+    return subScaled(this, vector, factor, this);
   }
 
   /**

@@ -66,6 +66,12 @@ window.esdocSearchIndex = [
     "function"
   ],
   [
+    "@kjerandp/linear-algebra/src/functions.js~addscaled",
+    "function/index.html#static-function-addScaled",
+    "<span>addScaled</span> <span class=\"search-result-import-path\">@kjerandp/linear-algebra/src/functions.js</span>",
+    "function"
+  ],
+  [
     "@kjerandp/linear-algebra/src/functions.js~angle2",
     "function/index.html#static-function-angle2",
     "<span>angle2</span> <span class=\"search-result-import-path\">@kjerandp/linear-algebra/src/functions.js</span>",
@@ -270,6 +276,12 @@ window.esdocSearchIndex = [
     "function"
   ],
   [
+    "@kjerandp/linear-algebra/src/functions.js~subscaled",
+    "function/index.html#static-function-subScaled",
+    "<span>subScaled</span> <span class=\"search-result-import-path\">@kjerandp/linear-algebra/src/functions.js</span>",
+    "function"
+  ],
+  [
     "@kjerandp/linear-algebra/src/functions.js~sumsqr",
     "function/index.html#static-function-sumsqr",
     "<span>sumsqr</span> <span class=\"search-result-import-path\">@kjerandp/linear-algebra/src/functions.js</span>",
@@ -307,127 +319,127 @@ window.esdocSearchIndex = [
   ],
   [
     "",
-    "test-file/test/functions.spec.js.html#lineNumber36",
+    "test-file/test/functions.spec.js.html#lineNumber38",
     "functions.js",
     "test"
   ],
   [
     "",
-    "test-file/test/functions.spec.js.html#lineNumber364",
+    "test-file/test/functions.spec.js.html#lineNumber387",
     "functions.js Can convert between degrees and radians",
     "test"
   ],
   [
     "",
-    "test-file/test/functions.spec.js.html#lineNumber269",
+    "test-file/test/functions.spec.js.html#lineNumber292",
     "functions.js Can find angles of 2d vectors",
     "test"
   ],
   [
     "",
-    "test-file/test/functions.spec.js.html#lineNumber279",
+    "test-file/test/functions.spec.js.html#lineNumber302",
     "functions.js Can find angles of 3d vectors",
     "test"
   ],
   [
     "",
-    "test-file/test/functions.spec.js.html#lineNumber322",
+    "test-file/test/functions.spec.js.html#lineNumber345",
     "functions.js Can generate threshold values with step and smoothstep functions (as in GLSL)",
     "test"
   ],
   [
     "",
-    "test-file/test/functions.spec.js.html#lineNumber337",
+    "test-file/test/functions.spec.js.html#lineNumber360",
     "functions.js Can mix vectors, matrices and values",
     "test"
   ],
   [
     "",
-    "test-file/test/functions.spec.js.html#lineNumber356",
+    "test-file/test/functions.spec.js.html#lineNumber379",
     "functions.js Can round vectors and values",
     "test"
   ],
   [
     "",
-    "test-file/test/functions.spec.js.html#lineNumber160",
+    "test-file/test/functions.spec.js.html#lineNumber183",
     "functions.js can calculate the scalar of a vector/array",
     "test"
   ],
   [
     "",
-    "test-file/test/functions.spec.js.html#lineNumber155",
+    "test-file/test/functions.spec.js.html#lineNumber178",
     "functions.js can calculate the sum of squares",
     "test"
   ],
   [
     "",
-    "test-file/test/functions.spec.js.html#lineNumber165",
+    "test-file/test/functions.spec.js.html#lineNumber188",
     "functions.js can normalize a vector/array",
     "test"
   ],
   [
     "",
-    "test-file/test/functions.spec.js.html#lineNumber181",
+    "test-file/test/functions.spec.js.html#lineNumber204",
     "functions.js can scale a vector/array by a factor",
     "test"
   ],
   [
     "",
-    "test-file/test/functions.spec.js.html#lineNumber50",
+    "test-file/test/functions.spec.js.html#lineNumber52",
     "functions.js should be able to add and subtract vectors/arrays",
     "test"
   ],
   [
     "",
-    "test-file/test/functions.spec.js.html#lineNumber246",
+    "test-file/test/functions.spec.js.html#lineNumber269",
     "functions.js should be able to calculate the psudo cross product of 2d vectors",
     "test"
   ],
   [
     "",
-    "test-file/test/functions.spec.js.html#lineNumber240",
+    "test-file/test/functions.spec.js.html#lineNumber263",
     "functions.js should be able to calculate the vector dot product",
     "test"
   ],
   [
     "",
-    "test-file/test/functions.spec.js.html#lineNumber290",
+    "test-file/test/functions.spec.js.html#lineNumber313",
     "functions.js should be able to clamp values and vectors/arrays",
     "test"
   ],
   [
     "",
-    "test-file/test/functions.spec.js.html#lineNumber37",
+    "test-file/test/functions.spec.js.html#lineNumber39",
     "functions.js should be able to create a vector from two points",
     "test"
   ],
   [
     "",
-    "test-file/test/functions.spec.js.html#lineNumber253",
+    "test-file/test/functions.spec.js.html#lineNumber276",
     "functions.js should be able to find the cross and triple product of 3d vectors",
     "test"
   ],
   [
     "",
-    "test-file/test/functions.spec.js.html#lineNumber204",
+    "test-file/test/functions.spec.js.html#lineNumber227",
     "functions.js should describe relationships between two points",
     "test"
   ],
   [
     "",
-    "test-file/test/functions.spec.js.html#lineNumber224",
+    "test-file/test/functions.spec.js.html#lineNumber247",
     "functions.js should find the an orthogonal unit vector",
     "test"
   ],
   [
     "",
-    "test-file/test/functions.spec.js.html#lineNumber191",
+    "test-file/test/functions.spec.js.html#lineNumber214",
     "functions.js should find the directional unit vector between two points",
     "test"
   ],
   [
     "",
-    "test-file/test/functions.spec.js.html#lineNumber186",
+    "test-file/test/functions.spec.js.html#lineNumber209",
     "functions.js should find the distance between two points",
     "test"
   ],
@@ -1032,6 +1044,12 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
+    "src/vector.js~vector#addscaled",
+    "class/src/vector.js~Vector.html#instance-method-addScaled",
+    "src/vector.js~Vector#addScaled",
+    "method"
+  ],
+  [
     "src/vector.js~vector#clone",
     "class/src/vector.js~Vector.html#instance-method-clone",
     "src/vector.js~Vector#clone",
@@ -1095,6 +1113,12 @@ window.esdocSearchIndex = [
     "src/vector.js~vector#sub",
     "class/src/vector.js~Vector.html#instance-method-sub",
     "src/vector.js~Vector#sub",
+    "method"
+  ],
+  [
+    "src/vector.js~vector#subscaled",
+    "class/src/vector.js~Vector.html#instance-method-subScaled",
+    "src/vector.js~Vector#subScaled",
     "method"
   ],
   [
@@ -1165,25 +1189,25 @@ window.esdocSearchIndex = [
   ],
   [
     "",
-    "test-file/test/vector.spec.js.html#lineNumber125",
+    "test-file/test/vector.spec.js.html#lineNumber145",
     "vector.js should be able to calculate the distance between two vectors",
     "test"
   ],
   [
     "",
-    "test-file/test/vector.spec.js.html#lineNumber120",
+    "test-file/test/vector.spec.js.html#lineNumber140",
     "vector.js should be able to calculate the psudo cross product of two 2d vectors",
     "test"
   ],
   [
     "",
-    "test-file/test/vector.spec.js.html#lineNumber115",
+    "test-file/test/vector.spec.js.html#lineNumber135",
     "vector.js should be able to negate a vector",
     "test"
   ],
   [
     "",
-    "test-file/test/vector.spec.js.html#lineNumber110",
+    "test-file/test/vector.spec.js.html#lineNumber130",
     "vector.js should be able to scale vector",
     "test"
   ],
@@ -1202,6 +1226,12 @@ window.esdocSearchIndex = [
   [
     "",
     "test-file/test/vector.spec.js.html#lineNumber91",
+    "vector.js should be possible to add/subtract a scaled version of a vector",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/vector.spec.js.html#lineNumber111",
     "vector.js should be possible to add/subtract multiple vectors",
     "test"
   ],
@@ -1225,7 +1255,7 @@ window.esdocSearchIndex = [
   ],
   [
     "",
-    "test-file/test/vector.spec.js.html#lineNumber105",
+    "test-file/test/vector.spec.js.html#lineNumber125",
     "vector.js should calculate the vector scalar (length)",
     "test"
   ]
