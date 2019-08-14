@@ -1,7 +1,7 @@
 {
   "private": false,
   "name": "@kjerandp/linear-algebra",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Math library for doing basic linear algebra operations",
   "repository": "https://github.com/kjerandp/linear-algebra",
   "author": "Kjerand Pedersen",
@@ -18,9 +18,9 @@
     "3d",
     "4d"
   ],
-  "main": "dist/@kjerandp/linear-algebra.cjs.js",
-  "module": "dist/@kjerandp/linear-algebra.esm.js",
-  "browser": "dist/@kjerandp/linear-algebra.min.js",
+  "main": "dist/cjs/linear-algebra.js",
+  "module": "dist/esm/linear-algebra.js",
+  "browser": "dist/linear-algebra.min.js",
   "devDependencies": {
     "@babel/cli": "^7.4.4",
     "@babel/core": "^7.4.4",

@@ -150,6 +150,12 @@ window.esdocSearchIndex = [
     "function"
   ],
   [
+    "@kjerandp/linear-algebra/src/utils.js~immutable",
+    "function/index.html#static-function-immutable",
+    "<span>immutable</span> <span class=\"search-result-import-path\">@kjerandp/linear-algebra/src/utils.js</span>",
+    "function"
+  ],
+  [
     "@kjerandp/linear-algebra/src/functions.js~lerp",
     "function/index.html#static-function-lerp",
     "<span>lerp</span> <span class=\"search-result-import-path\">@kjerandp/linear-algebra/src/functions.js</span>",

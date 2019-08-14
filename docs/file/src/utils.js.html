@@ -71,6 +71,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-mat3">mat3</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-mat4">mat4</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-flattenList">flattenList</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-immutable">immutable</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-rowsToColumns">rowsToColumns</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-nvec">nvec</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-vec2">vec2</a></span></span></li>
@@ -143,6 +144,28 @@ export function flattenList(arg = [], flattend = [], max = 0) {
   return flattend;
 }
 
+/**
+ * Experimental! This function will create a wrapper function
+ * that turns the input function into an immutable version,
+ * by following the convention where the target-argument is
+ * used to control which object is used to assign values to.
+ * @param {function} fn function to create immutable version of.
+ * The input-function must have a parameter named &apos;target&apos;, which
+ * must be of type array and be the last parameter in the parameter
+ * list.
+ */
+export function immutable(fn) {
+  if (!fn.toString().includes(&apos;var target=&apos;))
+    throw Error(&apos;Unable to create an immutable version of this function!&apos;);
+  return function wrapper(...args) {
+    if (args.length === 0) {
+      return fn([]);
+    } else if (Array.isArray(args[0])) {
+      return fn(...args, args[0].slice());
+    }
+    throw Error(&apos;Unable to execute immutable function!&apos;);
+  };
+}
 </code></pre>
 
 </div>

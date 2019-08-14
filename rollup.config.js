@@ -1,8 +1,13 @@
 import babel from 'rollup-plugin-babel';
-import resolve from 'rollup-plugin-node-resolve';
-import commonjs from 'rollup-plugin-commonjs';
 import { uglify } from 'rollup-plugin-uglify';
 import pkg from './package.json';
+
+const input = {
+  index: 'src/index.js',
+  functions: 'src/functions.js',
+  vector: 'src/vector.js',
+  matrix: 'src/matrix.js',
+};
 
 export default [
   // browser-friendly UMD build
@@ -11,15 +16,14 @@ export default [
     output: {
       file: pkg.browser,
       format: 'umd',
-      name: 'parsers',
+      name: 'linearAlgebra',
       sourcemap: true,
+      esModule: false,
     },
     plugins: [
       babel({
         exclude: ['node_modules/**'],
       }),
-      resolve(),
-      commonjs(),
       uglify({
         mangle: false,
       }),
@@ -27,23 +31,24 @@ export default [
   },
   // CommonJS
   {
-    input: 'src/index.js',
-    output: { file: pkg.main, format: 'cjs', name: 'parsers', sourcemap: true },
+    input,
+    output: {
+      dir: 'dist/cjs',
+      format: 'cjs',
+      esModule: false,
+    },
     plugins: [
       babel({
         exclude: ['node_modules/**'],
       }),
-      resolve(),
-      commonjs(),
     ],
   },
-  // ES module (main)
+  // ES module
   {
-    input: 'src/index.js',
+    input,
     output: {
-      file: pkg.module,
+      dir: 'dist/esm',
       format: 'esm',
-      sourcemap: true,
     },
   },
 ];

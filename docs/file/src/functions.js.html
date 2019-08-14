@@ -71,6 +71,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-mat3">mat3</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-mat4">mat4</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-flattenList">flattenList</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-immutable">immutable</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-rowsToColumns">rowsToColumns</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-nvec">nvec</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-vec2">vec2</a></span></span></li>
@@ -232,8 +233,8 @@ export function subAll(from, vectors, target = null) {
 }
 
 /**
- * Create a vector from two points. This function will not mutate any
- * arguments unless target is the same as from.
+ * Create a vector from two points. This function will NOT mutate any
+ * arguments unless &apos;target&apos; is the same as &apos;from&apos;.
  * @param {number[]} from start coordinates
  * @param {number[]} to end coordinates
  * @param {number[]} target optional array/vector to store the resulting vector
@@ -375,7 +376,9 @@ export function angle2(vector) {
 }
 
 /**
- * Get a unit vector between two points/coordinates.
+ * Get a unit vector between two points/coordinates. This function
+ * does not mutate any arguments, but a target may still be used to
+ * control the return type or to avoid creating additional arrays.
  * @param {number[]} from start coordinates
  * @param {number[]} to end coordinates
  * @param {number[]} target optional array/vector to store the resulting vector

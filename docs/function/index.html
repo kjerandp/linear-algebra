@@ -71,6 +71,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-mat3">mat3</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-mat4">mat4</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-flattenList">flattenList</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-immutable">immutable</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-rowsToColumns">rowsToColumns</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-nvec">nvec</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-vec2">vec2</a></span></span></li>
@@ -548,6 +549,38 @@
         
         
         <div data-ice="description"><p>Recursivly flattens a list of arguments to a 1 dimensional array</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
+          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-immutable">immutable</a></span></span><span class="code" data-ice="signature">(fn: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span>): <span>*</span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Experimental! This function will create a wrapper function
+that turns the input function into an immutable version,
+by following the convention where the target-argument is
+used to control which object is used to assign values to.</p>
 </div>
       </div>
     </td>
@@ -1840,11 +1873,11 @@ be mutated. Target will be overwritten and NOT included in the sum.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/functions.js.html#lineNumber393">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/functions.js.html#lineNumber395">source</a></span></span>
     </span>
   </h3>
 
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {clamp} from &apos;<span><a href="file/src/functions.js.html#lineNumber393">@kjerandp/linear-algebra/src/functions.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {clamp} from &apos;<span><a href="file/src/functions.js.html#lineNumber395">@kjerandp/linear-algebra/src/functions.js</a></span>&apos;</code></pre></div>
   
   
   <div data-ice="description"><p>Clamps the argument according to min and max. Arg can be either a numeric
@@ -1936,11 +1969,11 @@ value or an array of numeric values.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/functions.js.html#lineNumber376">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/functions.js.html#lineNumber378">source</a></span></span>
     </span>
   </h3>
 
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {clampArray} from &apos;<span><a href="file/src/functions.js.html#lineNumber376">@kjerandp/linear-algebra/src/functions.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {clampArray} from &apos;<span><a href="file/src/functions.js.html#lineNumber378">@kjerandp/linear-algebra/src/functions.js</a></span>&apos;</code></pre></div>
   
   
   <div data-ice="description"><p>Clamps each value in array according to min and max.</p>
@@ -2031,11 +2064,11 @@ value or an array of numeric values.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/functions.js.html#lineNumber362">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/functions.js.html#lineNumber364">source</a></span></span>
     </span>
   </h3>
 
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {clampValue} from &apos;<span><a href="file/src/functions.js.html#lineNumber362">@kjerandp/linear-algebra/src/functions.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {clampValue} from &apos;<span><a href="file/src/functions.js.html#lineNumber364">@kjerandp/linear-algebra/src/functions.js</a></span>&apos;</code></pre></div>
   
   
   <div data-ice="description"><p>Clamps the value to min or max if value is less than min or greater than max</p>
@@ -2119,11 +2152,11 @@ value or an array of numeric values.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/functions.js.html#lineNumber325">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/functions.js.html#lineNumber327">source</a></span></span>
     </span>
   </h3>
 
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {cross} from &apos;<span><a href="file/src/functions.js.html#lineNumber325">@kjerandp/linear-algebra/src/functions.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {cross} from &apos;<span><a href="file/src/functions.js.html#lineNumber327">@kjerandp/linear-algebra/src/functions.js</a></span>&apos;</code></pre></div>
   
   
   <div data-ice="description"><p>Find the cross product between two 3d vectors</p>
@@ -2207,11 +2240,11 @@ value or an array of numeric values.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/functions.js.html#lineNumber351">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/functions.js.html#lineNumber353">source</a></span></span>
     </span>
   </h3>
 
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {cross2} from &apos;<span><a href="file/src/functions.js.html#lineNumber351">@kjerandp/linear-algebra/src/functions.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {cross2} from &apos;<span><a href="file/src/functions.js.html#lineNumber353">@kjerandp/linear-algebra/src/functions.js</a></span>&apos;</code></pre></div>
   
   
   <div data-ice="description"><p>Find the psudo cross product between two 2d vectors</p>
@@ -2288,11 +2321,11 @@ value or an array of numeric values.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/functions.js.html#lineNumber542">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/functions.js.html#lineNumber544">source</a></span></span>
     </span>
   </h3>
 
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {deg} from &apos;<span><a href="file/src/functions.js.html#lineNumber542">@kjerandp/linear-algebra/src/functions.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {deg} from &apos;<span><a href="file/src/functions.js.html#lineNumber544">@kjerandp/linear-algebra/src/functions.js</a></span>&apos;</code></pre></div>
   
   
   <div data-ice="description"><p>Convert radians to degrees</p>
@@ -2449,14 +2482,16 @@ value or an array of numeric values.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/functions.js.html#lineNumber294">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/functions.js.html#lineNumber296">source</a></span></span>
     </span>
   </h3>
 
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {dir} from &apos;<span><a href="file/src/functions.js.html#lineNumber294">@kjerandp/linear-algebra/src/functions.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {dir} from &apos;<span><a href="file/src/functions.js.html#lineNumber296">@kjerandp/linear-algebra/src/functions.js</a></span>&apos;</code></pre></div>
   
   
-  <div data-ice="description"><p>Get a unit vector between two points/coordinates.</p>
+  <div data-ice="description"><p>Get a unit vector between two points/coordinates. This function
+does not mutate any arguments, but a target may still be used to
+control the return type or to avoid creating additional arrays.</p>
 </div>
 
   
@@ -2537,11 +2572,11 @@ value or an array of numeric values.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/functions.js.html#lineNumber304">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/functions.js.html#lineNumber306">source</a></span></span>
     </span>
   </h3>
 
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {dist} from &apos;<span><a href="file/src/functions.js.html#lineNumber304">@kjerandp/linear-algebra/src/functions.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {dist} from &apos;<span><a href="file/src/functions.js.html#lineNumber306">@kjerandp/linear-algebra/src/functions.js</a></span>&apos;</code></pre></div>
   
   
   <div data-ice="description"><p>Calculate the distance between two points/coordinates.</p>
@@ -2618,11 +2653,11 @@ value or an array of numeric values.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/functions.js.html#lineNumber314">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/functions.js.html#lineNumber316">source</a></span></span>
     </span>
   </h3>
 
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {dot} from &apos;<span><a href="file/src/functions.js.html#lineNumber314">@kjerandp/linear-algebra/src/functions.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {dot} from &apos;<span><a href="file/src/functions.js.html#lineNumber316">@kjerandp/linear-algebra/src/functions.js</a></span>&apos;</code></pre></div>
   
   
   <div data-ice="description"><p>Calculate the dot product between two vectors</p>
@@ -2775,6 +2810,85 @@ value or an array of numeric values.</p>
   
 </div>
 <div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="static-function-immutable">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    
+    <span class="code" data-ice="name">immutable</span><span class="code" data-ice="signature">(fn: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span>): <span>*</span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/utils.js.html#lineNumber66">source</a></span></span>
+    </span>
+  </h3>
+
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {immutable} from &apos;<span><a href="file/src/utils.js.html#lineNumber66">@kjerandp/linear-algebra/src/utils.js</a></span>&apos;</code></pre></div>
+  
+  
+  <div data-ice="description"><p>Experimental! This function will create a wrapper function
+that turns the input function into an immutable version,
+by following the convention where the target-argument is
+used to control which object is used to assign values to.</p>
+</div>
+
+  
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">fn</td>
+      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>function to create immutable version of.
+The input-function must have a parameter named &apos;target&apos;, which
+must be of type array and be the last parameter in the parameter
+list.</p>
+</td>
+    </tr>
+</tbody>
+  </table>
+</div>
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td class="return-type code" data-ice="returnType"><span>*</span></td>
+          
+        </tr>
+      </tbody>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
   <h3 data-ice="anchor" id="static-function-lerp">
     <span class="access" data-ice="access">public</span>
     
@@ -2786,11 +2900,11 @@ value or an array of numeric values.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/functions.js.html#lineNumber459">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/functions.js.html#lineNumber461">source</a></span></span>
     </span>
   </h3>
 
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {lerp} from &apos;<span><a href="file/src/functions.js.html#lineNumber459">@kjerandp/linear-algebra/src/functions.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {lerp} from &apos;<span><a href="file/src/functions.js.html#lineNumber461">@kjerandp/linear-algebra/src/functions.js</a></span>&apos;</code></pre></div>
   
   
   <div data-ice="description"><p>Linear interpolation between two numbers</p>
@@ -3189,11 +3303,11 @@ Initial values are passed in row-first order.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/functions.js.html#lineNumber473">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/functions.js.html#lineNumber475">source</a></span></span>
     </span>
   </h3>
 
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {mix} from &apos;<span><a href="file/src/functions.js.html#lineNumber473">@kjerandp/linear-algebra/src/functions.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {mix} from &apos;<span><a href="file/src/functions.js.html#lineNumber475">@kjerandp/linear-algebra/src/functions.js</a></span>&apos;</code></pre></div>
   
   
   <div data-ice="description"><p>Mix (interpolate) numbers or arrays (similar to glsl implementation).
@@ -3366,11 +3480,11 @@ Works on both vectors and matrices, since they are both arrays.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/functions.js.html#lineNumber551">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/functions.js.html#lineNumber553">source</a></span></span>
     </span>
   </h3>
 
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {nrad} from &apos;<span><a href="file/src/functions.js.html#lineNumber551">@kjerandp/linear-algebra/src/functions.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {nrad} from &apos;<span><a href="file/src/functions.js.html#lineNumber553">@kjerandp/linear-algebra/src/functions.js</a></span>&apos;</code></pre></div>
   
   
   <div data-ice="description"><p>Normalise an angle to be between -PI to +PI</p>
@@ -3604,11 +3718,11 @@ be neglected.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/functions.js.html#lineNumber533">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/functions.js.html#lineNumber535">source</a></span></span>
     </span>
   </h3>
 
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {rad} from &apos;<span><a href="file/src/functions.js.html#lineNumber533">@kjerandp/linear-algebra/src/functions.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {rad} from &apos;<span><a href="file/src/functions.js.html#lineNumber535">@kjerandp/linear-algebra/src/functions.js</a></span>&apos;</code></pre></div>
   
   
   <div data-ice="description"><p>Convert degrees to radians</p>
@@ -3678,11 +3792,11 @@ be neglected.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/functions.js.html#lineNumber517">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/functions.js.html#lineNumber519">source</a></span></span>
     </span>
   </h3>
 
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {round} from &apos;<span><a href="file/src/functions.js.html#lineNumber517">@kjerandp/linear-algebra/src/functions.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {round} from &apos;<span><a href="file/src/functions.js.html#lineNumber519">@kjerandp/linear-algebra/src/functions.js</a></span>&apos;</code></pre></div>
   
   
   <div data-ice="description"><p>Rounds a number to the specific number of digits. Works with either a
@@ -4010,11 +4124,11 @@ rows first to columns first.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/functions.js.html#lineNumber492">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/functions.js.html#lineNumber494">source</a></span></span>
     </span>
   </h3>
 
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {seq} from &apos;<span><a href="file/src/functions.js.html#lineNumber492">@kjerandp/linear-algebra/src/functions.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {seq} from &apos;<span><a href="file/src/functions.js.html#lineNumber494">@kjerandp/linear-algebra/src/functions.js</a></span>&apos;</code></pre></div>
   
   
   <div data-ice="description"><p>Generates a list of interpolated values between from and to,
@@ -4113,11 +4227,11 @@ steps argument.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/functions.js.html#lineNumber447">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/functions.js.html#lineNumber449">source</a></span></span>
     </span>
   </h3>
 
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {smoothstep} from &apos;<span><a href="file/src/functions.js.html#lineNumber447">@kjerandp/linear-algebra/src/functions.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {smoothstep} from &apos;<span><a href="file/src/functions.js.html#lineNumber449">@kjerandp/linear-algebra/src/functions.js</a></span>&apos;</code></pre></div>
   
   
   <div data-ice="description"><p>Implementation of glsl smoothstep function</p>
@@ -4198,11 +4312,11 @@ steps argument.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/functions.js.html#lineNumber434">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/functions.js.html#lineNumber436">source</a></span></span>
     </span>
   </h3>
 
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {step} from &apos;<span><a href="file/src/functions.js.html#lineNumber434">@kjerandp/linear-algebra/src/functions.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {step} from &apos;<span><a href="file/src/functions.js.html#lineNumber436">@kjerandp/linear-algebra/src/functions.js</a></span>&apos;</code></pre></div>
   
   
   <div data-ice="description"><p>Implementation of glsl step function. Returns 0 if an edge is less than the
@@ -4286,11 +4400,11 @@ threshold x, otherwise 1</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/functions.js.html#lineNumber417">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/functions.js.html#lineNumber419">source</a></span></span>
     </span>
   </h3>
 
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {stepArray} from &apos;<span><a href="file/src/functions.js.html#lineNumber417">@kjerandp/linear-algebra/src/functions.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {stepArray} from &apos;<span><a href="file/src/functions.js.html#lineNumber419">@kjerandp/linear-algebra/src/functions.js</a></span>&apos;</code></pre></div>
   
   
   <div data-ice="description"><p>As glsl step function for multiple numeric values</p>
@@ -4374,11 +4488,11 @@ threshold x, otherwise 1</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/functions.js.html#lineNumber406">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/functions.js.html#lineNumber408">source</a></span></span>
     </span>
   </h3>
 
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {stepValue} from &apos;<span><a href="file/src/functions.js.html#lineNumber406">@kjerandp/linear-algebra/src/functions.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {stepValue} from &apos;<span><a href="file/src/functions.js.html#lineNumber408">@kjerandp/linear-algebra/src/functions.js</a></span>&apos;</code></pre></div>
   
   
   <div data-ice="description"><p>As glsl step function for single numeric values</p>
@@ -4805,11 +4919,11 @@ be mutated. Target will be overwritten and NOT included in the sum.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/functions.js.html#lineNumber341">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/functions.js.html#lineNumber343">source</a></span></span>
     </span>
   </h3>
 
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {triple} from &apos;<span><a href="file/src/functions.js.html#lineNumber341">@kjerandp/linear-algebra/src/functions.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {triple} from &apos;<span><a href="file/src/functions.js.html#lineNumber343">@kjerandp/linear-algebra/src/functions.js</a></span>&apos;</code></pre></div>
   
   
   <div data-ice="description"><p>Get the triple product between three 3d vectors</p>
@@ -4900,8 +5014,8 @@ be mutated. Target will be overwritten and NOT included in the sum.</p>
   <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {vec} from &apos;<span><a href="file/src/functions.js.html#lineNumber152">@kjerandp/linear-algebra/src/functions.js</a></span>&apos;</code></pre></div>
   
   
-  <div data-ice="description"><p>Create a vector from two points. This function will not mutate any
-arguments unless target is the same as from.</p>
+  <div data-ice="description"><p>Create a vector from two points. This function will NOT mutate any
+arguments unless &apos;target&apos; is the same as &apos;from&apos;.</p>
 </div>
 
   
