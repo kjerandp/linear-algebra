@@ -25,20 +25,10 @@ export default [
       }),
     ],
   },
-
-  // CommonJS (for Node) and ES module (for bundlers) build.
-  // (We could have three entries in the configuration array
-  // instead of two, but it's quicker to generate multiple
-  // builds from a single configuration where possible, using
-  // the `targets` option which can specify `dest` and `format`)
+  // CommonJS
   {
     input: 'src/index.js',
-    output: [
-      {
-        file: pkg.main, format: 'cjs', name: 'parsers', sourcemap: true,
-      },
-      { file: pkg.module, format: 'es', sourcemap: true },
-    ],
+    output: { file: pkg.main, format: 'cjs', name: 'parsers', sourcemap: true },
     plugins: [
       babel({
         exclude: ['node_modules/**'],
@@ -46,5 +36,14 @@ export default [
       resolve(),
       commonjs(),
     ],
+  },
+  // ES module (main)
+  {
+    input: 'src/index.js',
+    output: {
+      file: pkg.module,
+      format: 'esm',
+      sourcemap: true,
+    },
   },
 ];

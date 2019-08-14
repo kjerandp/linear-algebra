@@ -142,8 +142,8 @@ export function subAll(from, vectors, target = null) {
 }
 
 /**
- * Create a vector from two points. This function will not mutate any
- * arguments unless target is the same as from.
+ * Create a vector from two points. This function will NOT mutate any
+ * arguments unless 'target' is the same as 'from'.
  * @param {number[]} from start coordinates
  * @param {number[]} to end coordinates
  * @param {number[]} target optional array/vector to store the resulting vector
@@ -285,7 +285,9 @@ export function angle2(vector) {
 }
 
 /**
- * Get a unit vector between two points/coordinates.
+ * Get a unit vector between two points/coordinates. This function
+ * does not mutate any arguments, but a target may still be used to
+ * control the return type or to avoid creating additional arrays.
  * @param {number[]} from start coordinates
  * @param {number[]} to end coordinates
  * @param {number[]} target optional array/vector to store the resulting vector

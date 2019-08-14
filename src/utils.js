@@ -53,3 +53,25 @@ export function flattenList(arg = [], flattend = [], max = 0) {
   return flattend;
 }
 
+/**
+ * Experimental! This function will create a wrapper function
+ * that turns the input function into an immutable version,
+ * by following the convention where the target-argument is
+ * used to control which object is used to assign values to.
+ * @param {function} fn function to create immutable version of.
+ * The input-function must have a parameter named 'target', which
+ * must be of type array and be the last parameter in the parameter
+ * list.
+ */
+export function immutable(fn) {
+  if (!fn.toString().includes('var target='))
+    throw Error('Unable to create an immutable version of this function!');
+  return function wrapper(...args) {
+    if (args.length === 0) {
+      return fn([]);
+    } else if (Array.isArray(args[0])) {
+      return fn(...args, args[0].slice());
+    }
+    throw Error('Unable to execute immutable function!');
+  };
+}
