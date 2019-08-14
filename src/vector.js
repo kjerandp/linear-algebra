@@ -36,7 +36,7 @@ const accessors = ({
 export class Vector extends Array {
   /**
    * Instantiate a vector from an array.
-   * @param {Array} arr array of numbers
+   * @param {number[]} arr array of numbers
    * @return {Vector}
    */
   static fromArray(arr) {
@@ -45,7 +45,7 @@ export class Vector extends Array {
 
   /**
    * Add one or more vectors to this vector
-   * @param  {...Array} vectors vectors to add to this
+   * @param  {...number[]} vectors vectors to add to this
    * @return {Vector}
    */
   add(...vectors) {
@@ -57,7 +57,7 @@ export class Vector extends Array {
 
   /**
    * Add a scaled version of a vector to this vector
-   * @param  {Array} vector vectors to add to this
+   * @param  {number[]} vector vectors to add to this
    * @param {number} factor scaling factor
    * @return {Vector}
    */
@@ -67,7 +67,7 @@ export class Vector extends Array {
 
   /**
    * Subtract one or more vectors from this vector
-   * @param  {...Array} vectors vectors to subtract from this vector
+   * @param  {...number[]} vectors vectors to subtract from this vector
    * @return {Vector}
    */
   sub(...vectors) {
@@ -80,7 +80,7 @@ export class Vector extends Array {
 
   /**
    * Subtract a scaled version of a vector from this vector
-   * @param  {Array} vector vector to subtract from this
+   * @param  {number[]} vector vector to subtract from this
    * @param {number} factor scaling factor
    * @return {Vector}
    */
@@ -126,7 +126,7 @@ export class Vector extends Array {
 
   /**
    * Calculate the dot product between this vector and the passed in argument
-   * @param {Array} other vector
+   * @param {number[]} other vector
    * @return {number} dot product
    */
   dot(other) {
@@ -136,7 +136,7 @@ export class Vector extends Array {
   /**
    * Find the cross product vector between this vector and the passed in argument.
    * Only for 3d vectors!
-   * @param {Array} other 3d vector
+   * @param {number[]} other 3d vector
    * @param {Array/Vector} target optional array/vector to avoid mutating this vector
    * @return {Vector}
    */
@@ -147,7 +147,7 @@ export class Vector extends Array {
   /**
    * Calculate the psudo cross product between this vector and the passed in argument.
    * Only for 2d vectors!
-   * @param {Array} other 2d vector
+   * @param {number[]} other 2d vector
    * @return {number} psudo cross product
    */
   cross2(other) {
@@ -156,7 +156,7 @@ export class Vector extends Array {
 
   /**
    * Calculate the distance between this coordinates to the coordinates supplied in the argument
-   * @param {Array} other coordinates
+   * @param {number[]} other coordinates
    * @return {number} distance
    */
   distance(other) {

@@ -150,7 +150,7 @@ instantiated by supplying values in rows-first order.</p>
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/matrix.js~Matrix.html#static-method-fromArray">fromArray</a></span></span><span class="code" data-ice="signature">(arr: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span>, columns: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>, rowsFirst: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>, mutateArgs: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>): <span><a href="class/src/matrix.js~Matrix.html">Matrix</a></span></span>
+          <span class="code" data-ice="name"><span><a href="class/src/matrix.js~Matrix.html#static-method-fromArray">fromArray</a></span></span><span class="code" data-ice="signature">(arr: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span><span>[]</span></span>, columns: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>, rowsFirst: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>, mutateArgs: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>): <span><a href="class/src/matrix.js~Matrix.html">Matrix</a></span></span>
         </p>
       </div>
       <div>
@@ -179,7 +179,7 @@ instantiated by supplying values in rows-first order.</p>
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/matrix.js~Matrix.html#static-method-fromVectors">fromVectors</a></span></span><span class="code" data-ice="signature">(vectors: ...<span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span>): <span><a href="class/src/matrix.js~Matrix.html">Matrix</a></span></span>
+          <span class="code" data-ice="name"><span><a href="class/src/matrix.js~Matrix.html#static-method-fromVectors">fromVectors</a></span></span><span class="code" data-ice="signature">(vectors: <span><span>...number</span><span>[]</span></span>): <span><a href="class/src/matrix.js~Matrix.html">Matrix</a></span></span>
         </p>
       </div>
       <div>
@@ -237,7 +237,7 @@ instantiated by supplying values in rows-first order.</p>
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/matrix.js~Matrix.html#static-method-traverse">traverse</a></span></span><span class="code" data-ice="signature">(arr: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span>, cols: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>, callback: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span>, rowsFirst: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>)</span>
+          <span class="code" data-ice="name"><span><a href="class/src/matrix.js~Matrix.html#static-method-traverse">traverse</a></span></span><span class="code" data-ice="signature">(arr: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span><span>[]</span></span>, cols: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>, callback: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span>, rowsFirst: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>)</span>
         </p>
       </div>
       <div>
@@ -273,7 +273,7 @@ instantiated by supplying values in rows-first order.</p>
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/matrix.js~Matrix.html#instance-constructor-constructor">constructor</a></span></span><span class="code" data-ice="signature">(rows: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>, cols: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>, values: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span>, rowsFirst: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>, mutateArgs: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>)</span>
+          <span class="code" data-ice="name"><span><a href="class/src/matrix.js~Matrix.html#instance-constructor-constructor">constructor</a></span></span><span class="code" data-ice="signature">(rows: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>, cols: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>, values: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span><span>[]</span></span>, rowsFirst: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>, mutateArgs: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>)</span>
         </p>
       </div>
       <div>
@@ -555,7 +555,7 @@ otherwise false.</p>
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/matrix.js~Matrix.html#instance-method-col">col</a></span></span><span class="code" data-ice="signature">(j: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>, target: <span>Array/Vector</span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span></span>
+          <span class="code" data-ice="name"><span><a href="class/src/matrix.js~Matrix.html#instance-method-col">col</a></span></span><span class="code" data-ice="signature">(j: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>, target: <span><a href="class/src/vector.js~Vector.html">Vector</a></span> | <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span><span>[]</span></span>): <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span><span>[]</span></span></span>
         </p>
       </div>
       <div>
@@ -584,7 +584,7 @@ otherwise false.</p>
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/matrix.js~Matrix.html#instance-method-columnsFirst">columnsFirst</a></span></span><span class="code" data-ice="signature">(): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span></span>
+          <span class="code" data-ice="name"><span><a href="class/src/matrix.js~Matrix.html#instance-method-columnsFirst">columnsFirst</a></span></span><span class="code" data-ice="signature">(): <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span><span>[]</span></span></span>
         </p>
       </div>
       <div>
@@ -613,7 +613,7 @@ otherwise false.</p>
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/matrix.js~Matrix.html#instance-method-copyFrom">copyFrom</a></span></span><span class="code" data-ice="signature">(values: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span>, rowsFirst: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>, mutateArgs: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>): <span>*</span></span>
+          <span class="code" data-ice="name"><span><a href="class/src/matrix.js~Matrix.html#instance-method-copyFrom">copyFrom</a></span></span><span class="code" data-ice="signature">(values: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span><span>[]</span></span>, rowsFirst: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>, mutateArgs: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>): <span>*</span></span>
         </p>
       </div>
       <div>
@@ -671,7 +671,7 @@ otherwise false.</p>
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/matrix.js~Matrix.html#instance-method-dot">dot</a></span></span><span class="code" data-ice="signature">(other: <span>Array/Vector/Matrix</span>, target: <span>Array/Vector</span>): <span>Matrix/Vector</span></span>
+          <span class="code" data-ice="name"><span><a href="class/src/matrix.js~Matrix.html#instance-method-dot">dot</a></span></span><span class="code" data-ice="signature">(other: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span><span>[]</span></span> | <span><a href="class/src/vector.js~Vector.html">Vector</a></span> | <span><a href="class/src/matrix.js~Matrix.html">Matrix</a></span>, target: <span><a href="class/src/vector.js~Vector.html">Vector</a></span> | <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span><span>[]</span></span>): <span><a href="class/src/matrix.js~Matrix.html">Matrix</a></span> | <span><a href="class/src/vector.js~Vector.html">Vector</a></span> | <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span><span>[]</span></span></span>
         </p>
       </div>
       <div>
@@ -730,7 +730,7 @@ the argument passed to the other-parameter.</p>
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/matrix.js~Matrix.html#instance-method-dotVec">dotVec</a></span></span><span class="code" data-ice="signature">(vec: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span>, target: <span>Array/Vector</span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span></span>
+          <span class="code" data-ice="name"><span><a href="class/src/matrix.js~Matrix.html#instance-method-dotVec">dotVec</a></span></span><span class="code" data-ice="signature">(vec: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span><span>[]</span></span>, target: <span><a href="class/src/vector.js~Vector.html">Vector</a></span> | <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span><span>[]</span></span>): <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span><span>[]</span></span></span>
         </p>
       </div>
       <div>
@@ -875,7 +875,7 @@ the argument passed to the other-parameter.</p>
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/matrix.js~Matrix.html#instance-method-row">row</a></span></span><span class="code" data-ice="signature">(i: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>, target: <span>Array/Vector</span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span></span>
+          <span class="code" data-ice="name"><span><a href="class/src/matrix.js~Matrix.html#instance-method-row">row</a></span></span><span class="code" data-ice="signature">(i: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>, target: <span><a href="class/src/vector.js~Vector.html">Vector</a></span> | <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span><span>[]</span></span>): <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span><span>[]</span></span></span>
         </p>
       </div>
       <div>
@@ -904,7 +904,7 @@ the argument passed to the other-parameter.</p>
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/matrix.js~Matrix.html#instance-method-rowsFirst">rowsFirst</a></span></span><span class="code" data-ice="signature">(): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span></span>
+          <span class="code" data-ice="name"><span><a href="class/src/matrix.js~Matrix.html#instance-method-rowsFirst">rowsFirst</a></span></span><span class="code" data-ice="signature">(): <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span><span>[]</span></span></span>
         </p>
       </div>
       <div>
@@ -933,7 +933,7 @@ the argument passed to the other-parameter.</p>
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/matrix.js~Matrix.html#instance-method-scale">scale</a></span></span><span class="code" data-ice="signature">(factor: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>, target: <span>Array/Matrix</span>): <span><a href="class/src/matrix.js~Matrix.html">Matrix</a></span></span>
+          <span class="code" data-ice="name"><span><a href="class/src/matrix.js~Matrix.html#instance-method-scale">scale</a></span></span><span class="code" data-ice="signature">(factor: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>, target: <span><a href="class/src/matrix.js~Matrix.html">Matrix</a></span> | <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span><span>[]</span></span>): <span><a href="class/src/matrix.js~Matrix.html">Matrix</a></span></span>
         </p>
       </div>
       <div>
@@ -991,7 +991,7 @@ the argument passed to the other-parameter.</p>
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/matrix.js~Matrix.html#instance-method-submatrix">submatrix</a></span></span><span class="code" data-ice="signature">(row: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>, col: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>, rows: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>, cols: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>, target: <span>Array/Matrix</span>): <span><a href="class/src/matrix.js~Matrix.html">Matrix</a></span></span>
+          <span class="code" data-ice="name"><span><a href="class/src/matrix.js~Matrix.html#instance-method-submatrix">submatrix</a></span></span><span class="code" data-ice="signature">(row: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>, col: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>, rows: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>, cols: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>, target: <span><a href="class/src/matrix.js~Matrix.html">Matrix</a></span> | <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span><span>[]</span></span>): <span><a href="class/src/matrix.js~Matrix.html">Matrix</a></span></span>
         </p>
       </div>
       <div>
@@ -1020,7 +1020,7 @@ the argument passed to the other-parameter.</p>
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/matrix.js~Matrix.html#instance-method-toArray">toArray</a></span></span><span class="code" data-ice="signature">(rowsFirst: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span></span>
+          <span class="code" data-ice="name"><span><a href="class/src/matrix.js~Matrix.html#instance-method-toArray">toArray</a></span></span><span class="code" data-ice="signature">(rowsFirst: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>): <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span><span>[]</span></span></span>
         </p>
       </div>
       <div>
@@ -1078,7 +1078,7 @@ the argument passed to the other-parameter.</p>
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/matrix.js~Matrix.html#instance-method-transpose">transpose</a></span></span><span class="code" data-ice="signature">(target: <span>Array/Matrix</span>): <span><a href="class/src/matrix.js~Matrix.html">Matrix</a></span></span>
+          <span class="code" data-ice="name"><span><a href="class/src/matrix.js~Matrix.html#instance-method-transpose">transpose</a></span></span><span class="code" data-ice="signature">(target: <span><a href="class/src/matrix.js~Matrix.html">Matrix</a></span> | <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span><span>[]</span></span>): <span><a href="class/src/matrix.js~Matrix.html">Matrix</a></span></span>
         </p>
       </div>
       <div>
@@ -1139,7 +1139,7 @@ the argument passed to the other-parameter.</p>
     
     
     
-    <span class="code" data-ice="name">fromArray</span><span class="code" data-ice="signature">(arr: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span>, columns: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>, rowsFirst: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>, mutateArgs: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>): <span><a href="class/src/matrix.js~Matrix.html">Matrix</a></span></span>
+    <span class="code" data-ice="name">fromArray</span><span class="code" data-ice="signature">(arr: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span><span>[]</span></span>, columns: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>, rowsFirst: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>, mutateArgs: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>): <span><a href="class/src/matrix.js~Matrix.html">Matrix</a></span></span>
     <span class="right-info">
       
       
@@ -1165,7 +1165,7 @@ the argument passed to the other-parameter.</p>
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">arr</td>
-      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span></td>
+      <td data-ice="type" class="code"><span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span><span>[]</span></span></td>
       <td data-ice="appendix"></td>
       <td data-ice="description"><p>array of numbers</p>
 </td>
@@ -1233,7 +1233,7 @@ the argument passed to the other-parameter.</p>
     
     
     
-    <span class="code" data-ice="name">fromVectors</span><span class="code" data-ice="signature">(vectors: ...<span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span>): <span><a href="class/src/matrix.js~Matrix.html">Matrix</a></span></span>
+    <span class="code" data-ice="name">fromVectors</span><span class="code" data-ice="signature">(vectors: <span><span>...number</span><span>[]</span></span>): <span><a href="class/src/matrix.js~Matrix.html">Matrix</a></span></span>
     <span class="right-info">
       
       
@@ -1260,7 +1260,7 @@ and the number of rows are determined by the vector dimension.</p>
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">vectors</td>
-      <td data-ice="type" class="code">...<span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span></td>
+      <td data-ice="type" class="code"><span><span>...number</span><span>[]</span></span></td>
       <td data-ice="appendix"></td>
       <td data-ice="description"></td>
     </tr>
@@ -1379,7 +1379,7 @@ and the number of rows are determined by the vector dimension.</p>
     
     
     
-    <span class="code" data-ice="name">traverse</span><span class="code" data-ice="signature">(arr: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span>, cols: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>, callback: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span>, rowsFirst: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>)</span>
+    <span class="code" data-ice="name">traverse</span><span class="code" data-ice="signature">(arr: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span><span>[]</span></span>, cols: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>, callback: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span>, rowsFirst: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>)</span>
     <span class="right-info">
       
       
@@ -1405,7 +1405,7 @@ and the number of rows are determined by the vector dimension.</p>
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">arr</td>
-      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span></td>
+      <td data-ice="type" class="code"><span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span><span>[]</span></span></td>
       <td data-ice="appendix"></td>
       <td data-ice="description"><p>array to traverse as a matrix</p>
 </td>
@@ -1464,7 +1464,7 @@ and the number of rows are determined by the vector dimension.</p>
     
     
     
-    <span class="code" data-ice="name">constructor</span><span class="code" data-ice="signature">(rows: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>, cols: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>, values: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span>, rowsFirst: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>, mutateArgs: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>)</span>
+    <span class="code" data-ice="name">constructor</span><span class="code" data-ice="signature">(rows: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>, cols: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>, values: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span><span>[]</span></span>, rowsFirst: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>, mutateArgs: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>)</span>
     <span class="right-info">
       
       
@@ -1505,7 +1505,7 @@ parameter, making a square matrix.</p>
     </tr>
 <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">values</td>
-      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span></td>
+      <td data-ice="type" class="code"><span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span><span>[]</span></span></td>
       <td data-ice="appendix"></td>
       <td data-ice="description"><p>array of numbers to assign to the matrix elements</p>
 </td>
@@ -1963,7 +1963,7 @@ otherwise false.</p>
     
     
     
-    <span class="code" data-ice="name">col</span><span class="code" data-ice="signature">(j: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>, target: <span>Array/Vector</span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span></span>
+    <span class="code" data-ice="name">col</span><span class="code" data-ice="signature">(j: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>, target: <span><a href="class/src/vector.js~Vector.html">Vector</a></span> | <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span><span>[]</span></span>): <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span><span>[]</span></span></span>
     <span class="right-info">
       
       
@@ -1996,7 +1996,7 @@ otherwise false.</p>
     </tr>
 <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">target</td>
-      <td data-ice="type" class="code"><span>Array/Vector</span></td>
+      <td data-ice="type" class="code"><span><a href="class/src/vector.js~Vector.html">Vector</a></span> | <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span><span>[]</span></span></td>
       <td data-ice="appendix"></td>
       <td data-ice="description"><p>optional array/vector to write values to</p>
 </td>
@@ -2011,7 +2011,7 @@ otherwise false.</p>
     <table>
       <tbody>
         <tr>
-          <td class="return-type code" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span></td>
+          <td class="return-type code" data-ice="returnType"><span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span><span>[]</span></span></td>
           <td class="return-desc" data-ice="returnDescription"><p>column values</p>
 </td>
         </tr>
@@ -2044,7 +2044,7 @@ otherwise false.</p>
     
     
     
-    <span class="code" data-ice="name">columnsFirst</span><span class="code" data-ice="signature">(): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span></span>
+    <span class="code" data-ice="name">columnsFirst</span><span class="code" data-ice="signature">(): <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span><span>[]</span></span></span>
     <span class="right-info">
       
       
@@ -2068,7 +2068,7 @@ otherwise false.</p>
     <table>
       <tbody>
         <tr>
-          <td class="return-type code" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span></td>
+          <td class="return-type code" data-ice="returnType"><span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span><span>[]</span></span></td>
           
         </tr>
       </tbody>
@@ -2100,7 +2100,7 @@ otherwise false.</p>
     
     
     
-    <span class="code" data-ice="name">copyFrom</span><span class="code" data-ice="signature">(values: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span>, rowsFirst: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>, mutateArgs: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>): <span>*</span></span>
+    <span class="code" data-ice="name">copyFrom</span><span class="code" data-ice="signature">(values: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span><span>[]</span></span>, rowsFirst: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>, mutateArgs: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>): <span>*</span></span>
     <span class="right-info">
       
       
@@ -2126,7 +2126,7 @@ otherwise false.</p>
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">values</td>
-      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span></td>
+      <td data-ice="type" class="code"><span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span><span>[]</span></span></td>
       <td data-ice="appendix"></td>
       <td data-ice="description"><p>array of numbers</p>
 </td>
@@ -2243,7 +2243,7 @@ otherwise false.</p>
     
     
     
-    <span class="code" data-ice="name">dot</span><span class="code" data-ice="signature">(other: <span>Array/Vector/Matrix</span>, target: <span>Array/Vector</span>): <span>Matrix/Vector</span></span>
+    <span class="code" data-ice="name">dot</span><span class="code" data-ice="signature">(other: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span><span>[]</span></span> | <span><a href="class/src/vector.js~Vector.html">Vector</a></span> | <span><a href="class/src/matrix.js~Matrix.html">Matrix</a></span>, target: <span><a href="class/src/vector.js~Vector.html">Vector</a></span> | <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span><span>[]</span></span>): <span><a href="class/src/matrix.js~Matrix.html">Matrix</a></span> | <span><a href="class/src/vector.js~Vector.html">Vector</a></span> | <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span><span>[]</span></span></span>
     <span class="right-info">
       
       
@@ -2270,14 +2270,14 @@ the argument passed to the other-parameter.</p>
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">other</td>
-      <td data-ice="type" class="code"><span>Array/Vector/Matrix</span></td>
+      <td data-ice="type" class="code"><span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span><span>[]</span></span> | <span><a href="class/src/vector.js~Vector.html">Vector</a></span> | <span><a href="class/src/matrix.js~Matrix.html">Matrix</a></span></td>
       <td data-ice="appendix"></td>
       <td data-ice="description"><p>{Array/Vector/Matrix}</p>
 </td>
     </tr>
 <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">target</td>
-      <td data-ice="type" class="code"><span>Array/Vector</span></td>
+      <td data-ice="type" class="code"><span><a href="class/src/vector.js~Vector.html">Vector</a></span> | <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span><span>[]</span></span></td>
       <td data-ice="appendix"></td>
       <td data-ice="description"><p>optional array/vector to avoid mutating input argument</p>
 </td>
@@ -2292,7 +2292,7 @@ the argument passed to the other-parameter.</p>
     <table>
       <tbody>
         <tr>
-          <td class="return-type code" data-ice="returnType"><span>Matrix/Vector</span></td>
+          <td class="return-type code" data-ice="returnType"><span><a href="class/src/matrix.js~Matrix.html">Matrix</a></span> | <span><a href="class/src/vector.js~Vector.html">Vector</a></span> | <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span><span>[]</span></span></td>
           <td class="return-desc" data-ice="returnDescription"><p>depending on input.</p>
 </td>
         </tr>
@@ -2399,7 +2399,7 @@ in the order they appear.</p>
     
     
     
-    <span class="code" data-ice="name">dotVec</span><span class="code" data-ice="signature">(vec: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span>, target: <span>Array/Vector</span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span></span>
+    <span class="code" data-ice="name">dotVec</span><span class="code" data-ice="signature">(vec: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span><span>[]</span></span>, target: <span><a href="class/src/vector.js~Vector.html">Vector</a></span> | <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span><span>[]</span></span>): <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span><span>[]</span></span></span>
     <span class="right-info">
       
       
@@ -2430,14 +2430,14 @@ in between as 0. In the opposite case, it will simply neglect excessive componen
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">vec</td>
-      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span></td>
+      <td data-ice="type" class="code"><span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span><span>[]</span></span></td>
       <td data-ice="appendix"></td>
       <td data-ice="description"><p>vector (as Array/Vector)</p>
 </td>
     </tr>
 <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">target</td>
-      <td data-ice="type" class="code"><span>Array/Vector</span></td>
+      <td data-ice="type" class="code"><span><a href="class/src/vector.js~Vector.html">Vector</a></span> | <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span><span>[]</span></span></td>
       <td data-ice="appendix"></td>
       <td data-ice="description"><p>optional array/vector to avoid mutating the vec argument</p>
 </td>
@@ -2452,7 +2452,7 @@ in between as 0. In the opposite case, it will simply neglect excessive componen
     <table>
       <tbody>
         <tr>
-          <td class="return-type code" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span></td>
+          <td class="return-type code" data-ice="returnType"><span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span><span>[]</span></span></td>
           <td class="return-desc" data-ice="returnDescription"><p>resulting vector (type depending on vec/target argument)</p>
 </td>
         </tr>
@@ -2807,7 +2807,7 @@ in between as 0. In the opposite case, it will simply neglect excessive componen
     
     
     
-    <span class="code" data-ice="name">row</span><span class="code" data-ice="signature">(i: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>, target: <span>Array/Vector</span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span></span>
+    <span class="code" data-ice="name">row</span><span class="code" data-ice="signature">(i: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>, target: <span><a href="class/src/vector.js~Vector.html">Vector</a></span> | <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span><span>[]</span></span>): <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span><span>[]</span></span></span>
     <span class="right-info">
       
       
@@ -2840,7 +2840,7 @@ in between as 0. In the opposite case, it will simply neglect excessive componen
     </tr>
 <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">target</td>
-      <td data-ice="type" class="code"><span>Array/Vector</span></td>
+      <td data-ice="type" class="code"><span><a href="class/src/vector.js~Vector.html">Vector</a></span> | <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span><span>[]</span></span></td>
       <td data-ice="appendix"></td>
       <td data-ice="description"><p>optional array/vector to write values to</p>
 </td>
@@ -2855,7 +2855,7 @@ in between as 0. In the opposite case, it will simply neglect excessive componen
     <table>
       <tbody>
         <tr>
-          <td class="return-type code" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span></td>
+          <td class="return-type code" data-ice="returnType"><span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span><span>[]</span></span></td>
           <td class="return-desc" data-ice="returnDescription"><p>row values</p>
 </td>
         </tr>
@@ -2888,7 +2888,7 @@ in between as 0. In the opposite case, it will simply neglect excessive componen
     
     
     
-    <span class="code" data-ice="name">rowsFirst</span><span class="code" data-ice="signature">(): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span></span>
+    <span class="code" data-ice="name">rowsFirst</span><span class="code" data-ice="signature">(): <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span><span>[]</span></span></span>
     <span class="right-info">
       
       
@@ -2912,7 +2912,7 @@ in between as 0. In the opposite case, it will simply neglect excessive componen
     <table>
       <tbody>
         <tr>
-          <td class="return-type code" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span></td>
+          <td class="return-type code" data-ice="returnType"><span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span><span>[]</span></span></td>
           
         </tr>
       </tbody>
@@ -2944,7 +2944,7 @@ in between as 0. In the opposite case, it will simply neglect excessive componen
     
     
     
-    <span class="code" data-ice="name">scale</span><span class="code" data-ice="signature">(factor: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>, target: <span>Array/Matrix</span>): <span><a href="class/src/matrix.js~Matrix.html">Matrix</a></span></span>
+    <span class="code" data-ice="name">scale</span><span class="code" data-ice="signature">(factor: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>, target: <span><a href="class/src/matrix.js~Matrix.html">Matrix</a></span> | <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span><span>[]</span></span>): <span><a href="class/src/matrix.js~Matrix.html">Matrix</a></span></span>
     <span class="right-info">
       
       
@@ -2977,7 +2977,7 @@ in between as 0. In the opposite case, it will simply neglect excessive componen
     </tr>
 <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">target</td>
-      <td data-ice="type" class="code"><span>Array/Matrix</span></td>
+      <td data-ice="type" class="code"><span><a href="class/src/matrix.js~Matrix.html">Matrix</a></span> | <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span><span>[]</span></span></td>
       <td data-ice="appendix"></td>
       <td data-ice="description"><p>optional array/matrix to avoid mutating this matrix</p>
 </td>
@@ -3112,7 +3112,7 @@ in between as 0. In the opposite case, it will simply neglect excessive componen
     
     
     
-    <span class="code" data-ice="name">submatrix</span><span class="code" data-ice="signature">(row: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>, col: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>, rows: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>, cols: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>, target: <span>Array/Matrix</span>): <span><a href="class/src/matrix.js~Matrix.html">Matrix</a></span></span>
+    <span class="code" data-ice="name">submatrix</span><span class="code" data-ice="signature">(row: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>, col: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>, rows: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>, cols: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>, target: <span><a href="class/src/matrix.js~Matrix.html">Matrix</a></span> | <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span><span>[]</span></span>): <span><a href="class/src/matrix.js~Matrix.html">Matrix</a></span></span>
     <span class="right-info">
       
       
@@ -3166,7 +3166,7 @@ in between as 0. In the opposite case, it will simply neglect excessive componen
     </tr>
 <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">target</td>
-      <td data-ice="type" class="code"><span>Array/Matrix</span></td>
+      <td data-ice="type" class="code"><span><a href="class/src/matrix.js~Matrix.html">Matrix</a></span> | <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span><span>[]</span></span></td>
       <td data-ice="appendix"></td>
       <td data-ice="description"><p>optional array/matrix to write values to</p>
 </td>
@@ -3214,7 +3214,7 @@ in between as 0. In the opposite case, it will simply neglect excessive componen
     
     
     
-    <span class="code" data-ice="name">toArray</span><span class="code" data-ice="signature">(rowsFirst: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span></span>
+    <span class="code" data-ice="name">toArray</span><span class="code" data-ice="signature">(rowsFirst: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>): <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span><span>[]</span></span></span>
     <span class="right-info">
       
       
@@ -3255,7 +3255,7 @@ in between as 0. In the opposite case, it will simply neglect excessive componen
     <table>
       <tbody>
         <tr>
-          <td class="return-type code" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span></td>
+          <td class="return-type code" data-ice="returnType"><span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span><span>[]</span></span></td>
           
         </tr>
       </tbody>
@@ -3360,7 +3360,7 @@ in between as 0. In the opposite case, it will simply neglect excessive componen
     
     
     
-    <span class="code" data-ice="name">transpose</span><span class="code" data-ice="signature">(target: <span>Array/Matrix</span>): <span><a href="class/src/matrix.js~Matrix.html">Matrix</a></span></span>
+    <span class="code" data-ice="name">transpose</span><span class="code" data-ice="signature">(target: <span><a href="class/src/matrix.js~Matrix.html">Matrix</a></span> | <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span><span>[]</span></span>): <span><a href="class/src/matrix.js~Matrix.html">Matrix</a></span></span>
     <span class="right-info">
       
       
@@ -3386,7 +3386,7 @@ in between as 0. In the opposite case, it will simply neglect excessive componen
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">target</td>
-      <td data-ice="type" class="code"><span>Array/Matrix</span></td>
+      <td data-ice="type" class="code"><span><a href="class/src/matrix.js~Matrix.html">Matrix</a></span> | <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span><span>[]</span></span></td>
       <td data-ice="appendix"></td>
       <td data-ice="description"><p>optional array/matrix to avoid mutating this matrix</p>
 </td>

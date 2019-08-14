@@ -94,10 +94,10 @@
  * Component-wise addition of two arrays/vectors.
  * If target is NOT specified, the first argument will
  * be mutated. Target will be overwritten and NOT included in the sum.
- * @param {Array} to left operand
- * @param {Array} from right operand
- * @param {Array} target optional array/vector to store the result
- * @return {Array} array/vector
+ * @param {number[]} to left operand
+ * @param {number[]} from right operand
+ * @param {number[]} target optional array/vector to store the result
+ * @return {number[]} array/vector
  */
 export function add(to, from, target = null) {
   if (target) {
@@ -115,11 +115,11 @@ export function add(to, from, target = null) {
  * Component-wise addition of one vector with a scaled version of another vector.
  * If target is NOT specified, the first argument will
  * be mutated. Target will be overwritten and NOT included in the sum.
- * @param {Array} to left operand
- * @param {Array} from right operand
+ * @param {number[]} to left operand
+ * @param {number[]} from right operand
  * @param {number} factor scaling factor to apply to from-vector
- * @param {Array} target optional array/vector to store the result
- * @return {Array} array/vector
+ * @param {number[]} target optional array/vector to store the result
+ * @return {number[]} array/vector
  */
 export function addScaled(to, from, factor, target = null) {
   if (target) {
@@ -137,9 +137,9 @@ export function addScaled(to, from, factor, target = null) {
  * Component-wise addition of a set of arrays/vectors.
  * If target is NOT specified, the first element in the set will
  * be mutated. Target (if it has valid values) WILL be included in the sum.
- * @param {Array&lt;Array&gt;} vectors Array of equally length arrays/vectors (to be added)
- * @param {Array} target optional array/vector to add into
- * @return {Array} array/vector
+ * @param {number[][]} vectors Array of equally length arrays/vectors (to be added)
+ * @param {number[]} target optional array/vector to add into
+ * @return {number[]} array/vector
  */
 export function addAll(vectors, target = null) {
   let start = 0;
@@ -164,10 +164,10 @@ export function addAll(vectors, target = null) {
  * Component-wise subtraction of two arrays/vectors.
  * If target is NOT specified, the first argument will
  * be mutated. Target will be overwritten and NOT included in the sum.
- * @param {Array} from left operand
- * @param {Array} vector right operand
- * @param {Array} target optional array/vector to store the result
- * @return {Array} array/vector
+ * @param {number[]} from left operand
+ * @param {number[]} vector right operand
+ * @param {number[]} target optional array/vector to store the result
+ * @return {number[]} array/vector
  */
 export function sub(from, vector, target = null) {
   if (target) {
@@ -185,11 +185,11 @@ export function sub(from, vector, target = null) {
  * Component-wise addition of one vector with a scaled version of another vector.
  * If target is NOT specified, the first argument will
  * be mutated. Target will be overwritten and NOT included in the sum.
- * @param {Array} from left operand
- * @param {Array} vector right operand
+ * @param {number[]} from left operand
+ * @param {number[]} vector right operand
  * @param {number} factor scaling factor to apply to vector that will be subtracted
- * @param {Array} target optional array/vector to store the result
- * @return {Array} array/vector
+ * @param {number[]} target optional array/vector to store the result
+ * @return {number[]} array/vector
  */
 export function subScaled(from, vector, factor, target = null) {
   if (target) {
@@ -207,10 +207,10 @@ export function subScaled(from, vector, factor, target = null) {
  * Component-wise subtraction of array/vector and all elements in vectors.
  * If target is NOT specified, the first argument will
  * be mutated. Target will be overwritten and NOT included in the sum.
- * @param {Array} from left operand
- * @param {Array&lt;Array&gt;} vectors right operand
- * @param {Array} target optional array/vector to store the result
- * @return {Array} array/vector
+ * @param {number[]} from left operand
+ * @param {number[][]} vectors right operand
+ * @param {number[]} target optional array/vector to store the result
+ * @return {number[]} array/vector
  */
 export function subAll(from, vectors, target = null) {
   if (target) {
@@ -234,10 +234,10 @@ export function subAll(from, vectors, target = null) {
 /**
  * Create a vector from two points. This function will not mutate any
  * arguments unless target is the same as from.
- * @param {Array} from start coordinates
- * @param {Array} to end coordinates
- * @param {Array} target optional array/vector to store the resulting vector
- * @return {Vector} vector
+ * @param {number[]} from start coordinates
+ * @param {number[]} to end coordinates
+ * @param {number[]} target optional array/vector to store the resulting vector
+ * @return {number[]} vector
  */
 export function vec(from, to, target = null) {
   if (!target) {
@@ -255,10 +255,10 @@ export function vec(from, to, target = null) {
 
 /**
  * Component-wise scaling of an array or vector
- * @param {Array} arr array/vector to scale
+ * @param {number[]} arr array/vector to scale
  * @param {number} factor scaling factor
- * @param {Array} target optional array/vector to store the result
- * @return {Array} scaled array/vector
+ * @param {number[]} target optional array/vector to store the result
+ * @return {number[]} scaled array/vector
  */
 export function scale(arr, factor, target = null) {
   target = target || arr;
@@ -270,7 +270,7 @@ export function scale(arr, factor, target = null) {
 
 /**
  * Computes the sum of squares
- * @param {Array} arr array/vector to compute
+ * @param {number[]} arr array/vector to compute
  * @return {number}
  */
 export function sumsqr(arr) {
@@ -279,7 +279,7 @@ export function sumsqr(arr) {
 
 /**
  * Computes the scalar value (length) of a vector
- * @param {Array} vector array/vector to compute
+ * @param {number[]} vector array/vector to compute
  * @return {number}
  */
 export function scalar(vector) {
@@ -290,9 +290,9 @@ export function scalar(vector) {
 
 /**
  * Normalizes an array/vector
- * @param {Array} vector array/vector to notmalize
- * @param {Array} target optional array/vector to store the result
- * @return {Array} normalized array/vector
+ * @param {number[]} vector array/vector to notmalize
+ * @param {number[]} target optional array/vector to store the result
+ * @return {number[]} normalized array/vector
  */
 export function norm(vector, target = null) {
   target = target || vector;
@@ -303,10 +303,10 @@ export function norm(vector, target = null) {
 
 /**
  * Describes relationships between two points.
- * @param {Array} from start coordinates
- * @param {Array} to end coordinates
- * @param {Array} target optional array/vector to store the result
- * @return {Object} vector, sum of squares, distance and unit vector
+ * @param {number[]} from start coordinates
+ * @param {number[]} to end coordinates
+ * @param {number[]} target optional array/vector to store the result
+ * @return {{vector: number[], sqr: number, distance: number, unit: number[]}}
  */
 export function descr(from, to, target = null) {
   if (!target) {
@@ -333,9 +333,9 @@ export function descr(from, to, target = null) {
 
 /**
  * Get a unit vector that is perpendicular to the input vector. Only for 2d vectors!
- * @param {Array} vector 2d vector
- * @param {Array} target optional array/vector to store the resulting vector
- * @return {Vector} normalized, perpendicular vector
+ * @param {number[]} vector 2d vector
+ * @param {number[]} target optional array/vector to store the resulting vector
+ * @return {number[]} normalized, perpendicular vector
  */
 export function orth2(vector, target = null) {
   target = target || vector;
@@ -347,7 +347,7 @@ export function orth2(vector, target = null) {
 
 /**
  * Find the axis aligned angle of a 3d vector
- * @param {Array} vector
+ * @param {number[]} vector
  * @param {number} axis which axis to measure from X=0, Y=1, Z=2 (defaults to 0)
  * @return {number} angle in radians
  */
@@ -367,7 +367,7 @@ export function angle(vector, axis = 0) {
 
 /**
  * Find the axis aligned angle of a 2d vector
- * @param {Array} vector
+ * @param {number[]} vector
  * @return {number} angle in radians
  */
 export function angle2(vector) {
@@ -376,10 +376,10 @@ export function angle2(vector) {
 
 /**
  * Get a unit vector between two points/coordinates.
- * @param {Array} from start coordinates
- * @param {Array} to end coordinates
- * @param {Array} target optional array/vector to store the resulting vector
- * @return {Vector} unit vector between from and to
+ * @param {number[]} from start coordinates
+ * @param {number[]} to end coordinates
+ * @param {number[]} target optional array/vector to store the resulting vector
+ * @return {number[]} unit vector between from and to
  */
 export function dir(from, to, target = null) {
   return norm(vec(from, to, target));
@@ -387,8 +387,8 @@ export function dir(from, to, target = null) {
 
 /**
  * Calculate the distance between two points/coordinates.
- * @param {Array} p1 point/coordinates
- * @param {Array} p2 point/coordinates
+ * @param {number[]} p1 point/coordinates
+ * @param {number[]} p2 point/coordinates
  * @return {number} distance
  */
 export function dist(p1, p2) {
@@ -397,8 +397,8 @@ export function dist(p1, p2) {
 
 /**
  * Calculate the dot product between two vectors
- * @param {Array} v1 left hand operand
- * @param {Array} v2 right hand operand
+ * @param {number[]} v1 left hand operand
+ * @param {number[]} v2 right hand operand
  * @return {number} the dot product
  */
 export function dot(v1, v2) {
@@ -407,10 +407,10 @@ export function dot(v1, v2) {
 
 /**
  * Find the cross product between two 3d vectors
- * @param {Array} v1 left hand operand (3d vector)
- * @param {*} v2 right hand operand (3d vector)
- * @param {Array} target optional array/vector to store the resulting vector
- * @return {Array} the cross product vector (normal)
+ * @param {number[]} v1 left hand operand (3d vector)
+ * @param {number[]} v2 right hand operand (3d vector)
+ * @param {number[]} target optional array/vector to store the resulting vector
+ * @return {number[]} the cross product vector (normal)
  */
 export function cross(v1, v2, target = null) {
   target = target || new Array(3);
@@ -423,9 +423,9 @@ export function cross(v1, v2, target = null) {
 
 /**
  * Get the triple product between three 3d vectors
- * @param {Array} v1 left hand operand for the dot product (3d vector)
- * @param {Array} v2 left hand operand for the cross product (3d vector)
- * @param {Array} v3 right hand operand for the cross product (3d vector)
+ * @param {number[]} v1 left hand operand for the dot product (3d vector)
+ * @param {number[]} v2 left hand operand for the cross product (3d vector)
+ * @param {number[]} v3 right hand operand for the cross product (3d vector)
  * @return {number} triple product
  */
 export function triple(v1, v2, v3) {
@@ -434,8 +434,8 @@ export function triple(v1, v2, v3) {
 
 /**
  * Find the psudo cross product between two 2d vectors
- * @param {Array} v1 left hand operand (2d vector)
- * @param {Array} v2 right hand operand (2d vector)
+ * @param {number[]} v1 left hand operand (2d vector)
+ * @param {number[]} v2 right hand operand (2d vector)
  * @return {number} signed area of the parallellogram defined by v1 and v2
  */
 export function cross2(v1, v2) {
@@ -457,11 +457,11 @@ export function clampValue(value, min = 0, max = 1) {
 
 /**
  * Clamps each value in array according to min and max.
- * @param {Array} arr values to clamp
+ * @param {number[]} arr values to clamp
  * @param {number} min minimum value
  * @param {number} max maximum value
- * @param {Array} target optional array/vector to store the result
- * @return {Array} array of clamped values
+ * @param {number[]} target optional array/vector to store the result
+ * @return {number[]} array of clamped values
  */
 export function clampArray(arr, min = 0, max = 1, target = null) {
   target = target || arr;
@@ -474,11 +474,11 @@ export function clampArray(arr, min = 0, max = 1, target = null) {
 /**
  * Clamps the argument according to min and max. Arg can be either a numeric
  * value or an array of numeric values.
- * @param {number/Array} arg value or array of values to clamp
+ * @param {number|number[]} arg value or array of values to clamp
  * @param {number} min minimum value
  * @param {number} max maximum value
- * @param {Array} target optional array/vector to store the result
- * @return {number/Array} clamped version of arg
+ * @param {number[]} target optional array/vector to store the result
+ * @return {number|number[]} clamped version of arg
  */
 export function clamp(arg, min = 0, max = 1, target = null) {
   if (Array.isArray(arg)) {
@@ -499,10 +499,10 @@ export function stepValue(edge, x) {
 
 /**
  * As glsl step function for multiple numeric values
- * @param {Array} edges values to test
- * @param {Array/number} x threshold values
- * @param {Array} target optional array/vector to store the result
- * @return {Array} results for each value in edges
+ * @param {number[]} edges values to test
+ * @param {number|number[]} x threshold values
+ * @param {number[]} target optional array/vector to store the result
+ * @return {number[]} results for each value in edges
  */
 export function stepArray(edges, x, target = null) {
   const m = Array.isArray(x) ? i =&gt; x[i] : () =&gt; x;
@@ -516,10 +516,10 @@ export function stepArray(edges, x, target = null) {
 /**
  * Implementation of glsl step function. Returns 0 if an edge is less than the
  * threshold x, otherwise 1
- * @param {number/Array} edge number/array to test
- * @param {number/Array} x threshold(s)
- * @param {Array} target optional array/vector to store the result (if edge is array)
- * @return {number/Array}
+ * @param {number|number[]} edge number/array to test
+ * @param {number|number[]} x threshold(s)
+ * @param {number[]} target optional array/vector to store the result (if edge is array)
+ * @return {number|number[]}
  */
 export function step(edge, x, target = null) {
   if (Array.isArray(edge)) {
@@ -554,11 +554,11 @@ export function lerp(a, b, t) {
 /**
  * Mix (interpolate) numbers or arrays (similar to glsl implementation).
  * Works on both vectors and matrices, since they are both arrays.
- * @param {Array} a interpolate from
- * @param {Array} b interpolate to
- * @param {number/Array} t time 0 = a, 1 = b
- * @param {Array} target optional array/vector to store the result
- * @return {Array} interpolated array/vector/matrix
+ * @param {number[]} a interpolate from
+ * @param {number[]} b interpolate to
+ * @param {number|number[]} t time 0 = a, 1 = b
+ * @param {number[]} target optional array/vector to store the result
+ * @return {number[]} interpolated array/vector/matrix
  */
 export function mix(a, b, t, target = null) {
   const m = Array.isArray(t) ? i =&gt; t[i] : () =&gt; t;
@@ -573,8 +573,8 @@ export function mix(a, b, t, target = null) {
  * Generates a list of interpolated values between from and to,
  * where the number of elements returned are controlled by the
  * steps argument.
- * @param {number/Array} from value to interpolate from
- * @param {number/Array} to value to interpolate to
+ * @param {number|number[]} from value to interpolate from
+ * @param {number|number[]} to value to interpolate to
  * @param {number} steps interpolation steps
  * @param {number} start start time of interpolation [0-1]
  * @param {number} end end time of interpolation [0-1]
@@ -600,7 +600,7 @@ export function seq(from, to, steps, start = 0, end = 1) {
  * Rounds a number to the specific number of digits. Works with either a
  * single number or an array of numbers, which means it can be used with vectors and
  * matrices as well.
- * @param {number/Array} v value to round
+ * @param {number|number[]} v value to round
  * @param {number} digits number of digits to round to
  * @return {number} rounded value
  */

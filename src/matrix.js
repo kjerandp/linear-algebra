@@ -25,7 +25,7 @@ export class Matrix extends Array {
 
   /**
    * Traverse an array as a matrix, either rows-first or columns first.
-   * @param {Array} arr array to traverse as a matrix
+   * @param {number[]} arr array to traverse as a matrix
    * @param {number} cols number of columns to split the array into
    * @param {function} callback function to be executed for each element
    * @param {boolean} rowsFirst traverse order
@@ -47,7 +47,7 @@ export class Matrix extends Array {
 
   /**
    * Instantiate a matrix from an array.
-   * @param {Array} arr array of numbers
+   * @param {number[]} arr array of numbers
    * @param {number} columns number of columns to split the array into
    * @param {boolean} rowsFirst traverse order
    * @param {boolean} mutateArgs set if the input array should be mutated or not
@@ -62,7 +62,7 @@ export class Matrix extends Array {
   /**
    * Create a matrix from vectors. Each vector will be a column in the matrix
    * and the number of rows are determined by the vector dimension.
-   * @param  {...Array} vectors
+   * @param  {...number[]} vectors
    * @return {Matrix}
    */
   static fromVectors(...vectors) {
@@ -83,7 +83,7 @@ export class Matrix extends Array {
    * parameter, making a square matrix.
    * @param {number} rows number of rows
    * @param {number} cols number of columns
-   * @param {Array} values array of numbers to assign to the matrix elements
+   * @param {number[]} values array of numbers to assign to the matrix elements
    * @param {boolean} rowsFirst if values should be read rows-first or columns-first
    * @param {boolean} mutateArgs set if the input array should be mutated or not
    */
@@ -105,7 +105,7 @@ export class Matrix extends Array {
 
   /**
    * Set values of this matrix from an array
-   * @param {Array} values array of numbers
+   * @param {number[]} values array of numbers
    * @param {boolean} rowsFirst if values should be read rows-first or columns-first
    * @param {number} mutateArgs
    */
@@ -218,9 +218,9 @@ export class Matrix extends Array {
   * the same number of components as the matrix has columns. For vectors with a lower dimension
   * than the number of columns in the matrix, the last component will be iterpreted as 1 and any
   * in between as 0. In the opposite case, it will simply neglect excessive components.
-  * @param  {Array} vec vector (as Array/Vector)
-  * @param {Array/Vector} target optional array/vector to avoid mutating the vec argument
-  * @return {Array} resulting vector (type depending on vec/target argument)
+  * @param  {number[]} vec vector (as Array/Vector)
+  * @param {Vector|number[]} target optional array/vector to avoid mutating the vec argument
+  * @return {number[]} resulting vector (type depending on vec/target argument)
   */
   dotVec(vec, target = null) {
     if (target) { // optimized for immutable input vector
@@ -267,9 +267,9 @@ export class Matrix extends Array {
   /**
    * Calculate the matrix-matrix or matrix-vector product, depending on the type of
    * the argument passed to the other-parameter.
-   * @param {Array/Vector/Matrix} other {Array/Vector/Matrix}
-   * @param {Array/Vector} target optional array/vector to avoid mutating input argument
-   * @return {Matrix/Vector} depending on input.
+   * @param {number[]|Vector|Matrix} other {Array/Vector/Matrix}
+   * @param {Vector|number[]} target optional array/vector to avoid mutating input argument
+   * @return {Matrix|Vector|number[]} depending on input.
    */
   dot(other, target = null) {
     if (other instanceof Matrix) {
@@ -281,8 +281,8 @@ export class Matrix extends Array {
   /**
    * Get the values from a specific column.
    * @param {number} j zero-based column index
-   * @param {Array/Vector} target optional array/vector to write values to
-   * @return {Array} column values
+   * @param {Vector|number[]} target optional array/vector to write values to
+   * @return {number[]} column values
    */
   col(j, target = null) {
     target = target || new Array(this.rows);
@@ -297,8 +297,8 @@ export class Matrix extends Array {
   /**
    * Get the values from a specific row.
    * @param {number} i zero-based row index
-   * @param {Array/Vector} target optional array/vector to write values to
-   * @return {Array} row values
+   * @param {Vector|number[]} target optional array/vector to write values to
+   * @return {number[]} row values
    */
   row(i, target = null) {
     target = target || new Array(this.columns);
@@ -315,7 +315,7 @@ export class Matrix extends Array {
    * @param {number} col zero-based column index
    * @param {number} rows number of rows to include
    * @param {number} cols number of columns to include
-   * @param {Array/Matrix} target optional array/matrix to write values to
+   * @param {Matrix|number[]} target optional array/matrix to write values to
    * @return {Matrix} submatrix
    */
   submatrix(row = 0, col = 0, rows = 2, cols = 2, target = null) {
@@ -378,7 +378,7 @@ export class Matrix extends Array {
 
   /**
    * Transpose this matrix (switch rows and columns)
-   * @param {Array/Matrix} target optional array/matrix to avoid mutating this matrix
+   * @param {Matrix|number[]} target optional array/matrix to avoid mutating this matrix
    * @return {Matrix} transposed matrix
    */
   transpose(target = null) {
@@ -516,7 +516,7 @@ export class Matrix extends Array {
   /**
    * Scale this vector by a factor
    * @param {number} factor scaling factor
-   * @param {Array/Matrix} target optional array/matrix to avoid mutating this matrix
+   * @param {Matrix|number[]} target optional array/matrix to avoid mutating this matrix
    * @return {Matrix}
    */
   scale(factor, target = null) {
@@ -525,7 +525,7 @@ export class Matrix extends Array {
 
   /**
    * Returns a native javascript Array representation of this matrix, in rows-first order
-   * @return {Array}
+   * @return {number[]}
    */
   columnsFirst() {
     return [...this];
@@ -533,7 +533,7 @@ export class Matrix extends Array {
 
   /**
    * Returns a native javascript Array representation of this matrix, in column-first order
-   * @return {Array}
+   * @return {number[]}
    */
   rowsFirst() {
     const res = new Array(this.length);
@@ -544,7 +544,7 @@ export class Matrix extends Array {
   /**
    * Return a native javascript Array representation of this matrix.
    * @param {boolean} rowsFirst if the output should be rows-first or columns-first
-   * @return {Array}
+   * @return {number[]}
    */
   toArray(rowsFirst = false) {
     return rowsFirst ? this.rowsFirst() : this.columnsFirst();
