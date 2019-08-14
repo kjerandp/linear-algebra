@@ -480,6 +480,33 @@ export function mix(a, b, t, target = null) {
 }
 
 /**
+ * Generates a list of interpolated values between from and to,
+ * where the number of elements returned are controlled by the
+ * steps argument.
+ * @param {number/Array} from value to interpolate from
+ * @param {number/Array} to value to interpolate to
+ * @param {number} steps interpolation steps
+ * @param {number} start start time of interpolation [0-1]
+ * @param {number} end end time of interpolation [0-1]
+ */
+export function seq(from, to, steps, start = 0, end = 1) {
+  let f;
+  if (Array.isArray(from)) {
+    f = t => mix(from, to, t, from.slice());
+  } else {
+    f = t => lerp(from, to, t);
+  }
+  const target = [];
+  const incr = (end - start) / (steps - 1);
+  for (let i = 0; i < steps - 1; i++) {
+    const x = start + i * incr;
+    target.push(f(x));
+  }
+  target.push(f(end));
+  return target;
+}
+
+/**
  * Rounds a number to the specific number of digits. Works with either a
  * single number or an array of numbers, which means it can be used with vectors and
  * matrices as well.
@@ -487,7 +514,7 @@ export function mix(a, b, t, target = null) {
  * @param {number} digits number of digits to round to
  * @return {number} rounded value
  */
-export function round(v, digits) {
+export function round(v, digits = 1) {
   const f = 10 ** digits;
   if (!Array.isArray(v)) {
     return Math.round(v * f) / f;
@@ -525,4 +552,3 @@ export function nrad(r) {
   const v = r % TAU;
   return (v < 0 ? v + TAU : v);
 }
-

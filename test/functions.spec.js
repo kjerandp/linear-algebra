@@ -30,6 +30,7 @@ import {
   deg,
   rad,
   nrad,
+  seq,
 } from '../src/functions';
 import { PI, TAU, SPI, QPI } from '../src/const';
 import { Vector, vec2, vec3, vec4 } from '../src/vector';
@@ -409,6 +410,40 @@ describe('functions.js', () => {
     expect(nrad(-SPI)).toBe(TAU - SPI);
     expect(nrad(-TAU)).toBe(-0);
     expect(nrad(-TAU - SPI)).toBe(TAU - SPI);
+  });
+
+  it('can create a sequence of interpolated values', () => {
+    let a = 100;
+    let b = 450;
+
+    let expected = [100, 450];
+
+    seq(a, b, 2).forEach((v, i) => expect(v).toBe(expected[i]));
+
+    expected = [100, 150, 200, 250, 300, 350, 400, 450];
+    seq(a, b, 8).forEach((v, i) => expect(v).toBeCloseTo(expected[i]));
+
+    // start at t=0.5 to t=0.75, same amount of steps
+    expected = [275, 287.5, 300, 312.5, 325, 337.5, 350, 362.5];
+    seq(a, b, 8, 0.5, 0.75).forEach((v, i) => expect(v).toBeCloseTo(expected[i]));
+
+    a = 0;
+    b = 1;
+    expected = [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1];
+    seq(a, b, 11).forEach((v, i) => expect(v).toBeCloseTo(expected[i]));
+
+    // array
+    a = [0, 0, 0];
+    b = [10, -20, 100];
+    expected = [
+      [0, 0, 0],
+      [2.5, -5, 25],
+      [5, -10, 50],
+      [7.5, -15, 75],
+      [10, -20, 100],
+    ];
+    seq(a, b, 5).forEach((v, i) => expect(v).toEqual(expected[i]));
+
   });
 });
 

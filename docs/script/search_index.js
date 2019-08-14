@@ -240,6 +240,12 @@ window.esdocSearchIndex = [
     "function"
   ],
   [
+    "@kjerandp/linear-algebra/src/functions.js~seq",
+    "function/index.html#static-function-seq",
+    "<span>seq</span> <span class=\"search-result-import-path\">@kjerandp/linear-algebra/src/functions.js</span>",
+    "function"
+  ],
+  [
     "@kjerandp/linear-algebra/src/functions.js~smoothstep",
     "function/index.html#static-function-smoothstep",
     "<span>smoothstep</span> <span class=\"search-result-import-path\">@kjerandp/linear-algebra/src/functions.js</span>",
@@ -319,127 +325,133 @@ window.esdocSearchIndex = [
   ],
   [
     "",
-    "test-file/test/functions.spec.js.html#lineNumber38",
+    "test-file/test/functions.spec.js.html#lineNumber39",
     "functions.js",
     "test"
   ],
   [
     "",
-    "test-file/test/functions.spec.js.html#lineNumber387",
+    "test-file/test/functions.spec.js.html#lineNumber388",
     "functions.js Can convert between degrees and radians",
     "test"
   ],
   [
     "",
-    "test-file/test/functions.spec.js.html#lineNumber292",
+    "test-file/test/functions.spec.js.html#lineNumber293",
     "functions.js Can find angles of 2d vectors",
     "test"
   ],
   [
     "",
-    "test-file/test/functions.spec.js.html#lineNumber302",
+    "test-file/test/functions.spec.js.html#lineNumber303",
     "functions.js Can find angles of 3d vectors",
     "test"
   ],
   [
     "",
-    "test-file/test/functions.spec.js.html#lineNumber345",
+    "test-file/test/functions.spec.js.html#lineNumber346",
     "functions.js Can generate threshold values with step and smoothstep functions (as in GLSL)",
     "test"
   ],
   [
     "",
-    "test-file/test/functions.spec.js.html#lineNumber360",
+    "test-file/test/functions.spec.js.html#lineNumber361",
     "functions.js Can mix vectors, matrices and values",
     "test"
   ],
   [
     "",
-    "test-file/test/functions.spec.js.html#lineNumber379",
+    "test-file/test/functions.spec.js.html#lineNumber380",
     "functions.js Can round vectors and values",
     "test"
   ],
   [
     "",
-    "test-file/test/functions.spec.js.html#lineNumber183",
+    "test-file/test/functions.spec.js.html#lineNumber184",
     "functions.js can calculate the scalar of a vector/array",
     "test"
   ],
   [
     "",
-    "test-file/test/functions.spec.js.html#lineNumber178",
+    "test-file/test/functions.spec.js.html#lineNumber179",
     "functions.js can calculate the sum of squares",
     "test"
   ],
   [
     "",
-    "test-file/test/functions.spec.js.html#lineNumber188",
+    "test-file/test/functions.spec.js.html#lineNumber415",
+    "functions.js can create a sequence of interpolated values",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/functions.spec.js.html#lineNumber189",
     "functions.js can normalize a vector/array",
     "test"
   ],
   [
     "",
-    "test-file/test/functions.spec.js.html#lineNumber204",
+    "test-file/test/functions.spec.js.html#lineNumber205",
     "functions.js can scale a vector/array by a factor",
     "test"
   ],
   [
     "",
-    "test-file/test/functions.spec.js.html#lineNumber52",
+    "test-file/test/functions.spec.js.html#lineNumber53",
     "functions.js should be able to add and subtract vectors/arrays",
     "test"
   ],
   [
     "",
-    "test-file/test/functions.spec.js.html#lineNumber269",
+    "test-file/test/functions.spec.js.html#lineNumber270",
     "functions.js should be able to calculate the psudo cross product of 2d vectors",
     "test"
   ],
   [
     "",
-    "test-file/test/functions.spec.js.html#lineNumber263",
+    "test-file/test/functions.spec.js.html#lineNumber264",
     "functions.js should be able to calculate the vector dot product",
     "test"
   ],
   [
     "",
-    "test-file/test/functions.spec.js.html#lineNumber313",
+    "test-file/test/functions.spec.js.html#lineNumber314",
     "functions.js should be able to clamp values and vectors/arrays",
     "test"
   ],
   [
     "",
-    "test-file/test/functions.spec.js.html#lineNumber39",
+    "test-file/test/functions.spec.js.html#lineNumber40",
     "functions.js should be able to create a vector from two points",
     "test"
   ],
   [
     "",
-    "test-file/test/functions.spec.js.html#lineNumber276",
+    "test-file/test/functions.spec.js.html#lineNumber277",
     "functions.js should be able to find the cross and triple product of 3d vectors",
     "test"
   ],
   [
     "",
-    "test-file/test/functions.spec.js.html#lineNumber227",
+    "test-file/test/functions.spec.js.html#lineNumber228",
     "functions.js should describe relationships between two points",
     "test"
   ],
   [
     "",
-    "test-file/test/functions.spec.js.html#lineNumber247",
+    "test-file/test/functions.spec.js.html#lineNumber248",
     "functions.js should find the an orthogonal unit vector",
     "test"
   ],
   [
     "",
-    "test-file/test/functions.spec.js.html#lineNumber214",
+    "test-file/test/functions.spec.js.html#lineNumber215",
     "functions.js should find the directional unit vector between two points",
     "test"
   ],
   [
     "",
-    "test-file/test/functions.spec.js.html#lineNumber209",
+    "test-file/test/functions.spec.js.html#lineNumber210",
     "functions.js should find the distance between two points",
     "test"
   ],
