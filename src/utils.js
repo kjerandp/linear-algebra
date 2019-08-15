@@ -54,6 +54,7 @@ export function flattenList(arg = [], flattend = [], max = 0) {
 }
 
 /**
+ * @ignore
  * Experimental! This function will create a wrapper function
  * that turns the input function into an immutable version,
  * by following the convention where the target-argument is
