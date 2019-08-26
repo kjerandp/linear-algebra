@@ -46,6 +46,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-dir">dir</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-dist">dist</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-dot">dot</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isNullVec">isNullVec</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-lerp">lerp</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-mix">mix</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-norm">norm</a></span></span></li>
@@ -56,6 +57,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-scalar">scalar</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-scale">scale</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-seq">seq</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-seqI">seqI</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-smoothstep">smoothstep</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-step">step</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-stepArray">stepArray</a></span></span></li>
@@ -97,133 +99,139 @@
   </thead>
 
   <tbody data-ice="tests"><tr class="test-interface" data-ice="testInterface" style="display: none;" data-test-depth="0">
-  <td data-ice="testDescription" style="padding-left: 10px"><span data-ice="testInterfaceToggle" class="toggle closed"></span><span><a href="test-file/test/functions.spec.js.html#lineNumber39"><p>functions.js</p>
+  <td data-ice="testDescription" style="padding-left: 10px"><span data-ice="testInterfaceToggle" class="toggle closed"></span><span><a href="test-file/test/functions.spec.js.html#lineNumber41"><p>functions.js</p>
 </a></span></td>
   <td data-ice="testTarget" class="test-target">-</td>
 </tr>
 
 <tr class="test-interface" data-ice="testInterface" style="display: none;" data-test-depth="1">
-  <td data-ice="testDescription" style="padding-left: 20px"><span><a href="test-file/test/functions.spec.js.html#lineNumber40"><p>should be able to create a vector from two points</p>
+  <td data-ice="testDescription" style="padding-left: 20px"><span><a href="test-file/test/functions.spec.js.html#lineNumber42"><p>should be able to create a vector from two points</p>
 </a></span></td>
   <td data-ice="testTarget" class="test-target">-</td>
 </tr>
 
 <tr class="test-interface" data-ice="testInterface" style="display: none;" data-test-depth="1">
-  <td data-ice="testDescription" style="padding-left: 20px"><span><a href="test-file/test/functions.spec.js.html#lineNumber53"><p>should be able to add and subtract vectors/arrays</p>
+  <td data-ice="testDescription" style="padding-left: 20px"><span><a href="test-file/test/functions.spec.js.html#lineNumber55"><p>should be able to add and subtract vectors/arrays</p>
 </a></span></td>
   <td data-ice="testTarget" class="test-target">-</td>
 </tr>
 
 <tr class="test-interface" data-ice="testInterface" style="display: none;" data-test-depth="1">
-  <td data-ice="testDescription" style="padding-left: 20px"><span><a href="test-file/test/functions.spec.js.html#lineNumber179"><p>can calculate the sum of squares</p>
+  <td data-ice="testDescription" style="padding-left: 20px"><span><a href="test-file/test/functions.spec.js.html#lineNumber181"><p>can calculate the sum of squares</p>
 </a></span></td>
   <td data-ice="testTarget" class="test-target">-</td>
 </tr>
 
 <tr class="test-interface" data-ice="testInterface" style="display: none;" data-test-depth="1">
-  <td data-ice="testDescription" style="padding-left: 20px"><span><a href="test-file/test/functions.spec.js.html#lineNumber184"><p>can calculate the scalar of a vector/array</p>
+  <td data-ice="testDescription" style="padding-left: 20px"><span><a href="test-file/test/functions.spec.js.html#lineNumber186"><p>can calculate the scalar of a vector/array</p>
 </a></span></td>
   <td data-ice="testTarget" class="test-target">-</td>
 </tr>
 
 <tr class="test-interface" data-ice="testInterface" style="display: none;" data-test-depth="1">
-  <td data-ice="testDescription" style="padding-left: 20px"><span><a href="test-file/test/functions.spec.js.html#lineNumber189"><p>can normalize a vector/array</p>
+  <td data-ice="testDescription" style="padding-left: 20px"><span><a href="test-file/test/functions.spec.js.html#lineNumber191"><p>can normalize a vector/array</p>
 </a></span></td>
   <td data-ice="testTarget" class="test-target">-</td>
 </tr>
 
 <tr class="test-interface" data-ice="testInterface" style="display: none;" data-test-depth="1">
-  <td data-ice="testDescription" style="padding-left: 20px"><span><a href="test-file/test/functions.spec.js.html#lineNumber205"><p>can scale a vector/array by a factor</p>
+  <td data-ice="testDescription" style="padding-left: 20px"><span><a href="test-file/test/functions.spec.js.html#lineNumber207"><p>can scale a vector/array by a factor</p>
 </a></span></td>
   <td data-ice="testTarget" class="test-target">-</td>
 </tr>
 
 <tr class="test-interface" data-ice="testInterface" style="display: none;" data-test-depth="1">
-  <td data-ice="testDescription" style="padding-left: 20px"><span><a href="test-file/test/functions.spec.js.html#lineNumber210"><p>should find the distance between two points</p>
+  <td data-ice="testDescription" style="padding-left: 20px"><span><a href="test-file/test/functions.spec.js.html#lineNumber212"><p>should find the distance between two points</p>
 </a></span></td>
   <td data-ice="testTarget" class="test-target">-</td>
 </tr>
 
 <tr class="test-interface" data-ice="testInterface" style="display: none;" data-test-depth="1">
-  <td data-ice="testDescription" style="padding-left: 20px"><span><a href="test-file/test/functions.spec.js.html#lineNumber215"><p>should find the directional unit vector between two points</p>
+  <td data-ice="testDescription" style="padding-left: 20px"><span><a href="test-file/test/functions.spec.js.html#lineNumber217"><p>should find the directional unit vector between two points</p>
 </a></span></td>
   <td data-ice="testTarget" class="test-target">-</td>
 </tr>
 
 <tr class="test-interface" data-ice="testInterface" style="display: none;" data-test-depth="1">
-  <td data-ice="testDescription" style="padding-left: 20px"><span><a href="test-file/test/functions.spec.js.html#lineNumber228"><p>should describe relationships between two points</p>
+  <td data-ice="testDescription" style="padding-left: 20px"><span><a href="test-file/test/functions.spec.js.html#lineNumber230"><p>should describe relationships between two points</p>
 </a></span></td>
   <td data-ice="testTarget" class="test-target">-</td>
 </tr>
 
 <tr class="test-interface" data-ice="testInterface" style="display: none;" data-test-depth="1">
-  <td data-ice="testDescription" style="padding-left: 20px"><span><a href="test-file/test/functions.spec.js.html#lineNumber248"><p>should find the an orthogonal unit vector</p>
+  <td data-ice="testDescription" style="padding-left: 20px"><span><a href="test-file/test/functions.spec.js.html#lineNumber250"><p>should find the an orthogonal unit vector</p>
 </a></span></td>
   <td data-ice="testTarget" class="test-target">-</td>
 </tr>
 
 <tr class="test-interface" data-ice="testInterface" style="display: none;" data-test-depth="1">
-  <td data-ice="testDescription" style="padding-left: 20px"><span><a href="test-file/test/functions.spec.js.html#lineNumber264"><p>should be able to calculate the vector dot product</p>
+  <td data-ice="testDescription" style="padding-left: 20px"><span><a href="test-file/test/functions.spec.js.html#lineNumber266"><p>should be able to calculate the vector dot product</p>
 </a></span></td>
   <td data-ice="testTarget" class="test-target">-</td>
 </tr>
 
 <tr class="test-interface" data-ice="testInterface" style="display: none;" data-test-depth="1">
-  <td data-ice="testDescription" style="padding-left: 20px"><span><a href="test-file/test/functions.spec.js.html#lineNumber270"><p>should be able to calculate the psudo cross product of 2d vectors</p>
+  <td data-ice="testDescription" style="padding-left: 20px"><span><a href="test-file/test/functions.spec.js.html#lineNumber272"><p>should be able to calculate the psudo cross product of 2d vectors</p>
 </a></span></td>
   <td data-ice="testTarget" class="test-target">-</td>
 </tr>
 
 <tr class="test-interface" data-ice="testInterface" style="display: none;" data-test-depth="1">
-  <td data-ice="testDescription" style="padding-left: 20px"><span><a href="test-file/test/functions.spec.js.html#lineNumber277"><p>should be able to find the cross and triple product of 3d vectors</p>
+  <td data-ice="testDescription" style="padding-left: 20px"><span><a href="test-file/test/functions.spec.js.html#lineNumber279"><p>should be able to find the cross and triple product of 3d vectors</p>
 </a></span></td>
   <td data-ice="testTarget" class="test-target">-</td>
 </tr>
 
 <tr class="test-interface" data-ice="testInterface" style="display: none;" data-test-depth="1">
-  <td data-ice="testDescription" style="padding-left: 20px"><span><a href="test-file/test/functions.spec.js.html#lineNumber293"><p>Can find angles of 2d vectors</p>
+  <td data-ice="testDescription" style="padding-left: 20px"><span><a href="test-file/test/functions.spec.js.html#lineNumber295"><p>Can find angles of 2d vectors</p>
 </a></span></td>
   <td data-ice="testTarget" class="test-target">-</td>
 </tr>
 
 <tr class="test-interface" data-ice="testInterface" style="display: none;" data-test-depth="1">
-  <td data-ice="testDescription" style="padding-left: 20px"><span><a href="test-file/test/functions.spec.js.html#lineNumber303"><p>Can find angles of 3d vectors</p>
+  <td data-ice="testDescription" style="padding-left: 20px"><span><a href="test-file/test/functions.spec.js.html#lineNumber305"><p>Can find angles of 3d vectors</p>
 </a></span></td>
   <td data-ice="testTarget" class="test-target">-</td>
 </tr>
 
 <tr class="test-interface" data-ice="testInterface" style="display: none;" data-test-depth="1">
-  <td data-ice="testDescription" style="padding-left: 20px"><span><a href="test-file/test/functions.spec.js.html#lineNumber314"><p>should be able to clamp values and vectors/arrays</p>
+  <td data-ice="testDescription" style="padding-left: 20px"><span><a href="test-file/test/functions.spec.js.html#lineNumber316"><p>should be able to clamp values and vectors/arrays</p>
 </a></span></td>
   <td data-ice="testTarget" class="test-target">-</td>
 </tr>
 
 <tr class="test-interface" data-ice="testInterface" style="display: none;" data-test-depth="1">
-  <td data-ice="testDescription" style="padding-left: 20px"><span><a href="test-file/test/functions.spec.js.html#lineNumber346"><p>Can generate threshold values with step and smoothstep functions (as in GLSL)</p>
+  <td data-ice="testDescription" style="padding-left: 20px"><span><a href="test-file/test/functions.spec.js.html#lineNumber348"><p>Can generate threshold values with step and smoothstep functions (as in GLSL)</p>
 </a></span></td>
   <td data-ice="testTarget" class="test-target">-</td>
 </tr>
 
 <tr class="test-interface" data-ice="testInterface" style="display: none;" data-test-depth="1">
-  <td data-ice="testDescription" style="padding-left: 20px"><span><a href="test-file/test/functions.spec.js.html#lineNumber361"><p>Can mix vectors, matrices and values</p>
+  <td data-ice="testDescription" style="padding-left: 20px"><span><a href="test-file/test/functions.spec.js.html#lineNumber363"><p>Can mix vectors, matrices and values</p>
 </a></span></td>
   <td data-ice="testTarget" class="test-target">-</td>
 </tr>
 
 <tr class="test-interface" data-ice="testInterface" style="display: none;" data-test-depth="1">
-  <td data-ice="testDescription" style="padding-left: 20px"><span><a href="test-file/test/functions.spec.js.html#lineNumber380"><p>Can round vectors and values</p>
+  <td data-ice="testDescription" style="padding-left: 20px"><span><a href="test-file/test/functions.spec.js.html#lineNumber382"><p>Can round vectors and values</p>
 </a></span></td>
   <td data-ice="testTarget" class="test-target">-</td>
 </tr>
 
 <tr class="test-interface" data-ice="testInterface" style="display: none;" data-test-depth="1">
-  <td data-ice="testDescription" style="padding-left: 20px"><span><a href="test-file/test/functions.spec.js.html#lineNumber388"><p>Can convert between degrees and radians</p>
+  <td data-ice="testDescription" style="padding-left: 20px"><span><a href="test-file/test/functions.spec.js.html#lineNumber390"><p>Can convert between degrees and radians</p>
 </a></span></td>
   <td data-ice="testTarget" class="test-target">-</td>
 </tr>
 
 <tr class="test-interface" data-ice="testInterface" style="display: none;" data-test-depth="1">
-  <td data-ice="testDescription" style="padding-left: 20px"><span><a href="test-file/test/functions.spec.js.html#lineNumber415"><p>can create a sequence of interpolated values</p>
+  <td data-ice="testDescription" style="padding-left: 20px"><span><a href="test-file/test/functions.spec.js.html#lineNumber417"><p>can create a sequence of interpolated values</p>
+</a></span></td>
+  <td data-ice="testTarget" class="test-target">-</td>
+</tr>
+
+<tr class="test-interface" data-ice="testInterface" style="display: none;" data-test-depth="1">
+  <td data-ice="testDescription" style="padding-left: 20px"><span><a href="test-file/test/functions.spec.js.html#lineNumber455"><p>should allow easy check for null vectors</p>
 </a></span></td>
   <td data-ice="testTarget" class="test-target">-</td>
 </tr>

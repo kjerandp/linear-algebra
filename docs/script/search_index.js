@@ -150,6 +150,12 @@ window.esdocSearchIndex = [
     "function"
   ],
   [
+    "@kjerandp/linear-algebra/src/functions.js~isnullvec",
+    "function/index.html#static-function-isNullVec",
+    "<span>isNullVec</span> <span class=\"search-result-import-path\">@kjerandp/linear-algebra/src/functions.js</span>",
+    "function"
+  ],
+  [
     "@kjerandp/linear-algebra/src/functions.js~lerp",
     "function/index.html#static-function-lerp",
     "<span>lerp</span> <span class=\"search-result-import-path\">@kjerandp/linear-algebra/src/functions.js</span>",
@@ -246,6 +252,12 @@ window.esdocSearchIndex = [
     "function"
   ],
   [
+    "@kjerandp/linear-algebra/src/functions.js~seqi",
+    "function/index.html#static-function-seqI",
+    "<span>seqI</span> <span class=\"search-result-import-path\">@kjerandp/linear-algebra/src/functions.js</span>",
+    "function"
+  ],
+  [
     "@kjerandp/linear-algebra/src/functions.js~smoothstep",
     "function/index.html#static-function-smoothstep",
     "<span>smoothstep</span> <span class=\"search-result-import-path\">@kjerandp/linear-algebra/src/functions.js</span>",
@@ -325,133 +337,139 @@ window.esdocSearchIndex = [
   ],
   [
     "",
-    "test-file/test/functions.spec.js.html#lineNumber39",
+    "test-file/test/functions.spec.js.html#lineNumber41",
     "functions.js",
     "test"
   ],
   [
     "",
-    "test-file/test/functions.spec.js.html#lineNumber388",
+    "test-file/test/functions.spec.js.html#lineNumber390",
     "functions.js Can convert between degrees and radians",
     "test"
   ],
   [
     "",
-    "test-file/test/functions.spec.js.html#lineNumber293",
+    "test-file/test/functions.spec.js.html#lineNumber295",
     "functions.js Can find angles of 2d vectors",
     "test"
   ],
   [
     "",
-    "test-file/test/functions.spec.js.html#lineNumber303",
+    "test-file/test/functions.spec.js.html#lineNumber305",
     "functions.js Can find angles of 3d vectors",
     "test"
   ],
   [
     "",
-    "test-file/test/functions.spec.js.html#lineNumber346",
+    "test-file/test/functions.spec.js.html#lineNumber348",
     "functions.js Can generate threshold values with step and smoothstep functions (as in GLSL)",
     "test"
   ],
   [
     "",
-    "test-file/test/functions.spec.js.html#lineNumber361",
+    "test-file/test/functions.spec.js.html#lineNumber363",
     "functions.js Can mix vectors, matrices and values",
     "test"
   ],
   [
     "",
-    "test-file/test/functions.spec.js.html#lineNumber380",
+    "test-file/test/functions.spec.js.html#lineNumber382",
     "functions.js Can round vectors and values",
     "test"
   ],
   [
     "",
-    "test-file/test/functions.spec.js.html#lineNumber184",
+    "test-file/test/functions.spec.js.html#lineNumber186",
     "functions.js can calculate the scalar of a vector/array",
     "test"
   ],
   [
     "",
-    "test-file/test/functions.spec.js.html#lineNumber179",
+    "test-file/test/functions.spec.js.html#lineNumber181",
     "functions.js can calculate the sum of squares",
     "test"
   ],
   [
     "",
-    "test-file/test/functions.spec.js.html#lineNumber415",
+    "test-file/test/functions.spec.js.html#lineNumber417",
     "functions.js can create a sequence of interpolated values",
     "test"
   ],
   [
     "",
-    "test-file/test/functions.spec.js.html#lineNumber189",
+    "test-file/test/functions.spec.js.html#lineNumber191",
     "functions.js can normalize a vector/array",
     "test"
   ],
   [
     "",
-    "test-file/test/functions.spec.js.html#lineNumber205",
+    "test-file/test/functions.spec.js.html#lineNumber207",
     "functions.js can scale a vector/array by a factor",
     "test"
   ],
   [
     "",
-    "test-file/test/functions.spec.js.html#lineNumber53",
+    "test-file/test/functions.spec.js.html#lineNumber455",
+    "functions.js should allow easy check for null vectors",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/functions.spec.js.html#lineNumber55",
     "functions.js should be able to add and subtract vectors/arrays",
     "test"
   ],
   [
     "",
-    "test-file/test/functions.spec.js.html#lineNumber270",
+    "test-file/test/functions.spec.js.html#lineNumber272",
     "functions.js should be able to calculate the psudo cross product of 2d vectors",
     "test"
   ],
   [
     "",
-    "test-file/test/functions.spec.js.html#lineNumber264",
+    "test-file/test/functions.spec.js.html#lineNumber266",
     "functions.js should be able to calculate the vector dot product",
     "test"
   ],
   [
     "",
-    "test-file/test/functions.spec.js.html#lineNumber314",
+    "test-file/test/functions.spec.js.html#lineNumber316",
     "functions.js should be able to clamp values and vectors/arrays",
     "test"
   ],
   [
     "",
-    "test-file/test/functions.spec.js.html#lineNumber40",
+    "test-file/test/functions.spec.js.html#lineNumber42",
     "functions.js should be able to create a vector from two points",
     "test"
   ],
   [
     "",
-    "test-file/test/functions.spec.js.html#lineNumber277",
+    "test-file/test/functions.spec.js.html#lineNumber279",
     "functions.js should be able to find the cross and triple product of 3d vectors",
     "test"
   ],
   [
     "",
-    "test-file/test/functions.spec.js.html#lineNumber228",
+    "test-file/test/functions.spec.js.html#lineNumber230",
     "functions.js should describe relationships between two points",
     "test"
   ],
   [
     "",
-    "test-file/test/functions.spec.js.html#lineNumber248",
+    "test-file/test/functions.spec.js.html#lineNumber250",
     "functions.js should find the an orthogonal unit vector",
     "test"
   ],
   [
     "",
-    "test-file/test/functions.spec.js.html#lineNumber215",
+    "test-file/test/functions.spec.js.html#lineNumber217",
     "functions.js should find the directional unit vector between two points",
     "test"
   ],
   [
     "",
-    "test-file/test/functions.spec.js.html#lineNumber210",
+    "test-file/test/functions.spec.js.html#lineNumber212",
     "functions.js should find the distance between two points",
     "test"
   ],
@@ -1089,6 +1107,12 @@ window.esdocSearchIndex = [
     "src/vector.js~vector#dot",
     "class/src/vector.js~Vector.html#instance-method-dot",
     "src/vector.js~Vector#dot",
+    "method"
+  ],
+  [
+    "src/vector.js~vector#isnull",
+    "class/src/vector.js~Vector.html#instance-method-isNull",
+    "src/vector.js~Vector#isNull",
     "method"
   ],
   [

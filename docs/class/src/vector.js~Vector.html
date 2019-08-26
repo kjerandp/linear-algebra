@@ -46,6 +46,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-dir">dir</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-dist">dist</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-dot">dot</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isNullVec">isNullVec</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-lerp">lerp</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-mix">mix</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-norm">norm</a></span></span></li>
@@ -56,6 +57,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-scalar">scalar</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-scale">scale</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-seq">seq</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-seqI">seqI</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-smoothstep">smoothstep</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-step">step</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-stepArray">stepArray</a></span></span></li>
@@ -88,13 +90,13 @@
 </nav>
 
 <div class="content" data-ice="content"><div class="header-notice">
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {Vector} from &apos;<span><a href="file/src/vector.js.html#lineNumber36">@kjerandp/linear-algebra/src/vector.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {Vector} from &apos;<span><a href="file/src/vector.js.html#lineNumber37">@kjerandp/linear-algebra/src/vector.js</a></span>&apos;</code></pre></div>
   <span data-ice="access">public</span>
   <span data-ice="kind">class</span>
   
   
   
-  <span data-ice="source">| <span><a href="file/src/vector.js.html#lineNumber36">source</a></span></span>
+  <span data-ice="source">| <span><a href="file/src/vector.js.html#lineNumber37">source</a></span></span>
 </div>
 
 <div class="self-detail detail">
@@ -426,6 +428,35 @@ Use the scalar function if you want to know the vector&apos;s length.</p>
           
           
           
+          <span class="code" data-ice="name"><span><a href="class/src/vector.js~Vector.html#instance-method-isNull">isNull</a></span></span><span class="code" data-ice="signature">(epsilon: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>): <span>*</span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Test if this vector is a null vector</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
           <span class="code" data-ice="name"><span><a href="class/src/vector.js~Vector.html#instance-method-negate">negate</a></span></span><span class="code" data-ice="signature">(target: <span>Array/Vector</span>): <span><a href="class/src/vector.js~Vector.html">Vector</a></span></span>
         </p>
       </div>
@@ -665,7 +696,7 @@ Use the scalar function if you want to know the vector&apos;s length.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/vector.js.html#lineNumber42">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/vector.js.html#lineNumber43">source</a></span></span>
     </span>
   </h3>
 
@@ -742,7 +773,7 @@ Use the scalar function if you want to know the vector&apos;s length.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/vector.js.html#lineNumber204">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/vector.js.html#lineNumber213">source</a></span></span>
     </span>
   </h3>
 
@@ -789,7 +820,7 @@ Use the scalar function if you want to know the vector&apos;s length.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/vector.js.html#lineNumber51">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/vector.js.html#lineNumber52">source</a></span></span>
     </span>
   </h3>
 
@@ -862,7 +893,7 @@ Use the scalar function if you want to know the vector&apos;s length.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/vector.js.html#lineNumber64">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/vector.js.html#lineNumber65">source</a></span></span>
     </span>
   </h3>
 
@@ -942,7 +973,7 @@ Use the scalar function if you want to know the vector&apos;s length.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/vector.js.html#lineNumber170">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/vector.js.html#lineNumber171">source</a></span></span>
     </span>
   </h3>
 
@@ -998,7 +1029,7 @@ Use the scalar function if you want to know the vector&apos;s length.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/vector.js.html#lineNumber143">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/vector.js.html#lineNumber144">source</a></span></span>
     </span>
   </h3>
 
@@ -1079,7 +1110,7 @@ Only for 3d vectors!</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/vector.js.html#lineNumber153">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/vector.js.html#lineNumber154">source</a></span></span>
     </span>
   </h3>
 
@@ -1154,7 +1185,7 @@ Only for 2d vectors!</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/vector.js.html#lineNumber162">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/vector.js.html#lineNumber163">source</a></span></span>
     </span>
   </h3>
 
@@ -1228,7 +1259,7 @@ Only for 2d vectors!</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/vector.js.html#lineNumber132">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/vector.js.html#lineNumber133">source</a></span></span>
     </span>
   </h3>
 
@@ -1291,6 +1322,79 @@ Only for 2d vectors!</p>
   
 </div>
 <div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-isNull">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    
+    <span class="code" data-ice="name">isNull</span><span class="code" data-ice="signature">(epsilon: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>): <span>*</span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/vector.js.html#lineNumber201">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Test if this vector is a null vector</p>
+</div>
+
+  
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">epsilon</td>
+      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>epsilon</p>
+</td>
+    </tr>
+</tbody>
+  </table>
+</div>
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td class="return-type code" data-ice="returnType"><span>*</span></td>
+          
+        </tr>
+      </tbody>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
   <h3 data-ice="anchor" id="instance-method-negate">
     <span class="access" data-ice="access">public</span>
     
@@ -1302,7 +1406,7 @@ Only for 2d vectors!</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/vector.js.html#lineNumber114">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/vector.js.html#lineNumber115">source</a></span></span>
     </span>
   </h3>
 
@@ -1375,7 +1479,7 @@ Only for 2d vectors!</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/vector.js.html#lineNumber123">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/vector.js.html#lineNumber124">source</a></span></span>
     </span>
   </h3>
 
@@ -1448,7 +1552,7 @@ Only for 2d vectors!</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/vector.js.html#lineNumber95">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/vector.js.html#lineNumber96">source</a></span></span>
     </span>
   </h3>
 
@@ -1504,7 +1608,7 @@ Only for 2d vectors!</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/vector.js.html#lineNumber105">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/vector.js.html#lineNumber106">source</a></span></span>
     </span>
   </h3>
 
@@ -1584,7 +1688,7 @@ Only for 2d vectors!</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/vector.js.html#lineNumber201">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/vector.js.html#lineNumber210">source</a></span></span>
     </span>
   </h3>
 
@@ -1657,7 +1761,7 @@ Only for 2d vectors!</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/vector.js.html#lineNumber73">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/vector.js.html#lineNumber74">source</a></span></span>
     </span>
   </h3>
 
@@ -1730,7 +1834,7 @@ Only for 2d vectors!</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/vector.js.html#lineNumber87">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/vector.js.html#lineNumber88">source</a></span></span>
     </span>
   </h3>
 
@@ -1810,7 +1914,7 @@ Only for 2d vectors!</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/vector.js.html#lineNumber182">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/vector.js.html#lineNumber183">source</a></span></span>
     </span>
   </h3>
 

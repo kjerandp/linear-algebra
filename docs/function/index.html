@@ -46,6 +46,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-dir">dir</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-dist">dist</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-dot">dot</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isNullVec">isNullVec</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-lerp">lerp</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-mix">mix</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-norm">norm</a></span></span></li>
@@ -56,6 +57,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-scalar">scalar</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-scale">scale</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-seq">seq</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-seqI">seqI</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-smoothstep">smoothstep</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-step">step</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-stepArray">stepArray</a></span></span></li>
@@ -570,6 +572,35 @@
           
           
           
+          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-isNullVec">isNullVec</a></span></span><span class="code" data-ice="signature">(v: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span><span>[]</span></span>, epsilon: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>): <span>*</span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Test if a vector is a null vector</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
           <span class="code" data-ice="name"><span><a href="function/index.html#static-function-lerp">lerp</a></span></span><span class="code" data-ice="signature">(a: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>, b: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>, t: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span></span>
         </p>
       </div>
@@ -1013,6 +1044,37 @@ rows first to columns first.</p>
         
         
         <div data-ice="description"><p>Generates a list of interpolated values between from and to,
+where the number of elements returned are controlled by the
+steps argument.</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
+          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-seqI">seqI</a></span></span><span class="code" data-ice="signature">(steps: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>): <span>*</span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Generates a list of interpolated values between 0 and 1,
 where the number of elements returned are controlled by the
 steps argument.</p>
 </div>
@@ -2288,11 +2350,11 @@ value or an array of numeric values.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/functions.js.html#lineNumber544">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/functions.js.html#lineNumber560">source</a></span></span>
     </span>
   </h3>
 
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {deg} from &apos;<span><a href="file/src/functions.js.html#lineNumber544">@kjerandp/linear-algebra/src/functions.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {deg} from &apos;<span><a href="file/src/functions.js.html#lineNumber560">@kjerandp/linear-algebra/src/functions.js</a></span>&apos;</code></pre></div>
   
   
   <div data-ice="description"><p>Convert radians to degrees</p>
@@ -2740,6 +2802,86 @@ control the return type or to avoid creating additional arrays.</p>
       <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span></td>
       <td data-ice="appendix"></td>
       <td data-ice="description"><p>Max returned values (default is 0 for all)</p>
+</td>
+    </tr>
+</tbody>
+  </table>
+</div>
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td class="return-type code" data-ice="returnType"><span>*</span></td>
+          
+        </tr>
+      </tbody>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="static-function-isNullVec">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    
+    <span class="code" data-ice="name">isNullVec</span><span class="code" data-ice="signature">(v: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span><span>[]</span></span>, epsilon: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>): <span>*</span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/functions.js.html#lineNumber579">source</a></span></span>
+    </span>
+  </h3>
+
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {isNullVec} from &apos;<span><a href="file/src/functions.js.html#lineNumber579">@kjerandp/linear-algebra/src/functions.js</a></span>&apos;</code></pre></div>
+  
+  
+  <div data-ice="description"><p>Test if a vector is a null vector</p>
+</div>
+
+  
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">v</td>
+      <td data-ice="type" class="code"><span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span><span>[]</span></span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>vector to test</p>
+</td>
+    </tr>
+<tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">epsilon</td>
+      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>optional epsilon value</p>
 </td>
     </tr>
 </tbody>
@@ -3368,11 +3510,11 @@ Works on both vectors and matrices, since they are both arrays.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/functions.js.html#lineNumber553">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/functions.js.html#lineNumber569">source</a></span></span>
     </span>
   </h3>
 
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {nrad} from &apos;<span><a href="file/src/functions.js.html#lineNumber553">@kjerandp/linear-algebra/src/functions.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {nrad} from &apos;<span><a href="file/src/functions.js.html#lineNumber569">@kjerandp/linear-algebra/src/functions.js</a></span>&apos;</code></pre></div>
   
   
   <div data-ice="description"><p>Normalise an angle to be between -PI to +PI</p>
@@ -3442,11 +3584,11 @@ Works on both vectors and matrices, since they are both arrays.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/vector.js.html#lineNumber233">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/vector.js.html#lineNumber242">source</a></span></span>
     </span>
   </h3>
 
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {nvec} from &apos;<span><a href="file/src/vector.js.html#lineNumber233">@kjerandp/linear-algebra/src/vector.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {nvec} from &apos;<span><a href="file/src/vector.js.html#lineNumber242">@kjerandp/linear-algebra/src/vector.js</a></span>&apos;</code></pre></div>
   
   
   <div data-ice="description"><p>Create a vector of specific dimension and optionally set its values.
@@ -3606,11 +3748,11 @@ be neglected.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/functions.js.html#lineNumber535">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/functions.js.html#lineNumber551">source</a></span></span>
     </span>
   </h3>
 
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {rad} from &apos;<span><a href="file/src/functions.js.html#lineNumber535">@kjerandp/linear-algebra/src/functions.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {rad} from &apos;<span><a href="file/src/functions.js.html#lineNumber551">@kjerandp/linear-algebra/src/functions.js</a></span>&apos;</code></pre></div>
   
   
   <div data-ice="description"><p>Convert degrees to radians</p>
@@ -3680,11 +3822,11 @@ be neglected.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/functions.js.html#lineNumber519">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/functions.js.html#lineNumber535">source</a></span></span>
     </span>
   </h3>
 
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {round} from &apos;<span><a href="file/src/functions.js.html#lineNumber519">@kjerandp/linear-algebra/src/functions.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {round} from &apos;<span><a href="file/src/functions.js.html#lineNumber535">@kjerandp/linear-algebra/src/functions.js</a></span>&apos;</code></pre></div>
   
   
   <div data-ice="description"><p>Rounds a number to the specific number of digits. Works with either a
@@ -4067,6 +4209,81 @@ steps argument.</p>
       <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span></td>
       <td data-ice="appendix"></td>
       <td data-ice="description"><p>end time of interpolation [0-1]</p>
+</td>
+    </tr>
+</tbody>
+  </table>
+</div>
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td class="return-type code" data-ice="returnType"><span>*</span></td>
+          
+        </tr>
+      </tbody>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="static-function-seqI">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    
+    <span class="code" data-ice="name">seqI</span><span class="code" data-ice="signature">(steps: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>): <span>*</span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/functions.js.html#lineNumber517">source</a></span></span>
+    </span>
+  </h3>
+
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {seqI} from &apos;<span><a href="file/src/functions.js.html#lineNumber517">@kjerandp/linear-algebra/src/functions.js</a></span>&apos;</code></pre></div>
+  
+  
+  <div data-ice="description"><p>Generates a list of interpolated values between 0 and 1,
+where the number of elements returned are controlled by the
+steps argument.</p>
+</div>
+
+  
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">steps</td>
+      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>interpolation steps</p>
 </td>
     </tr>
 </tbody>
@@ -4984,11 +5201,11 @@ arguments unless &apos;target&apos; is the same as &apos;from&apos;.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/vector.js.html#lineNumber252">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/vector.js.html#lineNumber261">source</a></span></span>
     </span>
   </h3>
 
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {vec2} from &apos;<span><a href="file/src/vector.js.html#lineNumber252">@kjerandp/linear-algebra/src/vector.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {vec2} from &apos;<span><a href="file/src/vector.js.html#lineNumber261">@kjerandp/linear-algebra/src/vector.js</a></span>&apos;</code></pre></div>
   
   
   <div data-ice="description"><p>Factory function for creating and assigning a 2d vector. If a single
@@ -5059,11 +5276,11 @@ Missing initial values will be filled with zeros.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/vector.js.html#lineNumber263">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/vector.js.html#lineNumber272">source</a></span></span>
     </span>
   </h3>
 
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {vec3} from &apos;<span><a href="file/src/vector.js.html#lineNumber263">@kjerandp/linear-algebra/src/vector.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {vec3} from &apos;<span><a href="file/src/vector.js.html#lineNumber272">@kjerandp/linear-algebra/src/vector.js</a></span>&apos;</code></pre></div>
   
   
   <div data-ice="description"><p>Factory function for creating and assigning a 3d vector. If a single
@@ -5134,11 +5351,11 @@ Missing initial values will be filled with zeros.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/vector.js.html#lineNumber274">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/vector.js.html#lineNumber283">source</a></span></span>
     </span>
   </h3>
 
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {vec4} from &apos;<span><a href="file/src/vector.js.html#lineNumber274">@kjerandp/linear-algebra/src/vector.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {vec4} from &apos;<span><a href="file/src/vector.js.html#lineNumber283">@kjerandp/linear-algebra/src/vector.js</a></span>&apos;</code></pre></div>
   
   
   <div data-ice="description"><p>Factory function for creating and assigning a 4d vector. If a single
