@@ -31,6 +31,8 @@ import {
   rad,
   nrad,
   seq,
+  seqI,
+  isNullVec,
 } from '../src/functions';
 import { PI, TAU, SPI, QPI } from '../src/const';
 import { Vector, vec2, vec3, vec4 } from '../src/vector';
@@ -444,6 +446,18 @@ describe('functions.js', () => {
     ];
     seq(a, b, 5).forEach((v, i) => expect(v).toEqual(expected[i]));
 
+    expected = [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1];
+    // optimized for 0..1 sequences
+    seqI(11).forEach((v, i) => expect(v).toBeCloseTo(expected[i], 10));
+
+  });
+
+  it('should allow easy check for null vectors', () => {
+    expect(isNullVec([0, 0, 0])).toBeTruthy();
+    expect(isNullVec([-0, -0, -0])).toBeTruthy();
+    expect(isNullVec([-1, -2, -3])).toBeFalsy();
+    expect(isNullVec([0.00001, 0, 0])).toBeFalsy();
+    expect(isNullVec([-0.00001, -0, -0], 0.001)).toBeTruthy();
   });
 });
 

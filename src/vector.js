@@ -13,6 +13,7 @@ import {
   cross2,
   dist,
   scalar,
+  isNullVec,
 } from './functions';
 import { flattenList } from './utils';
 
@@ -191,6 +192,14 @@ export class Vector extends Array {
       target[i] = values[ai];
     }
     return target;
+  }
+
+  /**
+   * Test if this vector is a null vector
+   * @param {number} epsilon epsilon
+   */
+  isNull(epsilon = 0) {
+    return isNullVec(this, epsilon);
   }
 
   /**

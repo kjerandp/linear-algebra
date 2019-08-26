@@ -509,6 +509,22 @@ export function seq(from, to, steps, start = 0, end = 1) {
 }
 
 /**
+ * Generates a list of interpolated values between 0 and 1,
+ * where the number of elements returned are controlled by the
+ * steps argument.
+ * @param {number} steps interpolation steps
+ */
+export function seqI(steps) {
+  const target = [];
+  const incr = 1 / (steps - 1);
+  for (let i = 0; i < steps - 1; i++) {
+    target.push(lerp(0, 1, i * incr));
+  }
+  target.push(1);
+  return target;
+}
+
+/**
  * Rounds a number to the specific number of digits. Works with either a
  * single number or an array of numbers, which means it can be used with vectors and
  * matrices as well.
@@ -553,4 +569,13 @@ export function deg(r) {
 export function nrad(r) {
   const v = r % TAU;
   return (v < 0 ? v + TAU : v);
+}
+
+/**
+ * Test if a vector is a null vector
+ * @param {number[]} v vector to test
+ * @param {number} epsilon optional epsilon value
+ */
+export function isNullVec(v, epsilon = 0) {
+  return epsilon ? v.every(val => Math.abs(val) - epsilon <= 0) : v.every(val => val === 0);
 }
